@@ -1,0 +1,150 @@
+Beleza! Vou manter a estrutura do seu código e só fazer as alterações para que a interface fique mais parecida com o Duolingo. Aqui estão as mudanças principais:
+
+1. Adição da barra de progresso animada
+
+
+2. Melhoria no layout dos botões e fundo escuro
+
+
+3. Balão de fala para a pergunta
+
+
+4. Correção da lógica dos botões
+
+
+
+
+---
+
+index.html (mantendo a estrutura e só melhorando o layout)
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz de Inglês</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="progress-bar">
+    <div class="progress" id="progress"></div>
+  </div>
+
+  <div class="quiz-container">
+    <div class="character">
+      <img src="character.png" alt="Personagem">
+      <div class="speech-bubble" id="question">Carregando...</div>
+    </div>
+
+    <ul class="options" id="options"></ul>
+
+    <button id="check-answer" class="verify-button" disabled>VERIFICAR</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+---
+
+styles.css (mantendo o código e alterando os estilos)
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Corpo */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #121212;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+/* Barra de progresso */
+.progress-bar {
+  width: 90%;
+  height: 10px;
+  background-color: #333;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.progress {
+  height: 100%;
+  background-color: #ffcc00;
+  width: 0%;
+  border-radius: 5px;
+  transition: width 0.5s ease-in-out;
+}
+
+/* Container do quiz */
+.quiz-container {
+  width: 90%;
+  max-width: 400px;
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* Personagem */
+.character {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.character img {
+  width: 100px;
+}
+
+.speech-bubble {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 10px;
+  display: inline-block;
+}
+
+/* Opções de resposta */
+.options {
+  list-style: none;
+  margin-top: 20px;
+}
+
+.options li {
+  background-color: #222;
+  color: white;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  text-align: center;
+  font-size: 18px;
+}
+
+.options li:hover {
+  border-color: #ffcc00;
+}
+
+.selected {
+  background-color: #ffcc00;
+  color: black;
+}
+
+/* Botão verificar */
+.verify-button {
+  background
+
