@@ -3,23 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz de Inglês</title>
+  <title>Speaky Easy - Quiz de Inglês</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="progress-bar">
-    <div class="progress" id="progress"></div>
-  </div>
+  <div class="container">
+    <h1 class="title">Speaky Easy</h1>
 
-  <div class="quiz-container">
-    <div class="character">
-      <img src="character.png" alt="Personagem">
-      <div class="speech-bubble" id="question">Carregando...</div>
+    <!-- Menu de navegação -->
+    <div class="tabs">
+      <button id="quizTab" class="tab-button">Quiz de Inglês</button>
+      <button id="libraryTab" class="tab-button">Biblioteca de Textos</button>
     </div>
 
-    <ul class="options" id="options"></ul>
+    <!-- Quiz -->
+    <div id="quiz-container" class="quiz-container">
+      <div id="quiz">
+        <p id="question"></p>
+        <ul id="options"></ul>
+      </div>
+      <button id="next" class="next-button" disabled>Próxima Pergunta</button>
+      <div id="score-container" class="score-container">
+        <p class="score-text">Pontuação: <span id="score">0</span></p>
+      </div>
+    </div>
 
-    <button id="check-answer" class="verify-button" disabled>VERIFICAR</button>
+    <!-- Biblioteca de textos -->
+    <div id="library-container" class="library-container" style="display: none;">
+      <h2>Biblioteca de Textos</h2>
+      <div class="text-entry">
+        <p><strong>Português:</strong> Eu gosto de estudar inglês.</p>
+        <p><strong>Inglês:</strong> I like to study English.</p>
+      </div>
+      <div class="text-entry">
+        <p><strong>Português:</strong> Meu nome é João.</p>
+        <p><strong>Inglês:</strong> My name is João.</p>
+      </div>
+    </div>
+
+    <!-- Tela final do Quiz -->
+    <div id="end-screen" class="end-screen" style="display: none;">
+      <p id="final-message"></p>
+      <h3>Respostas incorretas:</h3>
+      <ul id="mistakes-list"></ul>
+      <button id="restart-button" class="restart-button">Reiniciar Quiz</button>
+    </div>
   </div>
 
   <script src="script.js"></script>
