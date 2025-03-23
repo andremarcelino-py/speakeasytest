@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Speaky Easy - Quiz de Inglês</title>
+  <title>Speak Easy - Quiz de Inglês</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="container">
-    <h1 class="title">Speaky Easy</h1>
+    <h1 class="title">Speak Easy</h1>
 
     <!-- Menu de navegação -->
     <div class="tabs">
@@ -22,7 +22,7 @@
         <p id="question"></p>
         <ul id="options"></ul>
       </div>
-      <button id="next" class="next-button" disabled>Próxima Pergunta</button>
+      <button id="next" class="next-button">Próxima Pergunta</button>
       <div id="score-container" class="score-container">
         <p class="score-text">Pontuação: <span id="score">0</span></p>
       </div>
@@ -32,20 +32,23 @@
     <div id="library-container" class="library-container" style="display: none;">
       <h2>Biblioteca de Textos</h2>
       <div class="text-entry">
-        <p><strong>Português:</strong> Eu gosto de estudar inglês.</p>
-        <p><strong>Inglês:</strong> I like to study English.</p>
+        <p><strong>Texto em Inglês:</strong> I love reading books.</p>
+        <p><strong>Tradução:</strong> Eu adoro ler livros.</p>
       </div>
       <div class="text-entry">
-        <p><strong>Português:</strong> Meu nome é João.</p>
-        <p><strong>Inglês:</strong> My name is João.</p>
+        <p><strong>Texto em Inglês:</strong> She is learning Spanish.</p>
+        <p><strong>Tradução:</strong> Ela está aprendendo espanhol.</p>
+      </div>
+      <div class="text-entry">
+        <p><strong>Texto em Inglês:</strong> They went to the park yesterday.</p>
+        <p><strong>Tradução:</strong> Eles foram ao parque ontem.</p>
       </div>
     </div>
 
     <!-- Tela final do Quiz -->
     <div id="end-screen" class="end-screen" style="display: none;">
       <p id="final-message"></p>
-      <h3>Respostas incorretas:</h3>
-      <ul id="mistakes-list"></ul>
+      <ul id="error-list"></ul>
       <button id="restart-button" class="restart-button">Reiniciar Quiz</button>
     </div>
   </div>

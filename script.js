@@ -1,12 +1,19 @@
 const questions = [
-  { question: "Como se diz 'eu sou estudante' em inglês?", options: ["I am a student", "I am student", "I student am"], answer: 0, explanation: "O correto é 'I am a student' pois 'a' é necessário antes de 'student'." },
-  { question: "Como perguntar se alguém gosta de pizza?", options: ["Do you like pizza?", "Like pizza you?", "Pizza do you like?"], answer: 0, explanation: "'Do you like pizza?' é a forma correta pois segue a estrutura do inglês." },
-  { question: "Traduza 'Onde você mora?'", options: ["Where are you living?", "Where do you live?", "Where is you live?"], answer: 1, explanation: "'Where do you live?' é a forma correta para perguntas no presente." }
+  { question: "How do you say 'gato' in English?", options: ["Dog", "Cat", "Mouse", "Bird"], answer: 1, explanation: "Gato em inglês é 'Cat'." },
+  { question: "What is the capital of the USA?", options: ["New York", "Washington D.C.", "Los Angeles", "Chicago"], answer: 1, explanation: "A capital dos EUA é Washington D.C." },
+  { question: "Which word is a verb?", options: ["Quickly", "Table", "Run", "Beautiful"], answer: 2, explanation: "'Run' é um verbo que significa 'correr'." },
+  { question: "What color is the sun?", options: ["Blue", "Yellow", "Green", "Red"], answer: 1, explanation: "O sol é amarelo." },
+  { question: "Translate: 'Eu gosto de estudar'", options: ["I like to study", "I like study", "Study I like", "I studying like"], answer: 0, explanation: "A forma correta é 'I like to study'." },
 ];
 
+let selectedQuestions = [];
 let currentQuestion = 0;
 let score = 0;
-let mistakes = [];
+let errors = [];
+
+function selectRandomQuestions() {
+  selectedQuestions = questions.sort(() => 0.5 - Math.random()).slice(0, 5);
+}
 
 const questionElement = document.getElementById("question");
 const optionsElement = document.getElementById("options");
@@ -15,27 +22,34 @@ const scoreElement = document.getElementById("score");
 const quizContainer = document.getElementById("quiz-container");
 const endScreen = document.getElementById("end-screen");
 const finalMessageElement = document.getElementById("final-message");
-const mistakesList = document.getElementById("mistakes-list");
+const errorListElement = document.getElementById("error-list");
 const restartButton = document.getElementById("restart-button");
 
+const quizTab = document.getElementById("quizTab");
+const libraryTab = document.getElementById("libraryTab");
+const libraryContainer = document.getElementById("library-container");
+
+nextButton.disabled = true;
+
 function loadQuestion() {
-  const q = questions[currentQuestion];
-  questionElement.textContent = q.question;
+  nextButton.disabled = true;
+  const currentQ = selectedQuestions[currentQuestion];
+  questionElement.textContent = currentQ.question;
   optionsElement.innerHTML = "";
-  q.options.forEach((option, index) => {
+  currentQ.options.forEach((option, index) => {
     const li = document.createElement("li");
     li.textContent = option;
-    li.onclick = () => selectAnswer(index);
+    li.onclick = () => checkAnswer(index);
     optionsElement.appendChild(li);
   });
 }
 
-function selectAnswer(selected) {
-  const q = questions[currentQuestion];
-  if (selected === q.answer) {
+function checkAnswer(selected) {
+  const currentQ = selectedQuestions[currentQuestion];
+  if (selected === currentQ.answer) {
     score++;
   } else {
-    mistakes.push(`${q.question} - Correto: ${q.options[q.answer]} (${q.explanation})`);
+    errors.push(`${currentQ.question} - Resposta correta: ${currentQ.options[currentQ.answer]} (${currentQ.explanation})`);
   }
   scoreElement.textContent = score;
   nextButton.disabled = false;
@@ -43,8 +57,7 @@ function selectAnswer(selected) {
 
 nextButton.onclick = () => {
   currentQuestion++;
-  nextButton.disabled = true;
-  if (currentQuestion < questions.length) {
+  if (currentQuestion < selectedQuestions.length) {
     loadQuestion();
   } else {
     endQuiz();
@@ -54,10 +67,29 @@ nextButton.onclick = () => {
 function endQuiz() {
   quizContainer.style.display = "none";
   endScreen.style.display = "block";
-  finalMessageElement.textContent = `Você acertou ${score}/${questions.length}.`;
-  mistakesList.innerHTML = mistakes.map(m => `<li>${m}</li>`).join("");
+  finalMessageElement.textContent = `Pontuação: ${score}/5`;
+  errorListElement.innerHTML = errors.map(err => `<li>${err}</li>`).join("");
 }
 
-restartButton.onclick = () => location.reload();
+restartButton.onclick = () => {
+  score = 0;
+  currentQuestion = 0;
+  errors = [];
+  endScreen.style.display = "none";
+  quizContainer.style.display = "block";
+  selectRandomQuestions();
+  loadQuestion();
+};
 
+selectRandomQuestions();
 loadQuestion();
+
+function endQuiz() {
+  quizContainer.style.display = "none";
+  endScreen.style.display = "block";
+  finalMessageElement.textContent = `Pontuação: ${score}/5`;
+
+  errorListElement.innerHTML = errors
+    .map(err => `<li class="error-item">${err}</li>`)
+    .join("");
+}
