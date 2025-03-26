@@ -94,6 +94,44 @@ function endQuiz() {
     .join("");
 }
 
+
+// Função para carregar o ranking
+async function loadRanking() {
+  const rankingList = document.getElementById("ranking-list");
+  rankingList.innerHTML = "<p>Carregando...</p>";
+
+  try {
+    const q = query(collection(db, "users"), orderBy("score", "desc"), limit(5));
+    const querySnapshot = await getDocs(q);
+
+    rankingList.innerHTML = ""; // Limpa a lista antes de preencher
+
+    if (querySnapshot.empty) {
+      rankingList.innerHTML = "<p>Nenhum jogador registrado ainda.</p>";
+    } else {
+      querySnapshot.forEach((doc) => {
+        const user = doc.data();
+        const listItem = document.createElement("li");
+        listItem.textContent = `${user.name} - ${user.score} pontos`;
+        rankingList.appendChild(listItem);
+      });
+    }
+  } catch (error) {
+    console.error("Erro ao carregar o ranking:", error);
+    rankingList.innerHTML = "<p>Erro ao carregar ranking.</p>";
+  }
+}
+
+// Evento para exibir o ranking
+document.getElementById("rankingTab").onclick = () => {
+  document.getElementById("quiz-container").style.display = "none";
+  document.getElementById("library-container").style.display = "none";
+  document.getElementById("end-screen").style.display = "none";
+  document.getElementById("ranking-container").style.display = "block";
+
+  loadRanking(); // Atualiza a lista ao abrir
+};
+
 restartButton.onclick = () => {
   score = 0;
   currentQuestion = 0;
