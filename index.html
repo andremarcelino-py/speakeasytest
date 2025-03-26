@@ -7,7 +7,16 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
+  <!-- Tela de Cadastro -->
+  <div id="register-container" class="register-container">
+    <h2>Cadastro</h2>
+    <input type="text" id="name" placeholder="Digite seu nome">
+    <input type="number" id="number" placeholder="Digite seu número">
+    <button id="start-button">Iniciar</button>
+  </div>
+
+  <!-- Conteúdo principal oculto inicialmente -->
+  <div id="main-container" class="container" style="display: none;">
     <h1 class="title">Speak Easy</h1>
 
     <!-- Menu de navegação -->
@@ -43,8 +52,14 @@
       <ul id="error-list"></ul>
       <button id="restart-button" class="restart-button">Reiniciar Quiz</button>
     </div>
+
+    <!-- Contador de acertos -->
+    <div id="score-container" class="score-container">
+      <p>Pontuação: <span id="score">0</span>/10</p>
+    </div>
   </div>
 
+  <script type="module" src="firebase-config.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
