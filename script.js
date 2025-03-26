@@ -21,10 +21,11 @@ const allQuestions = [
   { question: "What does 'tired' mean?", options: ["Feliz", "Cansado", "Bravo", "Triste"], answer: 1 }
 ];
 
+
 // Função para embaralhar as perguntas e selecionar 5 aleatórias
 function getRandomQuestions() {
   const shuffled = allQuestions.sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, 5);
+  return shuffled.slice(0, 10);
 }
 
 let questions = getRandomQuestions();
@@ -59,19 +60,34 @@ function loadQuestion() {
 
 function checkAnswer(selected) {
   const q = questions[currentQuestion];
+  const options = optionsElement.getElementsByTagName("li");
+
+  for (let i = 0; i < options.length; i++) {
+    options[i].style.backgroundColor = i === q.answer ? "green" : (i === selected ? "red" : "#9B59B6");
+    options[i].style.pointerEvents = "none";
+  }
+
   if (selected === q.answer) {
     score++;
+    updateScore();
   } else {
     errors.push(`Q: ${q.question} - R: ${q.options[q.answer]}`);
   }
-  currentQuestion++;
-  loadQuestion();
+
+  setTimeout(() => {
+    currentQuestion++;
+    loadQuestion();
+  }, 1000);
+}
+
+function updateScore() {
+  document.getElementById("score").textContent = score;
 }
 
 function endQuiz() {
   quizContainer.style.display = "none";
   endScreen.style.display = "block";
-  finalMessageElement.textContent = `Pontuação: ${score}/5`;
+  finalMessageElement.textContent = `Pontuação: ${score}/10`;
 
   errorListElement.innerHTML = errors
     .map(err => `<li class="error-item">${err}</li>`)
@@ -82,7 +98,7 @@ restartButton.onclick = () => {
   score = 0;
   currentQuestion = 0;
   errors = [];
-  questions = getRandomQuestions(); // Nova seleção aleatória de perguntas
+  questions = getRandomQuestions();
   quizContainer.style.display = "block";
   endScreen.style.display = "none";
   loadQuestion();
@@ -92,7 +108,7 @@ document.getElementById("quizTab").onclick = () => {
   quizContainer.style.display = "block";
   document.getElementById("library-container").style.display = "none";
   endScreen.style.display = "none";
-  questions = getRandomQuestions(); // Garante novas perguntas ao acessar
+  questions = getRandomQuestions();
   loadQuestion();
 };
 
