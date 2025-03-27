@@ -30,5 +30,6 @@ document.getElementById("start-button").addEventListener("click", async () => {
     }
   } else {
     alert("Preencha todos os campos!");
+export { db }
   }
 });
