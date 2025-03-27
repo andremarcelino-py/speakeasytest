@@ -120,3 +120,25 @@ body {
   border-radius: 5px;
   font-size: 1.2em;
 }
+
+
+.ranking-container {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  width: 300px;
+}
+
+.ranking-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.ranking-container li {
+  background-color: #9B59B6;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+  font-size: 1.2em;
+}
