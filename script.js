@@ -1,3 +1,35 @@
+import { db } from "./firebase-config.js";
+import { collection, addDoc, getDocs, query, orderBy, limit, updateDoc, where, getDoc, doc } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+
+let currentUser = null;
+
+document.getElementById("start-button").addEventListener("click", async () => {
+  const name = document.getElementById("name").value.trim();
+  const number = document.getElementById("number").value.trim();
+
+  if (name && number) {
+    try {
+      // Verificar se o usuário já existe
+      const userQuery = query(collection(db, "users"), where("number", "==", number));
+      const userSnapshot = await getDocs(userQuery);
+
+      if (!userSnapshot.empty) {
+        currentUser = userSnapshot.docs[0]; // Usuário existente
+      } else {
+        const docRef = await addDoc(collection(db, "users"), { name, number, score: 0 });
+        currentUser = await getDoc(docRef); // Novo usuário
+      }
+
+      document.getElementById("register-container").style.display = "none";
+      document.getElementById("main-container").style.display = "block";
+    } catch (error) {
+      console.error("Erro ao salvar no Firestore: ", error);
+    }
+  } else {
+    alert("Preencha todos os campos!");
+  }
+});
+
 const allQuestions = [
   { question: "What is 'eu sou estudante' in English?", options: ["I am a student", "I am student", "I student am", "A student I am"], answer: 0 },
   { question: "Which one is correct?", options: ["Do you like pizza?", "Like pizza you?", "Pizza do you like?", "You pizza like?"], answer: 0 },
@@ -33,6 +65,12 @@ let score = 0;
 let currentQuestion = 0;
 let errors = [];
 
+
+let questions = getRandomQuestions();
+let score = 0;
+let currentQuestion = 0;
+let errors = [];
+
 const questionElement = document.getElementById("question");
 const optionsElement = document.getElementById("options");
 const quizContainer = document.getElementById("quiz-container");
@@ -46,7 +84,7 @@ function loadQuestion() {
     const q = questions[currentQuestion];
     questionElement.textContent = q.question;
     optionsElement.innerHTML = "";
-    
+
     q.options.forEach((option, index) => {
       const li = document.createElement("li");
       li.textContent = option;
@@ -58,7 +96,7 @@ function loadQuestion() {
   }
 }
 
-function checkAnswer(selected) {
+async function checkAnswer(selected) {
   const q = questions[currentQuestion];
   const options = optionsElement.getElementsByTagName("li");
 
@@ -84,18 +122,22 @@ function updateScore() {
   document.getElementById("score").textContent = score;
 }
 
-function endQuiz() {
+async function endQuiz() {
   quizContainer.style.display = "none";
   endScreen.style.display = "block";
-  finalMessageElement.textContent = `Pontuação: ${score}/10`;
+  finalMessageElement.textContent = `Pontuação: ${score}/5`;
 
-  errorListElement.innerHTML = errors
-    .map(err => `<li class="error-item">${err}</li>`)
-    .join("");
+  errorListElement.innerHTML = errors.map(err => `<li class="error-item">${err}</li>`).join("");
+
+  if (currentUser) {
+    try {
+      await updateDoc(doc(db, "users", currentUser.id), { score });
+    } catch (error) {
+      console.error("Erro ao atualizar pontuação:", error);
+    }
+  }
 }
 
-
-// Função para carregar o ranking
 async function loadRanking() {
   const rankingList = document.getElementById("ranking-list");
   rankingList.innerHTML = "<p>Carregando...</p>";
@@ -104,7 +146,7 @@ async function loadRanking() {
     const q = query(collection(db, "users"), orderBy("score", "desc"), limit(5));
     const querySnapshot = await getDocs(q);
 
-    rankingList.innerHTML = ""; // Limpa a lista antes de preencher
+    rankingList.innerHTML = "";
 
     if (querySnapshot.empty) {
       rankingList.innerHTML = "<p>Nenhum jogador registrado ainda.</p>";
@@ -122,14 +164,12 @@ async function loadRanking() {
   }
 }
 
-// Evento para exibir o ranking
 document.getElementById("rankingTab").onclick = () => {
   document.getElementById("quiz-container").style.display = "none";
   document.getElementById("library-container").style.display = "none";
   document.getElementById("end-screen").style.display = "none";
   document.getElementById("ranking-container").style.display = "block";
-
-  loadRanking(); // Atualiza a lista ao abrir
+  loadRanking();
 };
 
 restartButton.onclick = () => {
