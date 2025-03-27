@@ -3,6 +3,7 @@ import { collection, addDoc, getDocs, query, where, getDoc } from "https://www.g
 
 let currentUser = null;
 
+
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("start-button").addEventListener("click", async () => {
     const name = document.getElementById("name").value.trim();
