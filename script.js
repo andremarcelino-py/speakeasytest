@@ -1,5 +1,16 @@
 import { db } from "./firebase-config.js";
-import { collection, addDoc, getDocs, query, orderBy, limit, updateDoc, where, getDoc, doc } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  orderBy,
+  limit,
+  updateDoc,
+  where,
+  getDoc,
+  doc
+} from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
 
 let currentUser = null;
 
@@ -14,10 +25,10 @@ document.getElementById("start-button").addEventListener("click", async () => {
       const userSnapshot = await getDocs(userQuery);
 
       if (!userSnapshot.empty) {
-        currentUser = userSnapshot.docs[0]; // Usuário existente
+        currentUser = userSnapshot.docs[0]; // Usuário já existe
       } else {
         const docRef = await addDoc(collection(db, "users"), { name, number, score: 0 });
-        currentUser = await getDoc(docRef); // Novo usuário
+        currentUser = await getDoc(docRef); // Novo usuário criado
       }
 
       document.getElementById("register-container").style.display = "none";
@@ -59,13 +70,6 @@ function getRandomQuestions() {
   const shuffled = allQuestions.sort(() => Math.random() - 0.5);
   return shuffled.slice(0, 10);
 }
-
-let questions = getRandomQuestions();
-let score = 0;
-let currentQuestion = 0;
-let errors = [];
-
-
 let questions = getRandomQuestions();
 let score = 0;
 let currentQuestion = 0;
@@ -98,11 +102,11 @@ function loadQuestion() {
 
 async function checkAnswer(selected) {
   const q = questions[currentQuestion];
-  const options = optionsElement.getElementsByTagName("li");
 
-  for (let i = 0; i < options.length; i++) {
-    options[i].style.backgroundColor = i === q.answer ? "green" : (i === selected ? "red" : "#9B59B6");
-    options[i].style.pointerEvents = "none";
+  for (let i = 0; i < optionsElement.children.length; i++) {
+    optionsElement.children[i].style.backgroundColor =
+      i === q.answer ? "green" : i === selected ? "red" : "#9B59B6";
+    optionsElement.children[i].style.pointerEvents = "none";
   }
 
   if (selected === q.answer) {
@@ -126,8 +130,7 @@ async function endQuiz() {
   quizContainer.style.display = "none";
   endScreen.style.display = "block";
   finalMessageElement.textContent = `Pontuação: ${score}/5`;
-
-  errorListElement.innerHTML = errors.map(err => `<li class="error-item">${err}</li>`).join("");
+  errorListElement.innerHTML = errors.map(err => `<li>${err}</li>`).join("");
 
   if (currentUser) {
     try {
@@ -140,18 +143,17 @@ async function endQuiz() {
 
 async function loadRanking() {
   const rankingList = document.getElementById("ranking-list");
-  rankingList.innerHTML = "<p>Carregando...</p>";
+  rankingList.innerHTML = "Carregando...";
 
   try {
     const q = query(collection(db, "users"), orderBy("score", "desc"), limit(5));
     const querySnapshot = await getDocs(q);
 
     rankingList.innerHTML = "";
-
     if (querySnapshot.empty) {
       rankingList.innerHTML = "<p>Nenhum jogador registrado ainda.</p>";
     } else {
-      querySnapshot.forEach((doc) => {
+      querySnapshot.forEach(doc => {
         const user = doc.data();
         const listItem = document.createElement("li");
         listItem.textContent = `${user.name} - ${user.score} pontos`;
@@ -160,14 +162,13 @@ async function loadRanking() {
     }
   } catch (error) {
     console.error("Erro ao carregar o ranking:", error);
-    rankingList.innerHTML = "<p>Erro ao carregar ranking.</p>";
+    rankingList.innerHTML = "Erro ao carregar ranking.";
   }
 }
 
+// Eventos para trocar de aba
 document.getElementById("rankingTab").onclick = () => {
   document.getElementById("quiz-container").style.display = "none";
-  document.getElementById("library-container").style.display = "none";
-  document.getElementById("end-screen").style.display = "none";
   document.getElementById("ranking-container").style.display = "block";
   loadRanking();
 };
@@ -180,20 +181,6 @@ restartButton.onclick = () => {
   quizContainer.style.display = "block";
   endScreen.style.display = "none";
   loadQuestion();
-};
-
-document.getElementById("quizTab").onclick = () => {
-  quizContainer.style.display = "block";
-  document.getElementById("library-container").style.display = "none";
-  endScreen.style.display = "none";
-  questions = getRandomQuestions();
-  loadQuestion();
-};
-
-document.getElementById("libraryTab").onclick = () => {
-  document.getElementById("library-container").style.display = "block";
-  quizContainer.style.display = "none";
-  endScreen.style.display = "none";
 };
 
 loadQuestion();
