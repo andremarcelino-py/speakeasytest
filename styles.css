@@ -15,11 +15,13 @@ body {
   flex-direction: column;
 }
 
-.register-container {
+.register-container, .quiz-container, .library-container, .ranking-container, .end-screen {
   text-align: center;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 20px;
   border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
 }
 
 .register-container input {
@@ -31,51 +33,17 @@ body {
   border: none;
 }
 
-.register-container button {
+.register-container button, .tab-button, .restart-button {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   background-color: #9B59B6;
   color: white;
-}
-
-.container {
-  text-align: center;
-}
-
-.title {
-  font-size: 2.5em;
-  margin-bottom: 20px;
-  color: #9B59B6;
-}
-
-.tabs {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.tab-button {
-  background-color: #8E44AD;
-  color: white;
-  padding: 10px 20px;
-  margin: 0 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
 }
 
 .tab-button:hover {
-  background-color: #9B59B6;
-}
-
-.quiz-container, .end-screen, .library-container {
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 30px;
-  border-radius: 15px;
-  width: 90%;
-  max-width: 600px;
+  background-color: #8E44AD;
 }
 
 #options li {
