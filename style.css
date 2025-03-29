@@ -108,7 +108,29 @@ body {
   margin-bottom: 1.5rem;
 }
 
+/* Adicione esses estilos */
+.title {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+}
 
+.header-logo {
+  height: 1.2em;
+  vertical-align: middle;
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
+}
+
+/* Mantenha o gradiente original do texto */
+.title {
+  font-size: 3rem;
+  background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
 
 /* Estilos do Logo */
 .logo-container {
@@ -133,22 +155,19 @@ body {
   filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
 }
 
+
+/* Ajuste para mobile */
 @media (max-width: 768px) {
-  .logo-container {
-    position: static;
-    text-align: center;
-    margin-bottom: 1rem;
+  .title {
+    font-size: 2rem;
+    flex-direction: column;
+    gap: 10px;
   }
   
-  .logo {
-    height: 40px;
-  }
-  
-  .logo-small {
-    height: 60px;
+  .header-logo {
+    height: 50px;
   }
 }
-
 
 
 .tabs {
