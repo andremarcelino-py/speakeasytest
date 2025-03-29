@@ -58,27 +58,29 @@ function loadQuestion() {
   }
 }
 
-function checkAnswer(selected) {
-  const q = questions[currentQuestion];
-  const options = optionsElement.getElementsByTagName("li");
+function checkAnswer(selected) {  
+  const q = questions[currentQuestion];  
+  const options = optionsElement.getElementsByTagName("li");  
 
-  for (let i = 0; i < options.length; i++) {
-    options[i].style.backgroundColor = i === q.answer ? "green" : (i === selected ? "red" : "#9B59B6");
-    options[i].style.pointerEvents = "none";
-  }
+  for (let i = 0; i < options.length; i++) {  
+    options[i].style.backgroundColor = i === q.answer ? "green" : (i === selected ? "red" : "#9B59B6");  
+    options[i].style.pointerEvents = "none";  
+  }  
 
-  if (selected === q.answer) {
-    score++;
-    updateScore();
-  } else {
-    errors.push(`Q: ${q.question} - R: ${q.options[q.answer]}`);
-  }
+  if (selected === q.answer) {  
+    score++;  
+  } else {  
+    errors.push(`Q: ${q.question} - R: ${q.options[q.answer]}`);  
+  }  
 
-  setTimeout(() => {
-    currentQuestion++;
-    loadQuestion();
-  }, 1000);
+  updateScore();  // Atualiza o score na tela  
+
+  setTimeout(() => {  
+    currentQuestion++;  
+    loadQuestion();  
+  }, 1000);  
 }
+
 
 function updateScore() {
   document.getElementById("score").textContent = score;
