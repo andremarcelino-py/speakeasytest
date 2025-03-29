@@ -90,6 +90,49 @@ body {
   margin-bottom: 1.5rem;
 }
 
+
+
+/* Estilos do Logo */
+.logo-container {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+}
+
+.logo {
+  height: 50px;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.1);
+}
+
+.logo-small {
+  height: 80px;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+}
+
+@media (max-width: 768px) {
+  .logo-container {
+    position: static;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .logo {
+    height: 40px;
+  }
+  
+  .logo-small {
+    height: 60px;
+  }
+}
+
+
+
 .tabs {
   display: flex;
   justify-content: center;
