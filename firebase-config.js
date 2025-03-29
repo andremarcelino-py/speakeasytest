@@ -48,6 +48,33 @@ document.getElementById("rankingTab").onclick = async () => {
   document.getElementById("ranking-container").style.display = "block";
   document.getElementById("quiz-container").style.display = "none";
   document.getElementById("library-container").style.display = "none";
+
+
+import { doc, updateDoc } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+
+async function saveScore(userName, score) {
+  const querySnapshot = await getDocs(collection(db, "users"));
+  let userDoc;
+
+  querySnapshot.forEach((doc) => {
+    if (doc.data().name === userName) {
+      userDoc = doc.ref;
+    }
+  });
+
+  if (userDoc) {
+    await updateDoc(userDoc, { score: score });
+  }
+}
+
+// Chame esta função quando o quiz terminar
+document.getElementById("restart-button").addEventListener("click", () => {
+  const userName = document.getElementById("name").value;
+  const finalScore = parseInt(document.getElementById("score").textContent, 10);
+
+  saveScore(userName, finalScore);
+});
+
   
   const rankingList = document.getElementById("ranking-list");
   rankingList.innerHTML = "";
