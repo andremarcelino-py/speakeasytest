@@ -44,32 +44,36 @@ document.getElementById("libraryTab").onclick = () => {
   document.getElementById("ranking-container").style.display = "none";
 };
 
-document.getElementById("rankingTab").onclick = async () => {
-  document.getElementById("ranking-container").style.display = "block";
-  document.getElementById("quiz-container").style.display = "none";
-  document.getElementById("library-container").style.display = "none";
+document.getElementById("rankingTab").onclick = async () => {  
+  document.getElementById("ranking-container").style.display = "block";  
+  document.getElementById("quiz-container").style.display = "none";  
+  document.getElementById("library-container").style.display = "none";  
 
-  const rankingList = document.getElementById("ranking-list");
-  rankingList.innerHTML = "";
+  const rankingList = document.getElementById("ranking-list");  
+  rankingList.innerHTML = "";  
 
-  const querySnapshot = await getDocs(collection(db, "users"));
-  const users = [];
+  try {
+    const querySnapshot = await getDocs(collection(db, "users"));  
+    const users = [];  
 
-  querySnapshot.forEach(doc => {
-    let userData = doc.data();
-    users.push({
-      name: userData.name,
-      score: userData.score || 0 // Se não existir, assume 0
-    });
-  });
+    querySnapshot.forEach(doc => {  
+      let userData = doc.data();  
+      users.push({  
+        name: userData.name,  
+        score: userData.score || 0 // Se não existir, assume 0  
+      });  
+    });  
 
-  users.sort((a, b) => b.score - a.score);
+    users.sort((a, b) => b.score - a.score);  
 
-  users.forEach((user, index) => {
-    const li = document.createElement("li");
-    li.textContent = `${index + 1}. ${user.name} - Pontos: ${user.score}`;
-    rankingList.appendChild(li);
-  });
+    users.forEach((user, index) => {  
+      const li = document.createElement("li");  
+      li.textContent = `${index + 1}. ${user.name} - Pontos: ${user.score}`;  
+      rankingList.appendChild(li);  
+    });  
+  } catch (error) {
+    console.error("Erro ao carregar o ranking:", error);
+  }
 };
 
 async function saveScore(userName, score) {  
