@@ -22,52 +22,100 @@ const allQuestions = [
 ];
 
 
+// Função para embaralhar as perguntas e selecionar 5 aleatórias
+function getRandomQuestions() {
+  const shuffled = allQuestions.sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, 10);
+}
 
+let questions = getRandomQuestions();
+let score = 0;
+let currentQuestion = 0;
+let errors = [];
 
-function getRandomQuestions() { const shuffled = allQuestions.sort(() => Math.random() - 0.5); return shuffled.slice(0, 10); }
+const questionElement = document.getElementById("question");
+const optionsElement = document.getElementById("options");
+const quizContainer = document.getElementById("quiz-container");
+const endScreen = document.getElementById("end-screen");
+const finalMessageElement = document.getElementById("final-message");
+const errorListElement = document.getElementById("error-list");
+const restartButton = document.getElementById("restart-button");
 
-let questions = getRandomQuestions(); let score = 0; let currentQuestion = 0; let errors = [];
+function loadQuestion() {
+  if (currentQuestion < questions.length) {
+    const q = questions[currentQuestion];
+    questionElement.textContent = q.question;
+    optionsElement.innerHTML = "";
+    
+    q.options.forEach((option, index) => {
+      const li = document.createElement("li");
+      li.textContent = option;
+      li.onclick = () => checkAnswer(index);
+      optionsElement.appendChild(li);
+    });
+  } else {
+    endQuiz();
+  }
+}
 
-const questionElement = document.getElementById("question"); const optionsElement = document.getElementById("options"); const quizContainer = document.getElementById("quiz-container"); const endScreen = document.getElementById("end-screen"); const finalMessageElement = document.getElementById("final-message"); const errorListElement = document.getElementById("error-list"); const restartButton = document.getElementById("restart-button");
+function checkAnswer(selected) {
+  const q = questions[currentQuestion];
+  const options = optionsElement.getElementsByTagName("li");
 
-function loadQuestion() { if (currentQuestion < questions.length) { const q = questions[currentQuestion]; questionElement.textContent = q.question; optionsElement.innerHTML = "";
+  for (let i = 0; i < options.length; i++) {
+    options[i].style.backgroundColor = i === q.answer ? "green" : (i === selected ? "red" : "#9B59B6");
+    options[i].style.pointerEvents = "none";
+  }
 
-q.options.forEach((option, index) => {
-  const li = document.createElement("li");
-  li.textContent = option;
-  li.onclick = () => checkAnswer(index);
-  optionsElement.appendChild(li);
-});
+  if (selected === q.answer) {
+    score++;
+    updateScore();
+  } else {
+    errors.push(`Q: ${q.question} - R: ${q.options[q.answer]}`);
+  }
 
-} else { endQuiz(); } }
+  setTimeout(() => {
+    currentQuestion++;
+    loadQuestion();
+  }, 1000);
+}
 
-function checkAnswer(selected) { const q = questions[currentQuestion]; const options = optionsElement.getElementsByTagName("li");
+function updateScore() {
+  document.getElementById("score").textContent = score;
+}
 
-for (let i = 0; i < options.length; i++) { options[i].style.backgroundColor = i === q.answer ? "green" : (i === selected ? "red" : "#9B59B6"); options[i].style.pointerEvents = "none"; }
+function endQuiz() {
+  quizContainer.style.display = "none";
+  endScreen.style.display = "block";
+  finalMessageElement.textContent = `Pontuação: ${score}/10`;
 
-if (selected === q.answer) { score++; updateScore(); } else { errors.push(Q: ${q.question} - R: ${q.options[q.answer]}); }
+  errorListElement.innerHTML = errors
+    .map(err => `<li class="error-item">${err}</li>`)
+    .join("");
+}
 
-setTimeout(() => { currentQuestion++; loadQuestion(); }, 1000); }
+restartButton.onclick = () => {
+  score = 0;
+  currentQuestion = 0;
+  errors = [];
+  questions = getRandomQuestions();
+  quizContainer.style.display = "block";
+  endScreen.style.display = "none";
+  loadQuestion();
+};
 
-function updateScore() { document.getElementById("score").textContent = score; }
+document.getElementById("quizTab").onclick = () => {
+  quizContainer.style.display = "block";
+  document.getElementById("library-container").style.display = "none";
+  endScreen.style.display = "none";
+  questions = getRandomQuestions();
+  loadQuestion();
+};
 
-function endQuiz() { quizContainer.style.display = "none"; endScreen.style.display = "block"; finalMessageElement.textContent = Pontuação: ${score}/10;
-
-errorListElement.innerHTML = errors .map(err => <li class="error-item">${err}</li>) .join(""); }
-
-restartButton.onclick = () => { score = 0; currentQuestion = 0; errors = []; questions = getRandomQuestions(); quizContainer.style.display = "block"; endScreen.style.display = "none"; loadQuestion(); };
-
-document.getElementById("rankingTab").onclick = async () => { document.getElementById("ranking-container").style.display = "block"; document.getElementById("quiz-container").style.display = "none"; document.getElementById("library-container").style.display = "none";
-
-const rankingList = document.getElementById("ranking-list"); rankingList.innerHTML = "";
-
-const querySnapshot = await getDocs(collection(db, "users")); const users = [];
-
-querySnapshot.forEach(doc => { let userData = doc.data(); users.push({ name: userData.name, score: userData.score || 0 }); });
-
-users.sort((a, b) => b.score - a.score);
-
-users.forEach((user, index) => { const li = document.createElement("li"); li.textContent = ${index + 1}. ${user.name} - Pontos: ${user.score}; rankingList.appendChild(li); }); };
+document.getElementById("libraryTab").onclick = () => {
+  document.getElementById("library-container").style.display = "block";
+  quizContainer.style.display = "none";
+  endScreen.style.display = "none";
+};
 
 loadQuestion();
-
