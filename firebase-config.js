@@ -72,25 +72,24 @@ document.getElementById("rankingTab").onclick = async () => {
   });
 };
 
-async function saveScore(userName, score) {
-  const querySnapshot = await getDocs(collection(db, "users"));
-  let userDoc;
+async function saveScore(userName, score) {  
+  const querySnapshot = await getDocs(collection(db, "users"));  
+  let userDoc = null;  
 
-  querySnapshot.forEach((doc) => {
-    if (doc.data().name === userName) {
-      userDoc = doc.ref;
+  querySnapshot.forEach((document) => {  
+    if (document.data().name === userName) {  
+      userDoc = document.ref;  
+    }  
+  });  
+
+  if (userDoc) {  
+    try {
+      await updateDoc(userDoc, { score: score });  
+      console.log("Score atualizado com sucesso!");
+    } catch (error) {
+      console.error("Erro ao atualizar o score:", error);
     }
-  });
-
-  if (userDoc) {
-    await updateDoc(userDoc, { score: score });
-  }
+  } else {  
+    console.error("Usuário não encontrado no Firestore.");
+  }  
 }
-
-// Chame esta função quando o quiz terminar
-document.getElementById("restart-button").addEventListener("click", () => {
-  const userName = document.getElementById("name").value;
-  const finalScore = parseInt(document.getElementById("score").textContent, 10);
-
-  saveScore(userName, finalScore);
-});
