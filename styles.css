@@ -1,67 +1,156 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* CSS Atualizado */
+:root {
+  --primary-color: #7C3AED;
+  --secondary-color: #A78BFA;
+  --accent-color: #F472B6;
+  --background-gradient: linear-gradient(135deg, #1F1A3A 0%, #2E0854 100%);
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background-color: #2E0854;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  font-family: 'Poppins', sans-serif;
+  background: var(--background-gradient);
   min-height: 100vh;
-  flex-direction: column;
+  padding: 20px;
 }
 
-.register-container, .quiz-container, .library-container, .ranking-container, .end-screen {
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 20px;
-  border-radius: 10px;
+.register-container {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 400px;
   width: 90%;
-  max-width: 600px;
 }
 
 .register-container input {
-  display: block;
-  width: 80%;
-  padding: 10px;
-  margin: 10px auto;
-  border-radius: 5px;
-  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid var(--primary-color);
+  transition: all 0.3s ease;
 }
 
-.register-container button, .tab-button, .restart-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  background-color: #9B59B6;
-  color: white;
+.register-container input:focus {
+  transform: scale(1.02);
+  box-shadow: 0 0 15px var(--secondary-color);
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+}
+
+.title {
+  font-size: 3rem;
+  background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tabs {
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.tab-button {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 12px 24px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .tab-button:hover {
-  background-color: #8E44AD;
+  background: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+}
+
+.quiz-container, .library-container, .ranking-container {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 2rem;
+  margin: 1rem 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 #options li {
-  background-color: #9B59B6;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid transparent;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+#options li::before {
+  content: "•";
+  color: var(--secondary-color);
 }
 
 #options li:hover {
-  background-color: #8E44AD;
+  transform: translateX(10px);
+  border-color: var(--primary-color);
 }
 
-.score-container {
-  margin: 20px 0;
-  font-size: 1.2em;
-  font-weight: bold;
-  color: #9B59B6;
+#options li.correct {
+  background: rgba(72, 187, 120, 0.2);
+  border-color: #48BB78;
+}
+
+#options li.wrong {
+  background: rgba(245, 101, 101, 0.2);
+  border-color: #F56565;
+}
+
+.end-screen {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  padding: 2rem;
+}
+
+.restart-button {
+  background: var(--primary-color);
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.restart-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+}
+
+.progress-bar {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  margin: 1rem 0;
+}
+
+.progress {
+  height: 100%;
+  background: var(--accent-color);
+  transition: width 0.3s ease;
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+  animation: fadeIn 0.5s ease-out;
 }
