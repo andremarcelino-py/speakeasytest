@@ -11,24 +11,6 @@
   box-sizing: border-box;
 }
 
-/* Adicione esses estilos */
-.header-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  margin-bottom: 1.5rem;
-}
-
-.logo-container {
-  position: relative;
-  top: auto;
-  left: auto;
-  z-index: auto;
-}
-
-/* Mantenha os outros estilos do logo */
-
 body {
   font-family: 'Poppins', sans-serif;
   background: var(--background-gradient);
@@ -107,68 +89,6 @@ body {
   text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin-bottom: 1.5rem;
 }
-
-/* Adicione esses estilos */
-.title {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.header-logo {
-  height: 1.2em;
-  vertical-align: middle;
-  filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
-}
-
-/* Mantenha o gradiente original do texto */
-.title {
-  font-size: 3rem;
-  background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 1.5rem;
-}
-
-/* Estilos do Logo */
-.logo-container {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  z-index: 1000;
-}
-
-.logo {
-  height: 50px;
-  transition: transform 0.3s ease;
-}
-
-.logo:hover {
-  transform: scale(1.1);
-}
-
-.logo-small {
-  height: 80px;
-  margin-bottom: 1rem;
-  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
-}
-
-
-/* Ajuste para mobile */
-@media (max-width: 768px) {
-  .title {
-    font-size: 2rem;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .header-logo {
-    height: 50px;
-  }
-}
-
 
 .tabs {
   display: flex;
