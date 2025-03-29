@@ -227,4 +227,13 @@ document.querySelectorAll('.tab-button, .restart-button').forEach(button => {
   });
 });
 
+// Efeito no logo
+document.querySelector('.logo').addEventListener('mouseover', function() {
+  this.style.transform = 'rotate(360deg)';
+  setTimeout(() => {
+    this.style.transform = 'rotate(0deg)';
+  }, 1000);
+});
+
+
 loadQuestion();
