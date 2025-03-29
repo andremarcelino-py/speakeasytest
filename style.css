@@ -11,6 +11,24 @@
   box-sizing: border-box;
 }
 
+/* Adicione esses estilos */
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 1.5rem;
+}
+
+.logo-container {
+  position: relative;
+  top: auto;
+  left: auto;
+  z-index: auto;
+}
+
+/* Mantenha os outros estilos do logo */
+
 body {
   font-family: 'Poppins', sans-serif;
   background: var(--background-gradient);
