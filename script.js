@@ -227,7 +227,4 @@ document.querySelectorAll('.tab-button, .restart-button').forEach(button => {
   });
 });
 
-// 
-
-
 loadQuestion();
