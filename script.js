@@ -25,6 +25,7 @@ const rankingContainer = document.getElementById("ranking-container");
 const endScreen = document.getElementById("end-screen");
 const perguntasEndScreen = document.getElementById("perguntas-end-screen");
 
+// Botões
 const startButton = document.getElementById("start-button");
 const btnQuiz = document.getElementById("btnQuiz");
 const btnPerguntas = document.getElementById("btnPerguntas");
@@ -33,26 +34,68 @@ const btnRanking = document.getElementById("btnRanking");
 const btnFacil = document.getElementById("btnFacil");
 const btnMedio = document.getElementById("btnMedio");
 const btnDificil = document.getElementById("btnDificil");
+const restartButton = document.getElementById("restart-button");
+const perguntasRestartButton = document.getElementById("perguntas-restart-button");
+const perguntasMenuButton = document.getElementById("perguntas-menu-button");
 
+// Elementos do quiz
 const questionElement = document.getElementById("question");
 const optionsElement = document.getElementById("options");
 const scoreElement = document.getElementById("score");
 const timerElement = document.getElementById("timer");
 const finalMessageElement = document.getElementById("final-message");
 const errorListElement = document.getElementById("error-list");
-const restartButton = document.getElementById("restart-button");
 const rankingList = document.getElementById("ranking-list");
 
+// Elementos do quiz de perguntas
 const perguntasQuestionElement = document.getElementById("perguntas-question");
 const perguntasOptionsElement = document.getElementById("perguntas-options");
 const perguntasScoreElement = document.getElementById("perguntas-score");
 const perguntasTimerElement = document.getElementById("perguntas-timer");
 const perguntasFinalMessageElement = document.getElementById("perguntas-final-message");
 const perguntasErrorListElement = document.getElementById("perguntas-error-list");
-const perguntasRestartButton = document.getElementById("perguntas-restart-button");
-const perguntasMenuButton = document.getElementById("perguntas-menu-button");
 
-// Variáveis para os Quizzes
+// Botões de voltar
+const backButtons = {
+  quiz: document.getElementById("backButtonQuiz"),
+  perguntas: document.getElementById("backButtonPerguntas"),
+  perguntasQuiz: document.getElementById("backButtonPerguntasQuiz"),
+  library: document.getElementById("backButtonLibrary"),
+  ranking: document.getElementById("backButtonRanking"),
+  endScreen: document.getElementById("backButtonEndScreen"),
+  perguntasEndScreen: document.getElementById("backButtonPerguntasEndScreen")
+};
+
+// Configuração dos eventos dos botões de voltar
+Object.values(backButtons).forEach(button => {
+  if (button) {
+    button.addEventListener('click', backToMenu);
+  }
+});
+
+function backToMenu() {
+  hideAllSections();
+  menuContainer.style.display = "block";
+}
+
+function hideAllSections() {
+  const sections = [
+    registerContainer,
+    quizContainer,
+    perguntasContainer,
+    perguntasQuizContainer,
+    libraryContainer,
+    rankingContainer,
+    endScreen,
+    perguntasEndScreen
+  ];
+  
+  sections.forEach(section => {
+    if (section) section.style.display = "none";
+  });
+}
+
+// Perguntas do quiz
 let allQuestions = [
   { 
     question: "What is 'eu sou estudante' in English?", 
@@ -88,102 +131,32 @@ let allQuestions = [
     answer: 1,
     difficulty: "hard",
     libraryRef: "verbos"
-  },
-  { 
-    question: "What does 'She is my sister' mean?", 
-    options: ["Ela é minha irmã", "Ela é minha prima", "Ela é minha mãe", "Ela é minha amiga"], 
-    answer: 0,
-    difficulty: "easy",
-    libraryRef: "frases-basicas"
-  },
-  { 
-    question: "Which sentence is correct?", 
-    options: ["He have a car", "He has a car", "He are a car", "He do have car"], 
-    answer: 1,
-    difficulty: "hard",
-    libraryRef: "verbos"
-  },
-  { 
-    question: "How do you say 'Eu gosto de ler livros' in English?", 
-    options: ["I like to read books", "I likes to read books", "I am like to read books", "I reading books"], 
-    answer: 0,
-    difficulty: "medium",
-    libraryRef: "verbos"
-  },
-  { 
-    question: "What is 'yesterday' in Portuguese?", 
-    options: ["Amanhã", "Ontem", "Hoje", "Depois"], 
-    answer: 1,
-    difficulty: "easy",
-    libraryRef: "frases-basicas"
-  },
-  { 
-    question: "Which one is correct?", 
-    options: ["She don't like coffee", "She doesn't like coffee", "She not like coffee", "She no like coffee"], 
-    answer: 1,
-    difficulty: "hard",
-    libraryRef: "verbos"
-  },
-  { 
-    question: "Translate: 'They are my friends'", 
-    options: ["Eles são meus amigos", "Eles foram meus amigos", "Eles estavam meus amigos", "Eles é meus amigos"], 
-    answer: 0,
-    difficulty: "easy",
-    libraryRef: "frases-basicas"
-  },
-  { 
-    question: "What does 'goodbye' mean?", 
-    options: ["Olá", "Obrigado", "Adeus", "Por favor"], 
-    answer: 2,
-    difficulty: "easy",
-    libraryRef: "frases-basicas"
-  },
-  { 
-    question: "What is the opposite of 'cold'?", 
-    options: ["Hot", "Warm", "Cool", "Frozen"], 
-    answer: 0,
-    difficulty: "medium",
-    libraryRef: "frases-basicas"
-  },
-  { 
-    question: "Choose the correct sentence", 
-    options: ["She go to school", "She goes to school", "She going to school", "She is go to school"], 
-    answer: 1,
-    difficulty: "hard",
-    libraryRef: "verbos"
-  },
-  { 
-    question: "How do you say 'Nós estamos felizes' in English?", 
-    options: ["We is happy", "We are happy", "We am happy", "We do happy"], 
-    answer: 1,
-    difficulty: "medium",
-    libraryRef: "frases-basicas"
   }
 ];
 
 let questions = [];
-let score = 0;
-let currentQuestion = 0;
-let errors = [];
-let quizTimer = 0;
-let timerInterval;
-
 let perguntasQuestions = [];
+let score = 0;
 let perguntasScore = 0;
+let currentQuestion = 0;
 let currentPerguntaQuestion = 0;
+let errors = [];
 let perguntasErrors = [];
+let quizTimer = 0;
 let perguntasTimer = 0;
+let timerInterval;
 let perguntasTimerInterval;
 
 // Funções do Quiz Principal
 function getRandomQuestions() {
-  const shuffled = allQuestions.sort(() => Math.random() - 0.5);
+  const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
   return shuffled.slice(0, 15);
 }
 
 function startTimer() {
   quizTimer = 0;
   timerElement.textContent = quizTimer;
+  clearInterval(timerInterval);
   timerInterval = setInterval(() => {
     quizTimer++;
     timerElement.textContent = quizTimer;
@@ -202,7 +175,7 @@ function loadQuestion() {
     q.options.forEach((option, index) => {
       const li = document.createElement("li");
       li.textContent = option;
-      li.onclick = () => checkAnswer(index);
+      li.addEventListener('click', () => checkAnswer(index));
       optionsElement.appendChild(li);
     });
   } else {
@@ -212,17 +185,17 @@ function loadQuestion() {
 
 function checkAnswer(selected) {
   const q = questions[currentQuestion];
-  const options = optionsElement.getElementsByTagName("li");
+  const options = optionsElement.querySelectorAll('li');
   
-  for (let i = 0; i < options.length; i++) {
-    options[i].classList.remove("correct", "wrong");
-    if (i === q.answer) {
-      options[i].classList.add("correct");
-    } else if (i === selected) {
-      options[i].classList.add("wrong");
+  options.forEach((option, index) => {
+    option.classList.remove("correct", "wrong");
+    if (index === q.answer) {
+      option.classList.add("correct");
+    } else if (index === selected) {
+      option.classList.add("wrong");
     }
-    options[i].style.pointerEvents = "none";
-  }
+    option.style.pointerEvents = "none";
+  });
   
   if (selected === q.answer) {
     score++;
@@ -251,22 +224,11 @@ function endQuiz() {
   saveScore(userName, score, quizTimer);
 }
 
-restartButton.onclick = () => {
-  score = 0;
-  currentQuestion = 0;
-  errors = [];
-  questions = getRandomQuestions();
-  endScreen.style.display = "none";
-  quizContainer.style.display = "block";
-  updateScore();
-  startTimer();
-  loadQuestion();
-};
-
 // Funções do Quiz de Perguntas
 function startPerguntasTimer() {
   perguntasTimer = 0;
   perguntasTimerElement.textContent = perguntasTimer;
+  clearInterval(perguntasTimerInterval);
   perguntasTimerInterval = setInterval(() => {
     perguntasTimer++;
     perguntasTimerElement.textContent = perguntasTimer;
@@ -285,7 +247,7 @@ function loadPerguntasQuestion() {
     q.options.forEach((option, index) => {
       const li = document.createElement("li");
       li.textContent = option;
-      li.onclick = () => checkPerguntasAnswer(index);
+      li.addEventListener('click', () => checkPerguntasAnswer(index));
       perguntasOptionsElement.appendChild(li);
     });
   } else {
@@ -295,17 +257,17 @@ function loadPerguntasQuestion() {
 
 function checkPerguntasAnswer(selected) {
   const q = perguntasQuestions[currentPerguntaQuestion];
-  const options = perguntasOptionsElement.getElementsByTagName("li");
+  const options = perguntasOptionsElement.querySelectorAll('li');
   
-  for (let i = 0; i < options.length; i++) {
-    options[i].classList.remove("correct", "wrong");
-    if (i === q.answer) {
-      options[i].classList.add("correct");
-    } else if (i === selected) {
-      options[i].classList.add("wrong");
+  options.forEach((option, index) => {
+    option.classList.remove("correct", "wrong");
+    if (index === q.answer) {
+      option.classList.add("correct");
+    } else if (index === selected) {
+      option.classList.add("wrong");
     }
-    options[i].style.pointerEvents = "none";
-  }
+    option.style.pointerEvents = "none";
+  });
   
   if (selected === q.answer) {
     perguntasScore++;
@@ -338,53 +300,16 @@ function endPerguntasQuiz() {
     <li class="error-item">
       ${err.question}<br>
       Resposta correta: ${err.correct}
-      <button onclick="showLibrary('${err.libraryRef}')">Aprenda Mais</button>
+      <button onclick="showLibrarySection('${err.libraryRef}')">Aprenda Mais</button>
     </li>
   `).join("");
 }
 
-perguntasRestartButton.onclick = () => {
-  const currentDifficulty = perguntasQuestions[0]?.difficulty || 'easy';
-  startPerguntasQuiz(currentDifficulty);
-};
-
-perguntasMenuButton.onclick = () => {
-  hideAllSections();
-  menuContainer.style.display = "block";
-};
-
-// Função para exibir a biblioteca
-window.showLibrary = (sectionId) => {
+window.showLibrarySection = function(sectionId) {
   hideAllSections();
   libraryContainer.style.display = "block";
   document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
 };
-
-// Funções compartilhadas
-async function saveScore(userName, score, time) {
-  const querySnapshot = await getDocs(collection(db, "users"));
-  let userDoc;
-  querySnapshot.forEach((doc) => {
-    if (doc.data().name === userName) {
-      userDoc = doc.ref;
-    }
-  });
-  if (userDoc) {
-    await updateDoc(userDoc, { score, time });
-  }
-}
-
-function hideAllSections() {
-  registerContainer.style.display = "none";
-  menuContainer.style.display = "none";
-  quizContainer.style.display = "none";
-  perguntasContainer.style.display = "none";
-  perguntasQuizContainer.style.display = "none";
-  libraryContainer.style.display = "none";
-  rankingContainer.style.display = "none";
-  endScreen.style.display = "none";
-  perguntasEndScreen.style.display = "none";
-}
 
 // Inicia o Quiz de Perguntas por nível
 function startPerguntasQuiz(difficulty) {
@@ -404,8 +329,27 @@ function startPerguntasQuiz(difficulty) {
   loadPerguntasQuestion();
 }
 
-// Eventos de menu
-btnQuiz.onclick = () => {
+// Event Listeners
+restartButton.addEventListener('click', () => {
+  score = 0;
+  currentQuestion = 0;
+  errors = [];
+  questions = getRandomQuestions();
+  endScreen.style.display = "none";
+  quizContainer.style.display = "block";
+  updateScore();
+  startTimer();
+  loadQuestion();
+});
+
+perguntasRestartButton.addEventListener('click', () => {
+  const currentDifficulty = perguntasQuestions[0]?.difficulty || 'easy';
+  startPerguntasQuiz(currentDifficulty);
+});
+
+perguntasMenuButton.addEventListener('click', backToMenu);
+
+btnQuiz.addEventListener('click', () => {
   hideAllSections();
   quizContainer.style.display = "block";
   questions = getRandomQuestions();
@@ -415,19 +359,23 @@ btnQuiz.onclick = () => {
   updateScore();
   startTimer();
   loadQuestion();
-};
+});
 
-btnPerguntas.onclick = () => {
+btnPerguntas.addEventListener('click', () => {
   hideAllSections();
   perguntasContainer.style.display = "block";
-};
+});
 
-btnLibrary.onclick = () => {
+btnFacil.addEventListener('click', () => startPerguntasQuiz('easy'));
+btnMedio.addEventListener('click', () => startPerguntasQuiz('medium'));
+btnDificil.addEventListener('click', () => startPerguntasQuiz('hard'));
+
+btnLibrary.addEventListener('click', () => {
   hideAllSections();
   libraryContainer.style.display = "block";
-};
+});
 
-btnRanking.onclick = async () => {
+btnRanking.addEventListener('click', async () => {
   hideAllSections();
   rankingContainer.style.display = "block";
   rankingList.innerHTML = "";
@@ -450,7 +398,7 @@ btnRanking.onclick = async () => {
     li.innerHTML = `<span>${index + 1}. ${user.name}</span><span>Pontos: ${user.score} | Tempo: ${user.time}s</span>`;
     rankingList.appendChild(li);
   });
-};
+});
 
 // Lógica de cadastro
 startButton.addEventListener("click", async () => {
@@ -468,3 +416,17 @@ startButton.addEventListener("click", async () => {
     alert("Preencha todos os campos!");
   }
 });
+
+// Salva pontuação e tempo no Firestore
+async function saveScore(userName, score, time) {
+  const querySnapshot = await getDocs(collection(db, "users"));
+  let userDoc;
+  querySnapshot.forEach((doc) => {
+    if (doc.data().name === userName) {
+      userDoc = doc.ref;
+    }
+  });
+  if (userDoc) {
+    await updateDoc(userDoc, { score, time });
+  }
+}
