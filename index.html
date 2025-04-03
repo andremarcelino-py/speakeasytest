@@ -17,83 +17,104 @@
     <button id="start-button">Iniciar <i class="fas fa-arrow-right"></i></button>
   </div>
 
-  <!-- Conteúdo principal oculto inicialmente -->
-  <div id="main-container" class="container">
+  <!-- Tela de Menu Principal (após cadastro) -->
+  <div id="menu-container" class="menu-container" style="display:none;">
     <h1 class="title">Speak Easy</h1>
-
-    <!-- Menu de navegação -->
     <div class="tabs">
-      <button id="quizTab" class="tab-button animate-in">
-        <i class="fas fa-question-circle"></i>
-        Quiz
+      <button id="btnQuiz" class="tab-button animate-in">
+        <i class="fas fa-question-circle"></i> Quiz
       </button>
-      <button id="libraryTab" class="tab-button animate-in">
-        <i class="fas fa-book-open"></i>
-        Biblioteca
+      <button id="btnPerguntas" class="tab-button animate-in">
+        <i class="fas fa-edit"></i> Perguntas
       </button>
-      <button id="rankingTab" class="tab-button animate-in">
-        <i class="fas fa-trophy"></i>
-        Ranking
+      <button id="btnLibrary" class="tab-button animate-in">
+        <i class="fas fa-book-open"></i> Biblioteca
+      </button>
+      <button id="btnRanking" class="tab-button animate-in">
+        <i class="fas fa-trophy"></i> Ranking
       </button>
     </div>
+  </div>
 
-    <!-- Barra de progresso -->
-    <div class="progress-bar">
-      <div class="progress"></div>
+  <!-- Conteúdo das seções -->
+  <!-- Quiz Original -->
+  <div id="quiz-container" class="quiz-container" style="display:none;">
+    <div id="quiz">
+      <p id="question"></p>
+      <ul id="options"></ul>
     </div>
+    <div class="score-container">
+      <p>Pontuação: <span id="score">0</span>/15</p>
+      <p>Tempo: <span id="timer">0</span> s</p>
+    </div>
+  </div>
 
-    <!-- Quiz -->
-    <div id="quiz-container" class="quiz-container">
-      <div id="quiz">
-        <p id="question"></p>
-        <ul id="options"></ul>
+  <!-- Aba Perguntas – Quiz com Níveis -->
+  <div id="perguntas-container" class="perguntas-container" style="display:none;">
+    <h2><i class="fas fa-edit"></i> Perguntas por Nível</h2>
+    <!-- Seleção de Nível -->
+    <div id="perguntas-difficulty">
+      <button id="btnEasy" class="tab-button">Fácil</button>
+      <button id="btnMedium" class="tab-button">Médio</button>
+      <button id="btnHard" class="tab-button">Difícil</button>
+    </div>
+    <!-- Quiz da Aba Perguntas -->
+    <div id="perguntas-quiz-container" style="display:none;">
+      <div id="perguntas-quiz">
+        <p id="perguntas-question"></p>
+        <ul id="perguntas-options"></ul>
+      </div>
+      <div class="score-container">
+        <p>Pontuação: <span id="perguntas-score">0</span>/10</p>
+      </div>
+      <!-- Tela final do Quiz de Perguntas -->
+      <div id="perguntas-end" style="display:none;">
+        <p id="perguntas-final-message"></p>
+        <ul id="perguntas-error-list"></ul>
+        <button id="btnLearnMore" class="restart-button">Aprenda mais</button>
+        <button id="btnMenuFromPerguntas" class="restart-button">Menu</button>
       </div>
     </div>
+  </div>
 
-    <!-- Biblioteca de textos -->
-    <div id="library-container" class="library-container">
-      <h2><i class="fas fa-book-open"></i> Biblioteca de Textos</h2>
-      <div class="text-card animate-in">
-        <div class="text-header">
-          <i class="fas fa-star"></i>
-          <h3>Frases Básicas</h3>
-        </div>
-        <div class="text-content">
-          <p class="english">I like to study English</p>
-          <p class="portuguese">Eu gosto de estudar inglês</p>
-        </div>
+  <!-- Biblioteca -->
+  <div id="library-container" class="library-container" style="display:none;">
+    <h2><i class="fas fa-book-open"></i> Biblioteca de Textos</h2>
+    <div class="text-card animate-in">
+      <div class="text-header">
+        <i class="fas fa-star"></i>
+        <h3>Frases Básicas</h3>
       </div>
-      <div class="text-card animate-in">
-        <div class="text-header">
-          <i class="fas fa-star"></i>
-          <h3>Apresentações</h3>
-        </div>
-        <div class="text-content">
-          <p class="english">My name is John</p>
-          <p class="portuguese">Meu nome é João</p>
-        </div>
+      <div class="text-content">
+        <p class="english">I like to study English</p>
+        <p class="portuguese">Eu gosto de estudar inglês</p>
       </div>
     </div>
-
-    <!-- Tela de Ranking -->
-    <div id="ranking-container" class="ranking-container">
-      <h2><i class="fas fa-trophy"></i> Ranking</h2>
-      <ul id="ranking-list"></ul>
+    <div class="text-card animate-in">
+      <div class="text-header">
+        <i class="fas fa-star"></i>
+        <h3>Apresentações</h3>
+      </div>
+      <div class="text-content">
+        <p class="english">My name is John</p>
+        <p class="portuguese">Meu nome é João</p>
+      </div>
     </div>
+  </div>
 
-    <!-- Tela final do Quiz -->
-    <div id="end-screen" class="end-screen">
-      <p id="final-message"></p>
-      <ul id="error-list"></ul>
-      <button id="restart-button" class="restart-button">
-        <i class="fas fa-sync-alt"></i> Reiniciar Quiz
-      </button>
-    </div>
+  <!-- Ranking -->
+  <div id="ranking-container" class="ranking-container" style="display:none;">
+    <h2><i class="fas fa-trophy"></i> Ranking</h2>
+    <ul id="ranking-list"></ul>
+  </div>
 
-    <!-- Contador de acertos -->
-    <div id="score-container" class="score-container">
-      <p>Pontuação: <span id="score">0</span>/10</p>
-    </div>
+  <!-- Tela Final do Quiz Original -->
+  <div id="end-screen" class="end-screen" style="display:none;">
+    <p id="final-message"></p>
+    <ul id="error-list"></ul>
+    <button id="restart-button" class="restart-button">
+      <i class="fas fa-sync-alt"></i> Reiniciar Quiz
+    </button>
   </div>
 
   <script type="module" src="script.js"></script>
