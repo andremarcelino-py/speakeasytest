@@ -88,6 +88,31 @@ body {
   width: 90%;
   margin: auto;
   padding: 2rem;
+  position: relative;
+  padding-top: 60px !important;
+}
+
+/* Botão Voltar */
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 50px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.3s ease;
+  z-index: 100;
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(-5px);
 }
 
 /* Títulos e Tabs */
@@ -394,5 +419,12 @@ body {
   
   .level-buttons {
     flex-direction: column;
+  }
+  
+  .back-button {
+    top: 10px;
+    left: 10px;
+    padding: 8px 12px;
+    font-size: 0.9rem;
   }
 }
