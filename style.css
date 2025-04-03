@@ -77,6 +77,7 @@ body {
 
 /* Menu e Conteúdo Principal */
 .menu-container,
+.container,
 .quiz-container,
 .perguntas-container,
 .library-container,
@@ -114,7 +115,7 @@ body {
   padding: 12px 24px;
   border-radius: 12px;
   cursor: pointer;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 8px;
   color: white;
@@ -127,7 +128,7 @@ body {
   box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
 }
 
-/* Quiz Original */
+/* Quiz */
 .quiz-container {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(12px);
@@ -138,17 +139,17 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-#question {
+#question, #perguntas-question {
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
   color: white;
 }
 
-#options {
+#options, #perguntas-options {
   list-style: none;
 }
 
-#options li {
+#options li, #perguntas-options li {
   background: rgba(255, 255, 255, 0.1);
   border: 2px solid transparent;
   padding: 1rem;
@@ -162,23 +163,23 @@ body {
   color: white;
 }
 
-#options li::before {
+#options li::before, #perguntas-options li::before {
   content: "•";
   color: var(--secondary-color);
   font-weight: bold;
 }
 
-#options li:hover {
+#options li:hover, #perguntas-options li:hover {
   transform: translateX(10px);
   border-color: var(--primary-color);
 }
 
-#options li.correct {
+#options li.correct, #perguntas-options li.correct {
   background: rgba(72, 187, 120, 0.2);
   border-color: #48BB78;
 }
 
-#options li.wrong {
+#options li.wrong, #perguntas-options li.wrong {
   background: rgba(245, 101, 101, 0.2);
   border-color: #F56565;
 }
@@ -275,13 +276,13 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-#final-message {
+#final-message, #perguntas-final-message {
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
   color: white;
 }
 
-#error-list {
+#error-list, #perguntas-error-list {
   list-style: none;
   margin-bottom: 1.5rem;
   text-align: left;
@@ -295,7 +296,7 @@ body {
   border-left: 4px solid var(--accent-color);
 }
 
-/* Restart Button e Botões Adicionais */
+/* Restart Button */
 .restart-button {
   background: var(--primary-color);
   padding: 1rem 2rem;
@@ -314,55 +315,56 @@ body {
   box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
 }
 
-/* Perguntas – Quiz com Níveis */
-/* A área de seleção de nível e quiz seguem o mesmo padrão */
-#perguntas-difficulty {
-  margin-bottom: 1.5rem;
-}
-
-#perguntas-difficulty .tab-button {
-  margin: 0 0.5rem;
-}
-
-/* Perguntas Quiz Container */
-#perguntas-quiz-container {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  border-radius: 20px;
-  padding: 2rem;
-  margin: 1rem auto;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Perguntas Quiz – Uso de IDs diferenciados */
-#perguntas-question {
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
-  color: white;
-}
-
-#perguntas-options {
-  list-style: none;
-}
-
-#perguntas-options li {
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid transparent;
-  padding: 1rem;
-  margin: 0.5rem 0;
-  border-radius: 12px;
-  transition: all 0.2s ease;
+/* Níveis de Perguntas */
+.level-buttons {
   display: flex;
-  align-items: center;
   gap: 1rem;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.level-button {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
   color: white;
+  font-size: 1.1rem;
+  transition: transform 0.2s;
 }
 
-#perguntas-options li:hover {
-  transform: translateX(10px);
-  border-color: var(--primary-color);
+.level-button:hover {
+  transform: scale(1.05);
+}
+
+#btnFacil {
+  background: #4CAF50;
+}
+
+#btnMedio {
+  background: #FFC107;
+}
+
+#btnDificil {
+  background: #F44336;
+}
+
+/* Erros no quiz de perguntas */
+#perguntas-error-list li {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 8px;
+}
+
+#perguntas-error-list button {
+  background: #2196F3;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  color: white;
 }
 
 /* Animação */
@@ -385,7 +387,12 @@ body {
     font-size: 0.9rem;
   }
   
-  .quiz-container, .library-container, .ranking-container, .end-screen, .perguntas-container {
+  .quiz-container, .library-container, .ranking-container, 
+  .end-screen, .perguntas-container, .perguntas-quiz-container {
     padding: 1.5rem;
+  }
+  
+  .level-buttons {
+    flex-direction: column;
   }
 }
