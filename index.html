@@ -6,7 +6,7 @@
   <title>Speak Easy - Quiz de Inglês</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <!-- Tela de Cadastro -->
@@ -37,7 +37,7 @@
   </div>
 
   <!-- Conteúdo das seções -->
-  <!-- Quiz Original -->
+  <!-- Quiz Principal -->
   <div id="quiz-container" class="quiz-container" style="display:none;">
     <div id="quiz">
       <p id="question"></p>
@@ -49,38 +49,32 @@
     </div>
   </div>
 
-  <!-- Aba Perguntas – Quiz com Níveis -->
+  <!-- Perguntas com níveis -->
   <div id="perguntas-container" class="perguntas-container" style="display:none;">
-    <h2><i class="fas fa-edit"></i> Perguntas por Nível</h2>
-    <!-- Seleção de Nível -->
-    <div id="perguntas-difficulty">
-      <button id="btnEasy" class="tab-button">Fácil</button>
-      <button id="btnMedium" class="tab-button">Médio</button>
-      <button id="btnHard" class="tab-button">Difícil</button>
+    <h2><i class="fas fa-edit"></i> Escolha o Nível</h2>
+    <div class="level-buttons">
+      <button id="btnFacil" class="level-button">Fácil</button>
+      <button id="btnMedio" class="level-button">Médio</button>
+      <button id="btnDificil" class="level-button">Difícil</button>
     </div>
-    <!-- Quiz da Aba Perguntas -->
-    <div id="perguntas-quiz-container" style="display:none;">
-      <div id="perguntas-quiz">
-        <p id="perguntas-question"></p>
-        <ul id="perguntas-options"></ul>
-      </div>
-      <div class="score-container">
-        <p>Pontuação: <span id="perguntas-score">0</span>/10</p>
-      </div>
-      <!-- Tela final do Quiz de Perguntas -->
-      <div id="perguntas-end" style="display:none;">
-        <p id="perguntas-final-message"></p>
-        <ul id="perguntas-error-list"></ul>
-        <button id="btnLearnMore" class="restart-button">Aprenda mais</button>
-        <button id="btnMenuFromPerguntas" class="restart-button">Menu</button>
-      </div>
+  </div>
+
+  <!-- Quiz de Perguntas -->
+  <div id="perguntas-quiz-container" class="quiz-container" style="display:none;">
+    <div id="perguntas-quiz">
+      <p id="perguntas-question"></p>
+      <ul id="perguntas-options"></ul>
+    </div>
+    <div class="score-container">
+      <p>Pontuação: <span id="perguntas-score">0</span>/10</p>
+      <p>Tempo: <span id="perguntas-timer">0</span> s</p>
     </div>
   </div>
 
   <!-- Biblioteca -->
   <div id="library-container" class="library-container" style="display:none;">
     <h2><i class="fas fa-book-open"></i> Biblioteca de Textos</h2>
-    <div class="text-card animate-in">
+    <div id="frases-basicas" class="text-card animate-in">
       <div class="text-header">
         <i class="fas fa-star"></i>
         <h3>Frases Básicas</h3>
@@ -88,16 +82,20 @@
       <div class="text-content">
         <p class="english">I like to study English</p>
         <p class="portuguese">Eu gosto de estudar inglês</p>
+        <p class="english">I am a student</p>
+        <p class="portuguese">Eu sou estudante</p>
       </div>
     </div>
-    <div class="text-card animate-in">
+    <div id="verbos" class="text-card animate-in">
       <div class="text-header">
         <i class="fas fa-star"></i>
-        <h3>Apresentações</h3>
+        <h3>Verbos</h3>
       </div>
       <div class="text-content">
-        <p class="english">My name is John</p>
-        <p class="portuguese">Meu nome é João</p>
+        <p class="english">I like to read books</p>
+        <p class="portuguese">Eu gosto de ler livros</p>
+        <p class="english">She doesn't like coffee</p>
+        <p class="portuguese">Ela não gosta de café</p>
       </div>
     </div>
   </div>
@@ -108,12 +106,24 @@
     <ul id="ranking-list"></ul>
   </div>
 
-  <!-- Tela Final do Quiz Original -->
+  <!-- Tela Final do Quiz Principal -->
   <div id="end-screen" class="end-screen" style="display:none;">
     <p id="final-message"></p>
     <ul id="error-list"></ul>
     <button id="restart-button" class="restart-button">
       <i class="fas fa-sync-alt"></i> Reiniciar Quiz
+    </button>
+  </div>
+
+  <!-- Tela Final do Quiz de Perguntas -->
+  <div id="perguntas-end-screen" class="end-screen" style="display:none;">
+    <p id="perguntas-final-message"></p>
+    <ul id="perguntas-error-list"></ul>
+    <button id="perguntas-restart-button" class="restart-button">
+      <i class="fas fa-sync-alt"></i> Tentar Novamente
+    </button>
+    <button id="perguntas-menu-button" class="restart-button">
+      <i class="fas fa-home"></i> Menu Principal
     </button>
   </div>
 
