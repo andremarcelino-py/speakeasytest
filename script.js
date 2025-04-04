@@ -97,6 +97,116 @@ function hideAllSections() {
 
 // Perguntas do quiz
 let allQuestions = [
+
+
+ 
+  {
+    question: "Qual é a forma correta do verbo 'to be' para 'he'?",
+    options: ["He am", "He is", "He are", "He be"],
+    answer: 1,
+    difficulty: "easy",
+    libraryRef: "gramatica-basica"
+  },
+  {
+    question: "Como se forma o plural de 'box'?",
+    options: ["Boxs", "Boxes", "Boxen", "Box"],
+    answer: 1,
+    difficulty: "medium",
+    libraryRef: "gramatica-basica"
+  },
+  
+  // Novas perguntas de verbos
+  {
+    question: "Qual é o passado de 'go'?",
+    options: ["Goed", "Went", "Gone", "Go"],
+    answer: 1,
+    difficulty: "medium",
+    libraryRef: "verbos"
+  },
+  {
+    question: "Qual frase está no Present Continuous?",
+    options: ["I eat pizza", "I eating pizza", "I am eating pizza", "I ate pizza"],
+    answer: 2,
+    difficulty: "hard",
+    libraryRef: "verbos"
+  },
+  
+  // Novas perguntas de vocabulário
+  {
+    question: "Como se diz 'ontem' em inglês?",
+    options: ["Today", "Tomorrow", "Yesterday", "Now"],
+    answer: 2,
+    difficulty: "easy",
+    libraryRef: "vocabulario"
+  },
+  {
+    question: "Qual é o antônimo de 'expensive'?",
+    options: ["Cheap", "Big", "Small", "Rich"],
+    answer: 0,
+    difficulty: "easy",
+    libraryRef: "vocabulario"
+  },
+  
+  // Novas perguntas de pronúncia
+  {
+    question: "Qual palavra tem o som de 'θ' como em 'think'?",
+    options: ["This", "That", "Thing", "There"],
+    answer: 2,
+    difficulty: "hard",
+    libraryRef: "pronuncia"
+  },
+  {
+    question: "Como se pronuncia 'receipt'?",
+    options: ["Re-seipt", "Re-keipt", "Re-sit", "Re-seet"],
+    answer: 2,
+    difficulty: "hard",
+    libraryRef: "pronuncia"
+  },
+  
+  // Mais perguntas variadas
+  {
+    question: "Qual é a tradução de 'I have been working'?",
+    options: ["Eu estive trabalhando", "Eu trabalharei", "Eu trabalhava", "Eu trabalho"],
+    answer: 0,
+    difficulty: "hard",
+    libraryRef: "verbos"
+  },
+  {
+    question: "Complete: She ___ to school every day.",
+    options: ["go", "gos", "goes", "going"],
+    answer: 2,
+    difficulty: "medium",
+    libraryRef: "gramatica-basica"
+  },
+  {
+    question: "Qual é a forma negativa de 'They have a car'?",
+    options: ["They don't have a car", "They hasn't a car", "They haven't a car", "They not have a car"],
+    answer: 0,
+    difficulty: "medium",
+    libraryRef: "gramatica-basica"
+  },
+  {
+    question: "Qual frase está correta?",
+    options: ["She can to swim", "She can swim", "She cans swim", "She can swimming"],
+    answer: 1,
+    difficulty: "easy",
+    libraryRef: "gramatica-basica"
+  },
+  {
+    question: "Qual é o comparativo de 'good'?",
+    options: ["Gooder", "More good", "Better", "Best"],
+    answer: 2,
+    difficulty: "medium",
+    libraryRef: "gramatica-basica"
+  }
+];
+
+
+
+
+
+
+
   { 
     question: "What is 'eu sou estudante' in English?", 
     options: ["I am a student", "I am student", "I student am", "A student I am"], 
