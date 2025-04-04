@@ -428,3 +428,29 @@ body {
     font-size: 0.9rem;
   }
 }
+
+
+/* Adicione ao seu arquivo styles.css */
+
+.text-card {
+  margin-bottom: 2rem;
+}
+
+.text-content h4 {
+  color: var(--secondary-color);
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.explanation {
+  background: rgba(124, 58, 237, 0.1) !important;
+  padding: 0.8rem !important;
+  border-left: 3px solid var(--primary-color);
+  font-style: italic;
+  margin: 0.8rem 0;
+}
+
+.text-header i {
+  font-size: 1.5rem;
+  color: var(--accent-color);
+}
