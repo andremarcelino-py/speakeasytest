@@ -96,7 +96,7 @@ body {
 /* Botão Voltar */
 .back-button {
   position: absolute;
-  top: 20px;
+  top: 10px;
   left: 20px;
   background: rgba(255, 255, 255, 0.1);
   border: none;
