@@ -76,7 +76,7 @@ body {
   box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
 }
 
-/* Menu e Conteúdo Principal */
+/* Containers gerais */
 .menu-container,
 .container,
 .quiz-container,
@@ -93,10 +93,10 @@ body {
   padding-top: 60px;
 }
 
-/* Botão Voltar fixo */
+/* Botão Voltar (agora no canto inferior esquerdo) */
 .back-button {
   position: fixed;
-  top: 5px;  /* Posicionado mais acima */
+  bottom: 20px;
   left: 20px;
   z-index: 1000;
   background: rgba(255, 255, 255, 0.1);
@@ -113,10 +113,10 @@ body {
 
 .back-button:hover {
   background: rgba(255, 255, 255, 0.2);
-  transform: translateX(-5px);
+  transform: translateY(-2px);
 }
 
-/* Títulos e Tabs */
+/* Título e Tabs */
 .title {
   font-size: 3rem;
   background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
@@ -193,13 +193,6 @@ body {
   color: white;
 }
 
-#options li::before,
-#perguntas-options li::before {
-  content: "•";
-  color: var(--secondary-color);
-  font-weight: bold;
-}
-
 #options li:hover,
 #perguntas-options li:hover {
   transform: translateX(10px);
@@ -226,19 +219,7 @@ body {
   color: var(--secondary-color);
 }
 
-/* Biblioteca e Ranking */
-.library-container,
-.ranking-container {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  border-radius: 20px;
-  padding: 2rem;
-  margin: 1rem 0;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Cards da Biblioteca */
+/* Cards Biblioteca */
 .text-card {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
@@ -287,21 +268,6 @@ body {
   justify-content: space-between;
 }
 
-#ranking-list li:nth-child(1) {
-  background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), rgba(255, 255, 255, 0.05));
-  border-left: 4px solid gold;
-}
-
-#ranking-list li:nth-child(2) {
-  background: linear-gradient(90deg, rgba(192, 192, 192, 0.1), rgba(255, 255, 255, 0.05));
-  border-left: 4px solid silver;
-}
-
-#ranking-list li:nth-child(3) {
-  background: linear-gradient(90deg, rgba(205, 127, 50, 0.1), rgba(255, 255, 255, 0.05));
-  border-left: 4px solid #cd7f32;
-}
-
 /* Tela Final */
 .end-screen {
   background: rgba(255, 255, 255, 0.05);
@@ -311,13 +277,6 @@ body {
   margin: 1rem 0;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-#final-message,
-#perguntas-final-message {
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
-  color: white;
 }
 
 #error-list,
@@ -360,6 +319,7 @@ body {
   gap: 1rem;
   justify-content: center;
   margin: 2rem 0;
+  flex-wrap: wrap;
 }
 
 .level-button {
@@ -388,25 +348,7 @@ body {
   background: #F44336;
 }
 
-/* Erros no Quiz de Perguntas */
-#perguntas-error-list li {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 1rem;
-  margin: 1rem 0;
-  border-radius: 8px;
-}
-
-#perguntas-error-list button {
-  background: #2196F3;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  margin-top: 0.5rem;
-  cursor: pointer;
-  color: white;
-}
-
-/* Animação de Fade In */
+/* Animação */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
@@ -416,61 +358,49 @@ body {
   animation: fadeIn 0.5s ease-out;
 }
 
-/* Responsividade para telas menores */
+/* Responsividade */
 @media (max-width: 768px) {
   .title {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
   }
-  
+
   .tab-button {
     padding: 10px 15px;
     font-size: 0.9rem;
   }
-  
-  .quiz-container,
-  .library-container,
-  .ranking-container,
-  .end-screen,
-  .perguntas-container,
-  .perguntas-quiz-container {
-    padding: 1.5rem;
-    margin: 1rem 0;
-  }
-  
-  .level-buttons {
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
+
   .back-button {
-    top: 5px;
+    bottom: 15px;
     left: 10px;
     padding: 8px 12px;
     font-size: 0.9rem;
   }
+
+  .level-buttons {
+    flex-direction: column;
+    gap: 1rem;
+  }
 }
 
-/* Ajustes para telas muito pequenas */
 @media (max-width: 480px) {
   .title {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
-  
+
   .register-container,
   .menu-container,
   .quiz-container,
-  .perguntas-container,
   .library-container,
   .ranking-container,
   .end-screen {
     padding: 1rem;
   }
-  
+
   .tab-button {
     padding: 8px 12px;
     font-size: 0.8rem;
   }
-  
+
   .restart-button,
   .level-button {
     padding: 0.8rem 1.2rem;
