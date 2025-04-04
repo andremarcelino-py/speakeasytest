@@ -93,11 +93,12 @@ body {
   padding-top: 60px;
 }
 
-/* Botão Voltar */
+/* Botão Voltar fixo */
 .back-button {
-  position: absolute;
-  top: 20px;
+  position: fixed;
+  top: 5px;  /* Posicionado mais acima */
   left: 20px;
+  z-index: 1000;
   background: rgba(255, 255, 255, 0.1);
   border: none;
   padding: 10px 15px;
@@ -108,7 +109,6 @@ body {
   align-items: center;
   gap: 5px;
   transition: all 0.3s ease;
-  z-index: 100;
 }
 
 .back-button:hover {
@@ -443,7 +443,7 @@ body {
   }
   
   .back-button {
-    top: 10px;
+    top: 5px;
     left: 10px;
     padding: 8px 12px;
     font-size: 0.9rem;
