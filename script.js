@@ -101,21 +101,21 @@ function hideAllSections() {
 // Perguntas do quiz (mais perguntas adicionadas)
 let allQuestions = [
   { 
-    question: "What is 'eu sou estudante' in English?", 
+    question: "O que é 'eu sou estudante' em inglês?", 
     options: ["I am a student", "I am student", "I student am", "A student I am"], 
     answer: 0,
     difficulty: "easy",
     libraryRef: "frases-basicas"
   },
   { 
-    question: "Which one is correct?", 
-    options: ["Do you like pizza?", "Like pizza you?", "Pizza do you like?", "You pizza like?"], 
-    answer: 0,
+    question: "Escolha a correta", 
+    options: ["Like pizza you?", "Pizza do you like?", "You pizza like?", "Do you like pizza?"], 
+    answer: 3,
     difficulty: "easy",
     libraryRef: "frases-basicas"
   },
   { 
-    question: "What does 'I am learning English' mean?", 
+    question: "O que 'I am learning English' significa?", 
     options: ["Eu estou aprendendo inglês", "Eu aprendi inglês", "Eu ensino inglês", "Eu amo inglês"], 
     answer: 0,
     difficulty: "medium",
