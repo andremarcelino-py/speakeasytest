@@ -38,7 +38,7 @@ const restartButton = document.getElementById("restart-button");
 const perguntasRestartButton = document.getElementById("perguntas-restart-button");
 const perguntasMenuButton = document.getElementById("perguntas-menu-button");
 
-// Elementos do quiz
+// Elementos do quiz (inglês)
 const questionElement = document.getElementById("question");
 const optionsElement = document.getElementById("options");
 const scoreElement = document.getElementById("score");
@@ -57,6 +57,11 @@ const perguntasErrorListElement = document.getElementById("perguntas-error-list"
 
 // Elementos para o Conteúdo em Español
 const btnSpanish = document.getElementById("btnSpanish");
+const spanishMenuContainer = document.getElementById("spanish-menu-container");
+const btnSpanishQuiz = document.getElementById("btnSpanishQuiz");
+const btnSpanishLibrary = document.getElementById("btnSpanishLibrary");
+const backButtonSpanishMenu = document.getElementById("backButtonSpanishMenu");
+
 const spanishQuizContainer = document.getElementById("spanish-container");
 const backButtonSpanish = document.getElementById("backButtonSpanish");
 const spanishQuestionElement = document.getElementById("spanish-question");
@@ -64,11 +69,10 @@ const spanishOptionsElement = document.getElementById("spanish-options");
 const spanishScoreElement = document.getElementById("spanish-score");
 const spanishTimerElement = document.getElementById("spanish-timer");
 
+const spanishLibraryContainer = document.getElementById("spanish-library-container");
 const backButtonSpanishLibrary = document.getElementById("backButtonSpanishLibrary");
 
-
-
-// Botões de voltar
+// Botões de voltar (das seções já existentes)
 const backButtons = {
   quiz: document.getElementById("backButtonQuiz"),
   perguntas: document.getElementById("backButtonPerguntas"),
@@ -86,10 +90,11 @@ Object.values(backButtons).forEach(button => {
   }
 });
 
-// Função atualizada para voltar ao menu (para garantir que os timers sejam parados)
+// Função para voltar ao menu (garante que os timers sejam parados)
 function backToMenu() {
   stopTimer();
   stopPerguntasTimer();
+  stopSpanishTimer();
   hideAllSections();
   menuContainer.style.display = "block";
 }
@@ -103,7 +108,10 @@ function hideAllSections() {
     libraryContainer,
     rankingContainer,
     endScreen,
-    perguntasEndScreen
+    perguntasEndScreen,
+    spanishMenuContainer,
+    spanishQuizContainer,
+    spanishLibraryContainer
   ];
   
   sections.forEach(section => {
@@ -111,7 +119,8 @@ function hideAllSections() {
   });
 }
 
-// Perguntas do quiz (mais perguntas adicionadas)
+// Perguntas do quiz (em inglês)
+// (Adicione as perguntas completas conforme sua necessidade)
 let allQuestions = [
   { 
     question: "What is 'eu sou estudante' in English?", 
@@ -148,7 +157,6 @@ let allQuestions = [
     difficulty: "hard",
     libraryRef: "verbos"
   },
-  // Novas perguntas adicionadas:
   { 
     question: "How do you say 'bom dia' in English?", 
     options: ["Good morning", "Good evening", "Good night", "Hello"], 
@@ -179,8 +187,6 @@ let allQuestions = [
   }
 ];
 
-
-
 // Perguntas do Quiz em Español
 let spanishQuestions = [];
 let spanishScore = 0;
@@ -190,7 +196,6 @@ let spanishTimer = 0;
 let spanishTimerInterval;
 
 function getRandomSpanishQuestions() {
-  // Defina aqui as suas perguntas em espanhol
   const allSpanishQuestions = [
     {
       question: "¿Cómo se dice 'Hello' en español?",
@@ -222,7 +227,6 @@ function getRandomSpanishQuestions() {
       answer: 0,
       difficulty: "medium"
     }
-    // Você pode adicionar mais perguntas conforme necessário
   ];
   const shuffled = [...allSpanishQuestions].sort(() => Math.random() - 0.5);
   return shuffled.slice(0, 15);
@@ -292,11 +296,9 @@ function updateSpanishScore() {
 function endSpanishQuiz() {
   stopSpanishTimer();
   spanishQuizContainer.style.display = "none";
-  // Aqui você pode criar uma tela de fim de quiz em espanhol ou utilizar um alert para mostrar o resultado
   alert(`Puntuación Final: ${spanishScore}/${spanishQuestions.length} | Tiempo: ${spanishTimer}s`);
   backToMenu();
 }
-
 
 let questions = [];
 let perguntasQuestions = [];
@@ -311,7 +313,6 @@ let perguntasTimer = 0;
 let timerInterval;
 let perguntasTimerInterval;
 
-// Funções do Quiz Principal
 function getRandomQuestions() {
   const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
   return shuffled.slice(0, 15);
@@ -388,7 +389,6 @@ function endQuiz() {
   saveScore(userName, score, quizTimer);
 }
 
-// Funções do Quiz de Perguntas
 function startPerguntasTimer() {
   perguntasTimer = 0;
   perguntasTimerElement.textContent = perguntasTimer;
@@ -475,7 +475,6 @@ window.showLibrarySection = function(sectionId) {
   document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
 };
 
-// Inicia o Quiz de Perguntas por nível
 function startPerguntasQuiz(difficulty) {
   perguntasQuestions = allQuestions
     .filter(q => q.difficulty === difficulty)
@@ -493,7 +492,7 @@ function startPerguntasQuiz(difficulty) {
   loadPerguntasQuestion();
 }
 
-// Event Listeners
+// Event Listeners dos quizzes e menus
 restartButton.addEventListener('click', () => {
   score = 0;
   currentQuestion = 0;
@@ -512,25 +511,6 @@ perguntasRestartButton.addEventListener('click', () => {
 });
 
 perguntasMenuButton.addEventListener('click', backToMenu);
-
-//btn espanõl
-
-btnSpanish.addEventListener('click', () => {
-  hideAllSections();
-  spanishQuizContainer.style.display = "block";
-  spanishQuestions = getRandomSpanishQuestions();
-  spanishScore = 0;
-  currentSpanishQuestion = 0;
-  spanishErrors = [];
-  updateSpanishScore();
-  startSpanishTimer();
-  loadSpanishQuestion();
-});
-
-backButtonSpanish.addEventListener('click', backToMenu);
-backButtonSpanishLibrary.addEventListener('click', backToMenu);
-
-
 
 btnQuiz.addEventListener('click', () => {
   hideAllSections();
@@ -568,12 +548,7 @@ btnRanking.addEventListener('click', async () => {
     let userData = doc.data();
     users.push({ name: userData.name, score: userData.score || 0, time: userData.time || 9999 });
   });
-
-
-
-users = users.filter(user => user.time !== 9999);
-
-
+  users = users.filter(user => user.time !== 9999);
   users.sort((a, b) => {
     if(a.score === b.score) {
       return a.time - b.time;
@@ -619,3 +594,30 @@ async function saveScore(userName, score, time) {
     await updateDoc(userDoc, { score, time });
   }
 }
+
+// Eventos para o conteúdo em Español
+btnSpanish.addEventListener('click', () => {
+  hideAllSections();
+  spanishMenuContainer.style.display = "block";
+});
+
+btnSpanishQuiz.addEventListener('click', () => {
+  hideAllSections();
+  spanishQuizContainer.style.display = "block";
+  spanishQuestions = getRandomSpanishQuestions();
+  spanishScore = 0;
+  currentSpanishQuestion = 0;
+  spanishErrors = [];
+  updateSpanishScore();
+  startSpanishTimer();
+  loadSpanishQuestion();
+});
+
+btnSpanishLibrary.addEventListener('click', () => {
+  hideAllSections();
+  spanishLibraryContainer.style.display = "block";
+});
+
+backButtonSpanishMenu.addEventListener('click', backToMenu);
+backButtonSpanish.addEventListener('click', backToMenu);
+backButtonSpanishLibrary.addEventListener('click', backToMenu);
