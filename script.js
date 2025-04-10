@@ -477,7 +477,7 @@ const allQuestions = [
   { question: "How do you say 'bom dia' in English?", options: ["Good morning","Good evening","Good night","Hello"], answer:0, difficulty:"easy", libraryRef:"greetings" },
   { question: "What is the past tense of 'go'?", options: ["Go","Went","Gone","Going"], answer:1, difficulty:"easy", libraryRef:"verbos" },
   { question: "Which sentence is correct?", options: ["He don't like apples","He doesn't like apples","He like apples","He doesn't likes apples"], answer:1, difficulty:"medium", libraryRef:"grammar" },
-  { question: "What does 'break a leg' mean?", options: ["Good luck","Break your leg","Run fast","Don't trip"], answer:0, difficulty:"medium", libraryRef:"idioms" }
+  { question: "What does 'break a leg' mean?", options: ["Good luck","Break your leg","Run fast","Don't trip"], answer:0, difficulty:"medium", libraryRef:"idioms" },
   { question: "How do you say 'obrigado' in English?", options: ["Please", "Thanks", "Hello", "Sorry"], answer: 1, difficulty: "easy", libraryRef: "greetings" },
 { question: "Which is the correct form of the verb 'to be' for 'they'?", options: ["is", "am", "are", "be"], answer: 2, difficulty: "easy", libraryRef: "verbos" },
 { question: "What does 'How old are you?' mean?", options: ["Qual é o seu nome?", "Quantos anos você tem?", "Onde você mora?", "Como você está?"], answer: 1, difficulty: "medium", libraryRef: "frases-basicas" },
