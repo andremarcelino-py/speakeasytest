@@ -478,4 +478,16 @@ const allQuestions = [
   { question: "What is the past tense of 'go'?", options: ["Go","Went","Gone","Going"], answer:1, difficulty:"easy", libraryRef:"verbos" },
   { question: "Which sentence is correct?", options: ["He don't like apples","He doesn't like apples","He like apples","He doesn't likes apples"], answer:1, difficulty:"medium", libraryRef:"grammar" },
   { question: "What does 'break a leg' mean?", options: ["Good luck","Break your leg","Run fast","Don't trip"], answer:0, difficulty:"medium", libraryRef:"idioms" }
+  { question: "How do you say 'obrigado' in English?", options: ["Please", "Thanks", "Hello", "Sorry"], answer: 1, difficulty: "easy", libraryRef: "greetings" },
+{ question: "Which is the correct form of the verb 'to be' for 'they'?", options: ["is", "am", "are", "be"], answer: 2, difficulty: "easy", libraryRef: "verbos" },
+{ question: "What does 'How old are you?' mean?", options: ["Qual é o seu nome?", "Quantos anos você tem?", "Onde você mora?", "Como você está?"], answer: 1, difficulty: "medium", libraryRef: "frases-basicas" },
+{ question: "How do you say 'Estou com fome' in English?", options: ["I'm hungry", "I'm tired", "I'm cold", "I'm happy"], answer: 0, difficulty: "medium", libraryRef: "frases-basicas" },
+{ question: "What is the past tense of 'eat'?", options: ["Ate", "Eated", "Eating", "Eat"], answer: 0, difficulty: "hard", libraryRef: "verbos" },
+{ question: "Which one is a correct question?", options: ["What time is it?", "What is time it?", "What it is time?", "It is what time?"], answer: 0, difficulty: "medium", libraryRef: "grammar" },
+{ question: "What does 'It's raining cats and dogs' mean?", options: ["Está chovendo muito", "Animais estão caindo", "Chuva de gatos", "Está chovendo pouco"], answer: 0, difficulty: "hard", libraryRef: "idioms" },
+{ question: "How do you say 'Estou cansado' in English?", options: ["I'm sleepy", "I'm tired", "I'm sad", "I'm bored"], answer: 1, difficulty: "easy", libraryRef: "frases-basicas" },
+{ question: "What’s the opposite of 'hot'?", options: ["Warm", "Cold", "Cool", "Boiling"], answer: 1, difficulty: "easy", libraryRef: "vocabulary" },
+{ question: "Which sentence uses the present continuous?", options: ["I eat now", "I am eating", "I eats", "I will eat"], answer: 1, difficulty: "medium", libraryRef: "grammar" }
+
+  
 ];
