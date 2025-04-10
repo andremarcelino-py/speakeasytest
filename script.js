@@ -488,6 +488,16 @@ const allQuestions = [
 { question: "How do you say 'Estou cansado' in English?", options: ["I'm sleepy", "I'm tired", "I'm sad", "I'm bored"], answer: 1, difficulty: "easy", libraryRef: "frases-basicas" },
 { question: "What’s the opposite of 'hot'?", options: ["Warm", "Cold", "Cool", "Boiling"], answer: 1, difficulty: "easy", libraryRef: "vocabulary" },
 { question: "Which sentence uses the present continuous?", options: ["I eat now", "I am eating", "I eats", "I will eat"], answer: 1, difficulty: "medium", libraryRef: "grammar" }
+, { question: "What is the plural of 'mouse'?", options: ["Mouses", "Mouse", "Mices", "Mice"], answer: 3, difficulty: "hard", libraryRef: "vocabulary" },
+{ question: "How do you say 'Qual é o seu nome?' in English?", options: ["Where are you from?", "How are you?", "What is your name?", "Who are you?"], answer: 2, difficulty: "easy", libraryRef: "frases-basicas" },
+{ question: "Which one is a verb?", options: ["Run", "Happy", "Blue", "Fast"], answer: 0, difficulty: "easy", libraryRef: "verbos" },
+{ question: "Complete: She ___ going to school.", options: ["are", "is", "am", "be"], answer: 1, difficulty: "medium", libraryRef: "grammar" },
+{ question: "What does 'piece of cake' mean?", options: ["Um pedaço de bolo", "Muito difícil", "Muito fácil", "Algo caro"], answer: 2, difficulty: "hard", libraryRef: "idioms" },
+{ question: "How do you say 'Eu não entendo' in English?", options: ["I understand not", "I no understand", "I don't understand", "Not I understand"], answer: 2, difficulty: "easy", libraryRef: "frases-basicas" },
+{ question: "What is the opposite of 'early'?", options: ["Fast", "Late", "Soon", "Now"], answer: 1, difficulty: "medium", libraryRef: "vocabulary" },
+{ question: "Which is a correct negative sentence?", options: ["She don’t like coffee", "She doesn't like coffee", "She not like coffee", "She no likes coffee"], answer: 1, difficulty: "medium", libraryRef: "grammar" },
+{ question: "How do you say 'Eu gosto de música' in English?", options: ["I music like", "I like of music", "I like music", "I likes music"], answer: 2, difficulty: "easy", libraryRef: "frases-basicas" },
+{ question: "What is the correct past tense of 'have'?", options: ["Has", "Have", "Had", "Haved"], answer: 2, difficulty: "medium", libraryRef: "verbos" }
 
   
 ];
