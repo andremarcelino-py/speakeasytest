@@ -29,11 +29,13 @@ const perguntasEndScreen    = document.getElementById("perguntas-end-screen");
 const spanishMenuContainer  = document.getElementById("spanish-menu-container");
 const spanishQuizContainer  = document.getElementById("spanish-container");
 const spanishEndScreen      = document.getElementById("spanish-end-screen");
-const spanishLibraryContainer= document.getElementById("spanish-library-container");
+const spanishLibraryContainer = document.getElementById("spanish-library-container");
 const frenchMenuContainer   = document.getElementById("french-menu-container");
 const frenchQuizContainer   = document.getElementById("french-container");
 const frenchEndScreen       = document.getElementById("french-end-screen");
 const frenchLibraryContainer= document.getElementById("french-library-container");
+// NOVO: Container da Learning Track
+const learningTrackContainer = document.getElementById("learning-track-container");
 
 // Elementos de boas-vindas
 const btnRegisterNow = document.getElementById("btn-register-now");
@@ -68,6 +70,8 @@ const btnFrenchLibrary    = document.getElementById("btnFrenchLibrary");
 const backButtonFrenchMenu = document.getElementById("backButtonFrenchMenu");
 const frenchRestartButton  = document.getElementById("french-restart-button");
 const frenchMenuButton     = document.getElementById("french-menu-button");
+// NOVO: Botão para Learning Track
+const btnLearning         = document.getElementById("btnLearning");
 
 // Elementos do Quiz (inglês, perguntas, español, francês)
 const questionElement       = document.getElementById("question");
@@ -98,14 +102,15 @@ const frenchTimerElement    = document.getElementById("french-timer");
 const frenchFinalMessageEl  = document.getElementById("french-final-message");
 const frenchErrorListEl     = document.getElementById("french-error-list");
 
-// Função genérica para esconder todas as seções
+// --- Funções Gerais para esconder seções ---
 function hideAllSections() {
   [
     welcomeContainer, registerContainer, loginContainer, menuContainer,
     quizContainer, perguntasContainer, perguntasQuizContainer,
     libraryContainer, rankingContainer, endScreen, perguntasEndScreen,
     spanishMenuContainer, spanishQuizContainer, spanishEndScreen, spanishLibraryContainer,
-    frenchMenuContainer, frenchQuizContainer, frenchEndScreen, frenchLibraryContainer
+    frenchMenuContainer, frenchQuizContainer, frenchEndScreen, frenchLibraryContainer,
+    learningTrackContainer
   ].forEach(sec => sec && (sec.style.display = "none"));
 }
 
@@ -556,7 +561,7 @@ const allQuestions = [
   { question: "Which one is a correct question?", options: ["What it is time?", "What is time it?", "It is what time?", "What time is it?"], answer: 3, difficulty: "medium", libraryRef: "grammar" },
   { question: "What does 'It's raining cats and dogs' mean?", options: ["Está chovendo pouco", "Animais estão caindo", "Chuva de gatos", "Está chovendo muito"], answer: 3, difficulty: "hard", libraryRef: "idioms" },
   { question: "How do you say 'Estou cansado' in English?", options: ["I'm sad", "I'm bored", "I'm tired", "I'm sleepy"], answer: 2, difficulty: "easy", libraryRef: "frases-basicas" },
-  { question: "Whatés the opposite of 'hot'?", options: ["Boiling", "Cool", "Cold", "Warm"], answer: 2, difficulty: "easy", libraryRef: "vocabulary" },
+  { question: "What is the opposite of 'hot'?", options: ["Boiling", "Cool", "Cold", "Warm"], answer: 2, difficulty: "easy", libraryRef: "vocabulary" },
   { question: "Which sentence uses the present continuous?", options: ["I am eating", "I eat now", "I eats", "I will eat"], answer: 0, difficulty: "medium", libraryRef: "grammar" },
   { question: "What is the plural of 'mouse'?", options: ["Mices", "Mice", "Mouse", "Mouses"], answer: 1, difficulty: "hard", libraryRef: "vocabulary" },
   { question: "How do you say 'Qual é o seu nome?' in English?", options: ["What is your name?", "How are you?", "Where are you from?", "Who are you?"], answer: 0, difficulty: "easy", libraryRef: "frases-basicas" },
@@ -569,3 +574,141 @@ const allQuestions = [
   { question: "How do you say 'Eu gosto de música' in English?", options: ["I like music", "I like of music", "I music like", "I likes music"], answer: 0, difficulty: "easy", libraryRef: "frases-basicas" },
   { question: "What is the correct past tense of 'have'?", options: ["Haved", "Has", "Had", "Have"], answer: 2, difficulty: "medium", libraryRef: "verbos" },
 ];
+
+// ========================
+// --- LEARNING TRACK (INGLÊS) ---
+// ========================
+
+// Dados das lições
+const lessonsData = {
+  1: {
+    title: "Section 1 - Unit 1",
+    content: `
+      <h2>Welcome to Section 1 - Unit 1</h2>
+      <p>In this unit, you'll learn the basics of the English language. Read the text below:</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Vivamus vitae nisl vel metus dignissim fermentum.</p>
+      <p><strong>Exercise 1:</strong> Write one short sentence summarizing what you understood.</p>
+      <textarea id="exercise1" rows="3" style="width:100%;"></textarea>
+      <p><strong>Quiz:</strong></p>
+      <p>1) What is the capital of the United Kingdom?</p>
+      <div>
+        <input type="radio" name="q1" value="London"> London<br/>
+        <input type="radio" name="q1" value="Paris"> Paris<br/>
+        <input type="radio" name="q1" value="New York"> New York<br/>
+      </div>
+    `,
+    unlocked: true,
+    completed: false
+  },
+  2: {
+    title: "Section 1 - Unit 2",
+    content: `
+      <h2>Section 1 - Unit 2</h2>
+      <p>This unit deepens your understanding of basic vocabulary and sentence structure.</p>
+      <p>Please read the text carefully:</p>
+      <p>Donec aliquet, velit vel mattis tincidunt, sapien sapien ultrices libero, a dignissim libero nisi ac neque.</p>
+      <p><strong>Exercise:</strong> Describe one new concept you learned from Unit 1.</p>
+      <textarea id="exercise2" rows="3" style="width:100%;"></textarea>
+      <p><strong>Quiz:</strong></p>
+      <p>1) How many vowels are there in the English alphabet?</p>
+      <div>
+        <input type="radio" name="q2" value="5"> 5<br/>
+        <input type="radio" name="q2" value="6"> 6<br/>
+        <input type="radio" name="q2" value="7"> 7<br/>
+      </div>
+    `,
+    unlocked: false,
+    completed: false
+  },
+  3: {
+    title: "Section 2 - Unit 1",
+    content: `
+      <h2>Section 2 - Unit 1</h2>
+      <p>Welcome to an advanced unit, where we'll discuss idiomatic expressions and language nuances.</p>
+      <p>Please review the text below:</p>
+      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+      <p><strong>Exercise:</strong> Write a brief summary of what you have learned so far.</p>
+      <textarea id="exercise3" rows="3" style="width:100%;"></textarea>
+      <p><strong>Quiz:</strong></p>
+      <p>1) Which of the following is an English idiom?</p>
+      <div>
+        <input type="checkbox" name="q3" value="Break a leg"> Break a leg<br/>
+        <input type="checkbox" name="q3" value="Piece of cake"> Piece of cake<br/>
+        <input type="checkbox" name="q3" value="Cold turkey"> Cold turkey<br/>
+        <input type="checkbox" name="q3" value="Over the moon"> Over the moon<br/>
+      </div>
+    `,
+    unlocked: false,
+    completed: false
+  },
+};
+
+// Carrega progresso do usuário (usando localStorage)
+let userProgress = JSON.parse(localStorage.getItem("userProgress")) || {
+  1: { unlocked: true, completed: false },
+  2: { unlocked: false, completed: false },
+  3: { unlocked: false, completed: false }
+};
+
+const lessonBubbles = document.querySelectorAll("#learning-track-container .lesson-bubble");
+const modal = document.getElementById("lessonModal");
+const lessonContentDiv = document.getElementById("lessonContent");
+const closeButton = document.querySelector("#lessonModal .close-button");
+const completeLessonBtn = document.getElementById("completeLessonBtn");
+
+function updateBubblesUI() {
+  lessonBubbles.forEach(bubble => {
+    const lessonId = bubble.getAttribute("data-lesson-id");
+    if (userProgress[lessonId].unlocked) {
+      bubble.classList.remove("locked");
+      bubble.querySelector(".lesson-status").textContent = userProgress[lessonId].completed
+        ? "Completed"
+        : "Start";
+    } else {
+      bubble.classList.add("locked");
+      bubble.querySelector(".lesson-status").textContent = "Locked";
+    }
+  });
+}
+
+// Configura clique nas bolhas das lições
+lessonBubbles.forEach(bubble => {
+  bubble.addEventListener("click", function() {
+    const lessonId = this.getAttribute("data-lesson-id");
+    if (!userProgress[lessonId].unlocked) return;
+    const data = lessonsData[lessonId];
+    lessonContentDiv.innerHTML = data.content;
+    modal.style.display = "block";
+    completeLessonBtn.setAttribute("data-current-lesson", lessonId);
+  });
+});
+
+// Fecha o modal
+closeButton.addEventListener("click", function() {
+  modal.style.display = "none";
+});
+window.addEventListener("click", function(event) {
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+});
+
+// Ao concluir a lição
+completeLessonBtn.addEventListener("click", function() {
+  const currentLessonId = this.getAttribute("data-current-lesson");
+  userProgress[currentLessonId].completed = true;
+  const nextLessonId = parseInt(currentLessonId) + 1;
+  if (userProgress[nextLessonId]) {
+    userProgress[nextLessonId].unlocked = true;
+  }
+  localStorage.setItem("userProgress", JSON.stringify(userProgress));
+  updateBubblesUI();
+  modal.style.display = "none";
+});
+
+// Listener para exibir a Learning Track
+btnLearning.addEventListener("click", () => {
+  hideAllSections();
+  learningTrackContainer.style.display = "block";
+  updateBubblesUI();
+});
