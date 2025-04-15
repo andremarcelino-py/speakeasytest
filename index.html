@@ -45,6 +45,8 @@
       <button id="btnSpanish" class="tab-button animate-in spanish"><i class="fas fa-globe"></i> Español</button>
       <button id="btnFrench" class="tab-button animate-in french"><i class="fas fa-globe"></i> Français</button>
       <button id="btnRanking" class="tab-button animate-in"><i class="fas fa-trophy"></i> Ranking</button>
+      <!-- Novo botão para a Learning Track -->
+      <button id="btnLearning" class="tab-button animate-in"><i class="fas fa-graduation-cap"></i> Learning Track</button>
     </div>
   </div>
 
@@ -218,7 +220,7 @@
     </div>
   </div>
 
-  <!-- Quiz Principal (em inglês) -->
+  <!-- QUIZ PRINCIPAL (em inglês) -->
   <div id="quiz-container" class="quiz-container" style="display:none;">
     <div id="quiz">
       <p id="question"></p>
@@ -412,6 +414,37 @@
     <button id="perguntas-menu-button" class="restart-button">
       <i class="fas fa-home"></i> Menu Principal
     </button>
+  </div>
+
+  <!-- NOVO: Learning Track (em inglês) -->
+  <div id="learning-track-container" class="learning-track-container" style="display:none;">
+    <h2>English Learning Track</h2>
+    <section class="learning-track">
+      <div class="lesson-bubble" data-lesson-id="1">
+        <img src="images/bubble-icon.png" alt="Bolha de aprendizado" />
+        <span class="lesson-title">Section 1 - Unit 1</span>
+        <span class="lesson-status">Start</span>
+      </div>
+      <div class="lesson-bubble locked" data-lesson-id="2">
+        <img src="images/bubble-icon.png" alt="Bolha de aprendizado" />
+        <span class="lesson-title">Section 1 - Unit 2</span>
+        <span class="lesson-status">Locked</span>
+      </div>
+      <div class="lesson-bubble locked" data-lesson-id="3">
+        <img src="images/bubble-icon.png" alt="Bolha de aprendizado" />
+        <span class="lesson-title">Section 2 - Unit 1</span>
+        <span class="lesson-status">Locked</span>
+      </div>
+    </section>
+
+    <!-- Modal para exibir o conteúdo da lição -->
+    <div id="lessonModal" class="modal">
+      <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <div id="lessonContent"></div>
+        <button id="completeLessonBtn">Complete Unit</button>
+      </div>
+    </div>
   </div>
 
   <script type="module" src="script.js"></script>
