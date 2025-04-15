@@ -526,6 +526,15 @@ body {
   color: white;
 }
 
+@media (max-width: 768px) {
+  #spanish-container,
+  #spanish-library-container,
+  #french-container,
+  #french-library-container {
+    padding: 1rem;
+  }
+}
+
 /* Botão "Aprenda Mais" */
 .aprenda-mais-button {
   background-color: var(--secondary-color);
@@ -543,120 +552,180 @@ body {
   background-color: var(--accent-color);
 }
 
-/* ===================== */
-/* LEARNING TRACK STYLES */
-/* ===================== */
-.learning-track-container {
+/* Inicialmente, conteúdo das seções oculto */
+.text-card .text-content {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Conteúdo ativo */
+.text-card .text-content.active {
+  display: block;
+  opacity: 1;
+}
+
+
+
+
+/* Container principal */
+#app {
+  width: 100%;
+  max-width: 1200px;
+  text-align: center;
+}
+
+/* Título principal */
+h1 {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Classe para esconder elementos */
+.hidden {
+  display: none;
+}
+
+/* Container dos níveis (se utilizado) */
+#level-container {
+  margin-bottom: 2rem;
+}
+
+/* Caixa de perguntas e instruções */
+#question-box {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(12px);
   border-radius: 20px;
   padding: 2rem;
-  margin: 1rem 0;
+  margin: 1rem auto;
   width: 100%;
-  max-width: 1200px;
-  position: relative;
+  max-width: 800px;
 }
 
-.learning-track-container h2 {
-  margin-bottom: 1.5rem;
-  color: white;
-}
-
-.learning-track {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-}
-
-/* Bolhas das lições */
-.lesson-bubble {
-  background-color: var(--accent-color);
-  padding: 1rem;
-  border-radius: 50%;
-  width: 130px;
-  height: 130px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform 0.3s;
-}
-
-.lesson-bubble:hover {
-  transform: scale(1.05);
-}
-
-.lesson-bubble.locked {
-  background-color: #555;
-  cursor: not-allowed;
-}
-
-.lesson-bubble img {
-  border-radius: 50%;
-  width: 80px;
-  height: 80px;
+/* Instrução e questão */
+#instruction {
+  font-size: 1.2rem;
   margin-bottom: 0.5rem;
+  font-style: italic;
 }
 
-.lesson-title {
-  font-size: 0.9rem;
+#question {
+  font-size: 1.4rem;
   font-weight: bold;
-  text-align: center;
+  margin-bottom: 1rem;
 }
 
-.lesson-status {
-  font-size: 0.75rem;
-  margin-top: 0.2rem;
-  color: white;
+/* Botões de resposta (múltipla escolha) */
+#answers {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
 }
 
-/* Modal da Learning Track */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 999;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0,0,0,0.7);
-}
-
-.modal-content {
-  background-color: #333;
-  margin: 5% auto;
-  padding: 2rem;
-  border-radius: 8px;
-  max-width: 600px;
-  position: relative;
-  color: #fff;
-}
-
-.close-button {
-  color: #fff;
-  float: right;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
-.close-button:hover {
-  color: #ccc;
-}
-
-/* Botão para concluir lição */
-#completeLessonBtn {
-  background-color: var(--accent-color);
+#answers button {
+  padding: 0.8rem 1.2rem;
   border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
-  color: #fff;
+  border-radius: 8px;
+  background: var(--primary-color);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+#answers button:hover {
+  transform: scale(1.05);
+  background: var(--secondary-color);
+}
+
+/* Caixa do exercício de tradução */
+#translation-box {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#translation-box p {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+/* Botões do exercício de tradução */
+#translation-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+#translation-buttons button {
+  padding: 0.8rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--primary-color);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+#translation-buttons button:hover {
+  transform: scale(1.05);
+  background: var(--accent-color);
+}
+
+/* Botão para avançar para o próximo nível */
+#next-btn {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 50px;
+  background: var(--primary-color);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
   margin-top: 1rem;
 }
 
-#completeLessonBtn:hover {
-  background-color: var(--primary-color);
+#next-btn:hover {
+  transform: scale(1.05);
+  background: var(--secondary-color);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.2rem;
+  }
+  
+  #instruction, #question {
+    font-size: 1rem;
+  }
+  
+  #answers button, #translation-buttons button, #next-btn {
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #app {
+    padding: 10px;
+  }
+  
+  #question-box {
+    padding: 1rem;
+  }
+  
+  #answers button, #translation-buttons button, #next-btn {
+    padding: 0.7rem 0.8rem;
+    font-size: 0.85rem;
+  }
 }
