@@ -14,7 +14,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Containers principais
+// Seleção dos Containers e Elementos
 const welcomeContainer      = document.getElementById("welcome-container");
 const registerContainer     = document.getElementById("register-container");
 const loginContainer        = document.getElementById("login-container");
@@ -34,20 +34,19 @@ const frenchMenuContainer   = document.getElementById("french-menu-container");
 const frenchQuizContainer   = document.getElementById("french-container");
 const frenchEndScreen       = document.getElementById("french-end-screen");
 const frenchLibraryContainer= document.getElementById("french-library-container");
-// NOVO: Container da Learning Track
+
+// Novo: Container da Learning Track
 const learningTrackContainer = document.getElementById("learning-track-container");
 
-// Elementos de boas-vindas
+// Elementos de Boas-Vindas e Login/Cadastro
 const btnRegisterNow = document.getElementById("btn-register-now");
 const btnLoginWelcome  = document.getElementById("btn-login");
-
-// Elementos de cadastro/login
 const startButton         = document.getElementById("start-button");
 const loginButton         = document.getElementById("login-button");
 const goLoginLink         = document.getElementById("go-login");
 const goRegisterLink      = document.getElementById("go-register");
 
-// Outros botões (menu, quiz, etc.)
+// Outros botões do menu
 const btnQuiz             = document.getElementById("btnQuiz");
 const btnPerguntas        = document.getElementById("btnPerguntas");
 const btnLibrary          = document.getElementById("btnLibrary");
@@ -70,8 +69,13 @@ const btnFrenchLibrary    = document.getElementById("btnFrenchLibrary");
 const backButtonFrenchMenu = document.getElementById("backButtonFrenchMenu");
 const frenchRestartButton  = document.getElementById("french-restart-button");
 const frenchMenuButton     = document.getElementById("french-menu-button");
-// NOVO: Botão para Learning Track
+// Novo: Botão para Learning Track
 const btnLearning         = document.getElementById("btnLearning");
+
+
+
+
+
 
 // Elementos do Quiz (inglês, perguntas, español, francês)
 const questionElement       = document.getElementById("question");
@@ -102,7 +106,19 @@ const frenchTimerElement    = document.getElementById("french-timer");
 const frenchFinalMessageEl  = document.getElementById("french-final-message");
 const frenchErrorListEl     = document.getElementById("french-error-list");
 
-// --- Funções Gerais para esconder seções ---
+// Elementos da nova English Learning Track
+const levelContent = document.getElementById("level-content");
+const levelTitle = document.getElementById("level-title");
+const readingText = document.getElementById("reading-text");
+const explanationText = document.getElementById("explanation-text");
+const levelQuestion = document.getElementById("level-question");
+const levelOptions = document.getElementById("level-options");
+const translationSection = document.getElementById("translation-section");
+const englishButtons = document.getElementById("english-buttons");
+const portugueseButtons = document.getElementById("portuguese-buttons");
+const nextLevelBtn = document.getElementById("next-level-btn");
+
+// Função genérica para esconder todas as seções
 function hideAllSections() {
   [
     welcomeContainer, registerContainer, loginContainer, menuContainer,
@@ -116,23 +132,18 @@ function hideAllSections() {
 
 // Função para voltar ao menu
 function backToMenu() {
-  stopTimer(); stopPerguntasTimer(); stopSpanishTimer(); stopFrenchTimer();
+  // Se estiver usando temporizadores de quiz, pare-os aqui.
   hideAllSections();
   menuContainer.style.display = "block";
 }
 
-// Conecta botões de voltar
-[
-  "backButtonQuiz", "backButtonPerguntas", "backButtonPerguntasQuiz",
-  "backButtonLibrary", "backButtonRanking", "backButtonEndScreen", "backButtonPerguntasEndScreen",
-  "backButtonSpanish", "backButtonSpanishLibrary", "backButtonSpanishEndScreen",
-  "backButtonFrench", "backButtonFrenchLibrary", "backButtonFrenchEndScreen"
-].forEach(id => {
+// Conecta botões de voltar (mapeie os IDs existentes)
+["backButtonQuiz", "backButtonPerguntas", "backButtonPerguntasQuiz", "backButtonLibrary", "backButtonRanking", "backButtonEndScreen", "backButtonPerguntasEndScreen", "backButtonSpanish", "backButtonSpanishLibrary", "backButtonSpanishEndScreen", "backButtonFrench", "backButtonFrenchLibrary", "backButtonFrenchEndScreen"].forEach(id => {
   const btn = document.getElementById(id);
   if (btn) btn.addEventListener("click", backToMenu);
 });
 
-// Eventos para a tela de boas-vindas
+// Eventos para telas de boas-vindas, cadastro e login
 btnRegisterNow.addEventListener("click", () => {
   hideAllSections();
   registerContainer.style.display = "block";
@@ -142,7 +153,6 @@ btnLoginWelcome.addEventListener("click", () => {
   loginContainer.style.display = "block";
 });
 
-// --- CADASTRO ---
 startButton.addEventListener("click", async () => {
   const nameInput     = document.getElementById("name").value.trim();
   const passwordInput = document.getElementById("register-password").value.trim();
@@ -156,7 +166,7 @@ startButton.addEventListener("click", async () => {
   try {
     await addDoc(collection(db, "users"), { 
       name: nameInput, 
-      password: passwordInput // Em produção, utilize Firebase Authentication para segurança
+      password: passwordInput // Em produção, utilizar Firebase Authentication é recomendado
     });
     registerContainer.style.display = "none";
     loginContainer.style.display = "block";
@@ -167,7 +177,6 @@ startButton.addEventListener("click", async () => {
   }
 });
 
-// --- LOGIN ---
 loginButton.addEventListener("click", async () => {
   const loginName     = document.getElementById("login-name").value.trim();
   const loginPassword = document.getElementById("login-password").value.trim();
@@ -197,7 +206,6 @@ loginButton.addEventListener("click", async () => {
   }
 });
 
-// Navegação entre telas de cadastro e login
 goLoginLink.addEventListener("click", () => {
   registerContainer.style.display = "none";
   loginContainer.style.display = "block";
@@ -206,6 +214,301 @@ goRegisterLink.addEventListener("click", () => {
   loginContainer.style.display = "none";
   registerContainer.style.display = "block";
 });
+
+// ----------------------
+// English Learning Track - NOVA FUNCIONALIDADE
+// ----------------------
+
+// Estrutura de dados para os 10 níveis
+const levelsData = [
+  {
+    level: 1,
+    readingText: "Este nível apresenta as saudações básicas em inglês.",
+    explanation: "In this level, you will learn simple greetings and how to introduce yourself.",
+    question: "What does 'Good morning' mean?",
+    options: ["Bom dia", "Boa noite", "Olá", "Até logo"],
+    correctAnswer: 0,
+    translationPairs: [
+      { en: "Hello", pt: "Olá" },
+      { en: "Goodbye", pt: "Tchau" },
+      { en: "Please", pt: "Por favor" }
+    ]
+  },
+  {
+    level: 2,
+    readingText: "Este nível ensina as expressões para pedir informações.",
+    explanation: "This level covers common expressions used when asking for information.",
+    question: "How do you say 'Onde fica o banheiro?' in English?",
+    options: ["Where is the kitchen?", "Where is the bathroom?", "How are you?", "What time is it?"],
+    correctAnswer: 1,
+    translationPairs: [
+      { en: "Water", pt: "Água" },
+      { en: "Bathroom", pt: "Banheiro" },
+      { en: "Street", pt: "Rua" }
+    ]
+  },
+  {
+    level: 3,
+    readingText: "Neste nível, você aprende vocabulário sobre alimentos.",
+    explanation: "In this level, you will learn some common food vocabulary words.",
+    question: "What is the correct translation for 'maçã'?",
+    options: ["Apple", "Banana", "Orange", "Grape"],
+    correctAnswer: 0,
+    translationPairs: [
+      { en: "Bread", pt: "Pão" },
+      { en: "Cheese", pt: "Queijo" },
+      { en: "Apple", pt: "Maçã" }
+    ]
+  },
+  {
+    level: 4,
+    readingText: "O foco deste nível é a família e as relações pessoais.",
+    explanation: "This level introduces vocabulary about family members and relationships.",
+    question: "How do you say 'irmão' in English?",
+    options: ["Sister", "Brother", "Cousin", "Uncle"],
+    correctAnswer: 1,
+    translationPairs: [
+      { en: "Mother", pt: "Mãe" },
+      { en: "Father", pt: "Pai" },
+      { en: "Brother", pt: "Irmão" }
+    ]
+  },
+  {
+    level: 5,
+    readingText: "Neste nível, você aprenderá sobre o tempo e as estações.",
+    explanation: "This level covers vocabulary related to the weather and seasons.",
+    question: "What is the English word for 'inverno'?",
+    options: ["Spring", "Summer", "Winter", "Autumn"],
+    correctAnswer: 2,
+    translationPairs: [
+      { en: "Hot", pt: "Quente" },
+      { en: "Cold", pt: "Frio" },
+      { en: "Rain", pt: "Chuva" }
+    ]
+  },
+  {
+    level: 6,
+    readingText: "Este nível foca em atividades diárias e na rotina.",
+    explanation: "In this level, you will learn phrases used to describe daily routines.",
+    question: "What does 'I wake up' mean?",
+    options: ["Eu durmo", "Eu acordo", "Eu almoço", "Eu estudo"],
+    correctAnswer: 1,
+    translationPairs: [
+      { en: "Eat", pt: "Comer" },
+      { en: "Sleep", pt: "Dormir" },
+      { en: "Wake", pt: "Acordar" }
+    ]
+  },
+  {
+    level: 7,
+    readingText: "Neste nível, o tema é os transportes.",
+    explanation: "This level introduces vocabulary related to transportation.",
+    question: "How do you say 'trem' in English?",
+    options: ["Car", "Plane", "Train", "Boat"],
+    correctAnswer: 2,
+    translationPairs: [
+      { en: "Bus", pt: "Ônibus" },
+      { en: "Train", pt: "Trem" },
+      { en: "Bike", pt: "Bicicleta" }
+    ]
+  },
+  {
+    level: 8,
+    readingText: "Este nível aborda atividades de lazer.",
+    explanation: "In this level, you'll learn vocabulary about hobbies and leisure activities.",
+    question: "What does 'I like to read' mean in Portuguese?",
+    options: ["Eu gosto de correr", "Eu gosto de ler", "Eu gosto de escrever", "Eu gosto de dormir"],
+    correctAnswer: 1,
+    translationPairs: [
+      { en: "Read", pt: "Ler" },
+      { en: "Write", pt: "Escrever" },
+      { en: "Run", pt: "Correr" }
+    ]
+  },
+  {
+    level: 9,
+    readingText: "Neste nível, o tema é o trabalho e a profissão.",
+    explanation: "This level explains common job titles and work-related vocabulary.",
+    question: "How do you say 'professor' in English?",
+    options: ["Teacher", "Student", "Worker", "Engineer"],
+    correctAnswer: 0,
+    translationPairs: [
+      { en: "Teacher", pt: "Professor" },
+      { en: "Engineer", pt: "Engenheiro" },
+      { en: "Student", pt: "Estudante" }
+    ]
+  },
+  {
+    level: 10,
+    readingText: "O nível final explora expressões para descrever emoções.",
+    explanation: "This level focuses on words related to emotions and feelings.",
+    question: "What is the correct translation for 'feliz'?",
+    options: ["Sad", "Angry", "Happy", "Tired"],
+    correctAnswer: 2,
+    translationPairs: [
+      { en: "Happy", pt: "Feliz" },
+      { en: "Angry", pt: "Bravo" },
+      { en: "Sad", pt: "Triste" }
+    ]
+  }
+];
+
+let currentLevelIndex = 0; // índice dos níveis
+
+// Carrega um nível com base no índice
+function loadLevel(levelIndex) {
+  const levelData = levelsData[levelIndex];
+  if (!levelData) return;
+  
+  // Exibe a área de nível e atualiza os textos
+  levelContent.style.display = "block";
+  levelTitle.textContent = "Level " + levelData.level;
+  readingText.textContent = levelData.readingText;
+  explanationText.textContent = levelData.explanation;
+  
+  // Carrega a pergunta de múltipla escolha
+  levelQuestion.textContent = levelData.question;
+  levelOptions.innerHTML = "";
+  levelData.options.forEach((opt, i) => {
+    const li = document.createElement("li");
+    li.textContent = opt;
+    li.style.cursor = "pointer";
+    li.addEventListener("click", () => checkLevelAnswer(i, levelData));
+    levelOptions.appendChild(li);
+  });
+  
+  // Oculta a seção de tradução e o botão de próximo nível inicialmente
+  translationSection.style.display = "none";
+  nextLevelBtn.style.display = "none";
+}
+
+// Verifica a resposta da pergunta do nível
+function checkLevelAnswer(selectedIndex, levelData) {
+  const optionsItems = levelOptions.querySelectorAll("li");
+  optionsItems.forEach((li, i) => {
+    li.style.pointerEvents = "none";
+    li.classList.remove("correct", "wrong");
+    if (i === levelData.correctAnswer) {
+      li.classList.add("correct");
+    } else if (i === selectedIndex) {
+      li.classList.add("wrong");
+    }
+  });
+  
+  if (selectedIndex === levelData.correctAnswer) {
+    // Se acertar, carrega o exercício de tradução após breve atraso
+    setTimeout(() => {
+      loadTranslationExercise(levelData);
+    }, 1200);
+  } else {
+    alert("Incorrect. Please try again.");
+    optionsItems.forEach(li => {
+      li.style.pointerEvents = "auto";
+      li.classList.remove("correct", "wrong");
+    });
+  }
+}
+
+// Carrega o exercício de tradução
+function loadTranslationExercise(levelData) {
+  translationSection.style.display = "block";
+  englishButtons.innerHTML = "";
+  portugueseButtons.innerHTML = "";
+  
+  // Cria arrays com os termos
+  const englishWords = levelData.translationPairs.map(pair => pair.en);
+  const portugueseWords = levelData.translationPairs.map(pair => pair.pt);
+  
+  const shuffle = (array) => array.sort(() => Math.random() - 0.5);
+  const shuffledEnglish = shuffle([...englishWords]);
+  const shuffledPortuguese = shuffle([...portugueseWords]);
+  
+  // Cria botões para os termos em inglês
+  shuffledEnglish.forEach(word => {
+    const btn = document.createElement("button");
+    btn.textContent = word;
+    btn.dataset.en = word;
+    btn.addEventListener("click", handleTranslationSelection);
+    englishButtons.appendChild(btn);
+  });
+  
+  // Cria botões para os termos em português
+  shuffledPortuguese.forEach(word => {
+    const btn = document.createElement("button");
+    btn.textContent = word;
+    btn.dataset.pt = word;
+    btn.addEventListener("click", handleTranslationSelection);
+    portugueseButtons.appendChild(btn);
+  });
+  
+  window.selectedEnglish = null;
+  window.selectedPortuguese = null;
+}
+
+// Lida com a seleção dos botões de tradução
+function handleTranslationSelection(event) {
+  const btn = event.target;
+  if (btn.dataset.en) {
+    clearGroupSelection("english-buttons");
+    btn.classList.add("selected");
+    window.selectedEnglish = btn.dataset.en;
+  } else if (btn.dataset.pt) {
+    clearGroupSelection("portuguese-buttons");
+    btn.classList.add("selected");
+    window.selectedPortuguese = btn.dataset.pt;
+  }
+  
+  if (window.selectedEnglish && window.selectedPortuguese) {
+    const currentLevel = levelsData[currentLevelIndex];
+    const correct = currentLevel.translationPairs.some(pair => pair.en === window.selectedEnglish && pair.pt === window.selectedPortuguese);
+    if (correct) {
+      alert("Translation match correct!");
+      clearGroupSelection("english-buttons");
+      clearGroupSelection("portuguese-buttons");
+      nextLevelBtn.style.display = "block";
+      disableTranslationButtons();
+    } else {
+      alert("Incorrect match. Try again.");
+      clearGroupSelection("english-buttons");
+      clearGroupSelection("portuguese-buttons");
+      window.selectedEnglish = null;
+      window.selectedPortuguese = null;
+    }
+  }
+}
+
+// Limpa a seleção de botões em um grupo
+function clearGroupSelection(containerId) {
+  const container = document.getElementById(containerId);
+  container.querySelectorAll("button").forEach(btn => btn.classList.remove("selected"));
+}
+
+// Desabilita os botões após acerto no exercício de tradução
+function disableTranslationButtons() {
+  document.querySelectorAll("#english-buttons button, #portuguese-buttons button").forEach(btn => {
+    btn.disabled = true;
+  });
+}
+
+// Avança para o próximo nível
+nextLevelBtn.addEventListener("click", () => {
+  currentLevelIndex++;
+  if (currentLevelIndex < levelsData.length) {
+    loadLevel(currentLevelIndex);
+  } else {
+    alert("Congratulations! You have completed all levels.");
+    hideAllSections();
+    menuContainer.style.display = "block";
+  }
+});
+
+// Evento para iniciar a English Learning Track quando o usuário clicar no botão do menu
+btnLearning.addEventListener("click", () => {
+  hideAllSections();
+  learningTrackContainer.style.display = "block";
+  currentLevelIndex = 0;
+  loadLevel(currentLevelIndex);
+});  
 
 // --- QUIZ INGLÊS ---
 let questions = [], score = 0, currentQuestion = 0, errors = [], quizTimer = 0, timerInterval;
