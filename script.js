@@ -360,6 +360,30 @@ function loadLevel(levelIndex) {
   const levelData = levelsData[levelIndex];
   if (!levelData) return;
   
+
+// Carrossel dinâmico dos níveis
+const carouselTrack = document.getElementById("carousel-track");
+
+levelsData.forEach((level, index) => {
+  const slide = document.createElement("div");
+  slide.className = "carousel-slide";
+  slide.textContent = `Nível ${level.level}`;
+  slide.addEventListener("click", () => {
+    currentLevelIndex = index;
+    loadLevel(currentLevelIndex);
+  });
+  carouselTrack.appendChild(slide);
+});
+
+// Navegação do carrossel
+const scrollAmount = 240;
+document.getElementById("prev-slide").addEventListener("click", () => {
+  carouselTrack.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+});
+document.getElementById("next-slide").addEventListener("click", () => {
+  carouselTrack.scrollBy({ left: scrollAmount, behavior: "smooth" });
+});
+
   // Exibe a área de nível e atualiza os textos
   levelContent.style.display = "block";
   levelTitle.textContent = "Level " + levelData.level;
