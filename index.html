@@ -10,6 +10,42 @@
 </head>
 <body>
 
+<!-- Trilha de Aprendizagem (Learning Track) -->
+<div id="learning-track-container" class="learning-track-container" style="display: none;">
+  <button class="back-button" onclick="backToMenu()">
+    <i class="fas fa-arrow-left"></i> Voltar ao Menu
+  </button>
+  <h2 class="title"><i class="fas fa-graduation-cap"></i> Trilha de Aprendizagem</h2>
+
+  <!-- Carrossel de Níveis -->
+  <div id="carousel-track" class="carousel-track">
+    <!-- Slides são adicionados dinamicamente -->
+  </div>
+  <div class="carousel-controls">
+    <button id="prev-slide" class="carousel-button">&#10094;</button>
+    <button id="next-slide" class="carousel-button">&#10095;</button>
+  </div>
+
+  <!-- Conteúdo do Nível -->
+  <div id="level-content" class="level-content">
+    <h3 id="level-title"></h3>
+    <p id="reading-text"></p>
+    <p id="explanation-text"></p>
+    <div id="level-question-box">
+      <p id="level-question"></p>
+      <ul id="level-options" class="quiz-options"></ul>
+    </div>
+    <div id="translation-section" style="display: none;">
+      <h4>Traduza os pares abaixo</h4>
+      <div class="translation-box">
+        <div id="english-buttons" class="translation-column"></div>
+        <div id="portuguese-buttons" class="translation-column"></div>
+      </div>
+    </div>
+    <button id="next-level-btn" class="restart-button" style="display: none;">Próximo Nível</button>
+  </div>
+</div>
+
   <!-- Tela de Boas-Vindas -->
   <div id="welcome-container" class="welcome-container animate-in">
     <h1>Bem-vindo ao Speak Easy!</h1>
