@@ -729,3 +729,107 @@ h1 {
     font-size: 0.85rem;
   }
 }
+
+
+
+
+.learning-track-container {
+  text-align: center;
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+  padding: 2rem;
+  background: rgba(255,255,255,0.05);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.carousel-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+}
+
+.carousel-slide {
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+  background: rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 1rem;
+  min-width: 200px;
+  max-width: 220px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.carousel-slide:hover {
+  border-color: var(--primary-color);
+  transform: scale(1.05);
+}
+
+.carousel-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.carousel-button {
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 50%;
+  padding: 0.8rem 1rem;
+  font-size: 1.2rem;
+  color: white;
+  cursor: pointer;
+}
+
+.translation-box {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.translation-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.translation-column button {
+  padding: 0.8rem;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid var(--secondary-color);
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.translation-column button.selected {
+  background-color: var(--accent-color);
+  border-color: var(--primary-color);
+}
+
+.quiz-options li {
+  list-style: none;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid transparent;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 0.5rem 0;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.quiz-options li:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
