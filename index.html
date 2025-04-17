@@ -10,57 +10,15 @@
 </head>
 <body>
 
-<!-- Trilha de Aprendizagem (Learning Track) -->
-<div id="learning-track-container" class="learning-track-container" style="display: none;">
-  <button class="back-button" onclick="backToMenu()">
-    <i class="fas fa-arrow-left"></i> Voltar ao Menu
-  </button>
-  <h2 class="title"><i class="fas fa-graduation-cap"></i> Trilha de Aprendizagem</h2>
-
-  <!-- Carrossel de Níveis -->
-  <div id="carousel-track" class="carousel-track">
-    <!-- Slides são adicionados dinamicamente -->
-  </div>
-  <div class="carousel-controls">
-    <button id="prev-slide" class="carousel-button">&#10094;</button>
-    <button id="next-slide" class="carousel-button">&#10095;</button>
-  </div>
-
-  <!-- Conteúdo do Nível -->
-  <div id="level-content" class="level-content">
-    <h3 id="level-title"></h3>
-    <p id="reading-text"></p>
-    <p id="explanation-text"></p>
-    <div id="level-question-box">
-      <p id="level-question"></p>
-      <ul id="level-options" class="quiz-options"></ul>
-    </div>
-    <div id="translation-section" style="display: none;">
-      <h4>Traduza os pares abaixo</h4>
-      <div class="translation-box">
-        <div id="english-buttons" class="translation-column"></div>
-        <div id="portuguese-buttons" class="translation-column"></div>
-      </div>
-    </div>
-    <button id="next-level-btn" class="restart-button" style="display: none;">Próximo Nível</button>
-  </div>
-</div>
-
-  <!-- Tela de Boas-Vindas -->
-  <div id="welcome-container" class="welcome-container animate-in">
-    <h1>Bem-vindo ao Speak Easy!</h1>
-    <button id="btn-register-now" class="welcome-button">Comece agora</button>
-    <button id="btn-login" class="welcome-button">Já tenho uma conta</button>
-  </div>
 
   <!-- Tela de Cadastro -->
-  <div id="register-container" class="register-container animate-in" style="display:none;">
-    <h2>Cadastro</h2>
-    <input type="text" id="name" placeholder="Digite seu nome" required/>
-    <input type="password" id="register-password" placeholder="Crie uma senha" required/>
-    <button id="start-button">Cadastrar <i class="fas fa-arrow-right"></i></button>
-    <p>Já tem uma conta? <a href="#" id="go-login">Login</a></p>
-  </div>
+<div id="register-container" class="register-container animate-in">
+  <h2>Cadastro</h2>
+  <input type="text" id="name" placeholder="Digite seu nome"/>
+  <input type="password" id="register-password" placeholder="Crie uma senha"/>
+  <button id="start-button">Cadastrar <i class="fas fa-arrow-right"></i></button>
+  <p>Já tem uma conta? <a href="#" id="go-login">Login</a></p>
+</div>
 
   <!-- Tela de Login -->
   <div id="login-container" class="login-container" style="display:none;">
@@ -81,8 +39,6 @@
       <button id="btnSpanish" class="tab-button animate-in spanish"><i class="fas fa-globe"></i> Español</button>
       <button id="btnFrench" class="tab-button animate-in french"><i class="fas fa-globe"></i> Français</button>
       <button id="btnRanking" class="tab-button animate-in"><i class="fas fa-trophy"></i> Ranking</button>
-      <!-- Novo botão para acesso à English Learning Track -->
-      <button id="btnLearning" class="tab-button animate-in"><i class="fas fa-graduation-cap"></i> Learning Track</button>
     </div>
   </div>
 
@@ -256,7 +212,7 @@
     </div>
   </div>
 
-  <!-- QUIZ PRINCIPAL (em inglês) -->
+  <!-- Quiz Principal (en anglais) -->
   <div id="quiz-container" class="quiz-container" style="display:none;">
     <div id="quiz">
       <p id="question"></p>
@@ -452,38 +408,6 @@
     </button>
   </div>
 
- <!-- NOVO: English Learning Track -->
- <div id="learning-track-container" class="learning-track-container" style="display:none;">
-  <h2>English Learning Track</h2>
-  <!-- Aqui podem permanecer as "bolhas" se desejar uma visão geral, mas agora vamos usar um container específico para o fluxo de níveis -->
-  <div id="level-content" class="level-content" style="display:none;">
-    <h2 id="level-title"></h2>
-    
-    <!-- Seção de Leitura e Explicação -->
-    <div id="reading-section">
-      <p id="reading-text" style="font-style: italic;"></p>
-      <p id="explanation-text" style="margin-bottom: 1rem;"></p>
-    </div>
-    
-    <!-- Seção da Pergunta -->
-    <div id="question-section">
-      <p id="level-question" style="font-weight: bold;"></p>
-      <ul id="level-options"></ul>
-    </div>
-    
-    <!-- Seção do Exercício de Tradução -->
-    <div id="translation-section" style="display:none; margin-top: 1rem;">
-      <h3>Translation Exercise</h3>
-      <p>Match the English words with their Portuguese translations by clicking one word from each group.</p>
-      <div id="english-buttons" class="translation-group"></div>
-      <div id="portuguese-buttons" class="translation-group"></div>
-    </div>
-    
-    <!-- Botão para avançar para o próximo nível, que só aparece após todas as etapas concluídas -->
-    <button id="next-level-btn" class="restart-button" style="display:none;">Next Level</button>
-  </div>
-</div>
-
-<script type="module" src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
