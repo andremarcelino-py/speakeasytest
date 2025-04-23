@@ -620,3 +620,30 @@ const allQuestions = [
   { question: "How do you say 'Eu gosto de música' in English?", options: ["I like music", "I like of music", "I music like", "I likes music"], answer: 0, difficulty: "easy", libraryRef: "frases-basicas" },
   { question: "What is the correct past tense of 'have'?", options: ["Haved", "Has", "Had", "Have"], answer: 2, difficulty: "medium", libraryRef: "verbos" },
 ];
+
+
+
+
+<!-- Tela “Seu Perfil” -->
+<div id="profile-container" class="container" style="display:none;">
+  <button class="back-button" id="backButtonProfile">
+    <i class="fas fa-arrow-left"></i> Voltar
+  </button>
+  <h2>Seu Perfil</h2>
+  <img id="profile-photo" src="images/default.png" alt="Foto de perfil"
+       style="width:150px;height:150px;border-radius:50%;object-fit:cover;margin:1rem 0;" />
+  <p><strong>Nome:</strong> <span id="profile-name"></span></p>
+  <p><strong>Pontuação no quiz:</strong> <span id="profile-score"></span></p>
+
+  <h3>Escolha seu avatar:</h3>
+  <div class="avatar-options">
+    <img src="images/avatar1.png" class="avatar-option" data-avatar="images/avatar1.png" />
+    <img src="images/avatar2.png" class="avatar-option" data-avatar="images/avatar2.png" />
+    <img src="images/avatar3.png" class="avatar-option" data-avatar="images/avatar3.png" />
+  </div>
+</div>
+
+
+<script type="module" src="script.js"></script>
+</body>
+</html>
