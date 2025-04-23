@@ -538,6 +538,56 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+
+
+
+
+const avatarOptions = document.querySelectorAll(".avatar-option");
+
+// Marcar selecionado e salvar no Firestore
+avatarOptions.forEach(img => {
+  img.addEventListener("click", async () => {
+    avatarOptions.forEach(i => i.classList.remove("selected"));
+    img.classList.add("selected");
+    const selectedAvatar = img.getAttribute("data-avatar");
+    profilePhotoElement.src = selectedAvatar;
+
+    // Atualiza no Firestore
+    const snap = await getDocs(collection(db, "users"));
+    snap.forEach(doc => {
+      if (doc.data().name === currentUserName) {
+        updateDoc(doc.ref, { photoURL: selectedAvatar });
+      }
+    });
+  });
+});
+
+// Ao carregar o perfil, mostrar o avatar atual
+async function loadProfileData() {
+  const snap = await getDocs(collection(db, "users"));
+  let userData = null;
+  snap.forEach(doc => {
+    if (doc.data().name === currentUserName) {
+      userData = doc.data();
+    }
+  });
+
+  profileNameElement.textContent  = userData.name;
+  profileScoreElement.textContent = userData.score ?? 0;
+  profilePhotoElement.src = userData.photoURL || "images/default.png";
+
+  // Marca avatar atual
+  avatarOptions.forEach(img => {
+    if (img.getAttribute("data-avatar") === userData.photoURL) {
+      img.classList.add("selected");
+    }
+  });
+}
+
+
+
+
+
 // Lista de perguntas fixa
 const allQuestions = [
   { question: "What is 'eu sou estudante' in English?", options: ["I am student", "A student I am", "I student am", "I am a student"], answer: 3, difficulty: "easy", libraryRef: "frases-basicas" },
