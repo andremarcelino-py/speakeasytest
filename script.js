@@ -150,11 +150,16 @@ startButton.addEventListener("click", async () => {
 let currentUserName = ""; // Variável para armazenar o nome do usuário logado
 
 // Atualiza o nome do usuário no menu
-function updateUserName(name) {
+function updateUserName(name, photoURL = "images/default.png") {
   currentUserName = name;
   const userNameElement = document.getElementById("user-name");
+  const userPhotoElement = document.getElementById("user-photo");
+
   if (userNameElement) {
     userNameElement.textContent = `Bem-vindo, ${name}!`;
+  }
+  if (userPhotoElement) {
+    userPhotoElement.src = photoURL;
   }
 }
 
@@ -176,7 +181,7 @@ loginButton.addEventListener("click", async () => {
       const userData = doc.data();
       if (userData.name === loginName && userData.password === loginPassword) {
         userFound = true;
-        updateUserName(loginName); // Atualiza o nome do usuário
+        updateUserName(loginName, userData.photoURL); // Atualiza o nome e a foto do usuário
         hideAllSections();
         menuContainer.style.display = "block"; // Mostra o menu principal
       }
@@ -361,22 +366,43 @@ window.showLibrarySection = function(sectionId){
 };
 
 // --- RANKING ---
-btnRanking.addEventListener("click", async ()=>{
-  hideAllSections();
-  rankingContainer.style.display="block";
+async function loadRanking() {
   const rankingList = document.getElementById("ranking-list");
-  rankingList.innerHTML="";
-  const snap = await getDocs(collection(db,"users"));
-  let users = [];
-  snap.forEach(doc=> users.push({ name: doc.data().name, score: doc.data().score||0, time: doc.data().time||9999 }));
-  users = users.filter(u=>u.time!==9999).sort((a,b)=>(b.score-a.score) || (a.time-b.time));
-  users.forEach((u,i)=>{
-    const li = document.createElement("li");
-    li.className="animate-in";
-    li.style.animationDelay=`${i*0.1}s`;
-    li.innerHTML=`<span>${i+1}. ${u.name}</span><span>Pontos: ${u.score} | Tempo: ${u.time}s</span>`;
-    rankingList.appendChild(li);
-  });
+  rankingList.innerHTML = ""; // Limpa o ranking atual
+
+  try {
+    const snap = await getDocs(collection(db, "users"));
+    const users = [];
+
+    snap.forEach(doc => {
+      const userData = doc.data();
+      users.push(userData);
+    });
+
+    // Ordena os usuários pela pontuação (score) em ordem decrescente
+    users.sort((a, b) => b.score - a.score);
+
+    // Gera o ranking
+    users.forEach((user, index) => {
+      const listItem = document.createElement("li");
+      listItem.innerHTML = `
+        <div class="ranking-item">
+          <img src="${user.photoURL || 'images/default.png'}" alt="Foto de Perfil" class="ranking-photo"/>
+          <span>${index + 1}. ${user.name} - ${user.score || 0} pontos</span>
+        </div>
+      `;
+      rankingList.appendChild(listItem);
+    });
+  } catch (err) {
+    console.error("Erro ao carregar o ranking:", err);
+  }
+}
+
+// Evento para exibir o ranking ao clicar no botão
+btnRanking.addEventListener("click", () => {
+  hideAllSections();
+  loadRanking();
+  document.getElementById("ranking-container").style.display = "block";
 });
 
 // --- QUIZ ESPAÑOL ---
