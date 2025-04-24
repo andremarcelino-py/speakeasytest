@@ -100,7 +100,8 @@ function hideAllSections() {
     quizContainer, perguntasContainer, perguntasQuizContainer,
     libraryContainer, rankingContainer, endScreen, perguntasEndScreen,
     spanishMenuContainer, spanishQuizContainer, spanishEndScreen, spanishLibraryContainer,
-    frenchMenuContainer, frenchQuizContainer, frenchEndScreen, frenchLibraryContainer
+    frenchMenuContainer, frenchQuizContainer, frenchEndScreen, frenchLibraryContainer,
+    profileContainer // Adicione esta linha
   ].forEach(sec => sec && (sec.style.display = "none"));
 }
 
