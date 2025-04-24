@@ -148,6 +148,7 @@ body {
   font-size: 3rem;
   background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin-bottom: 1.5rem;
@@ -297,6 +298,25 @@ body {
 #ranking-list {
   list-style: none;
   padding: 0;
+  margin: 20px 0;
+}
+
+.ranking-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ranking-photo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--primary-color);
 }
 
 #ranking-list {
@@ -583,8 +603,8 @@ body {
 }
 
 .profile-photo {
-  width: 120px;
-  height: 120px;
+  width: 100px; /* Reduzido de 120px para 100px */
+  height: 100px;
   border-radius: 50%;
   border: 3px solid var(--primary-color);
   margin-bottom: 10px;
@@ -666,4 +686,11 @@ body {
     height: 50px;
   }
 }
-
+.user-photo {
+  width: 32px; /* Reduzido de 40px para 32px */
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--primary-color);
+  margin-right: 8px; /* Ajustado para melhor alinhamento */
+  vertical-align: middle;
+}
