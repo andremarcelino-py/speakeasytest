@@ -10,29 +10,46 @@
 </head>
 <body>
 
+
   <!-- Tela de Cadastro -->
-  <div id="register-container" class="register-container animate-in">
-    <h2>Cadastro</h2>
-    <input type="text" id="name" placeholder="Digite seu nome"/>
-    <input type="password" id="register-password" placeholder="Crie uma senha"/>
-    <button id="start-button">Cadastrar <i class="fas fa-arrow-right"></i></button>
-    <p>Já tem uma conta? <a href="#" id="go-login">Login</a></p>
-  </div>
+<div id="register-container" class="register-container animate-in">
+  <h2>Cadastro</h2>
+  <input type="text" id="name" placeholder="Digite seu nome"/>
+  <input type="password" id="register-password" placeholder="Crie uma senha"/>
+  <button id="start-button">Cadastrar <i class="fas fa-arrow-right"></i></button>
+  <p>Já tem uma conta? <a href="#" id="go-login">Login</a></p>
+</div>
 
   <!-- Tela de Login -->
-  <div id="login-container" class="login-container" style="display:none;">
-    <h2>Login</h2>
-    <input type="text" id="login-name" placeholder="Digite seu nome">
-    <input type="password" id="login-password" placeholder="Digite sua senha">
-    <button id="login-button">Entrar</button>
-    <p>Não tem uma conta? <a href="#" id="go-register">Cadastre-se</a></p>
+<div id="login-container" class="login-container" style="display:none;">
+  <h2>Login</h2>
+  <input type="text" id="login-name" placeholder="Digite seu nome">
+  <input type="password" id="login-password" placeholder="Digite sua senha">
+  <button id="login-button">Entrar</button>
+  <p>Não tem uma conta? <a href="#" id="go-register">Cadastre-se</a></p>
+</div>
+
+  <!-- Menu Principal -->
+  <div id="menu-container" class="menu-container" style="display:none;">
+    <h1 class="title">Speak Easy</h1>
+    <div id="user-info">
+      <span id="user-name"></span>
+    </div>
+    <div class="tabs">
+      <button id="btnQuiz" class="tab-button animate-in"><i class="fas fa-question-circle"></i> Quiz</button>
+      <button id="btnPerguntas" class="tab-button animate-in"><i class="fas fa-edit"></i> Perguntas</button>
+      <button id="btnLibrary" class="tab-button animate-in"><i class="fas fa-book-open"></i> Biblioteca</button>
+      <button id="btnSpanish" class="tab-button animate-in spanish"><i class="fas fa-globe"></i> Español</button>
+      <button id="btnFrench" class="tab-button animate-in french"><i class="fas fa-globe"></i> Français</button>
+      <button id="btnRanking" class="tab-button animate-in"><i class="fas fa-trophy"></i> Ranking</button>
+    </div>
+    <!-- Botão de logout no menu principal -->
+<button id="logout-button" class="restart-button" style="position: absolute; top: 10px; right: 10px;">
+  Sair
+</button>
   </div>
 
-
-
-
-
-  <!-- Menu Español: Seleção de Contenido en Español -->
+  <!-- Menu Español: Selección de Contenido en Español -->
   <div id="spanish-menu-container" class="menu-container" style="display:none;">
     <h2>Contenido en Español</h2>
     <div class="tabs">
@@ -371,7 +388,18 @@
     <ul id="ranking-list"></ul>
   </div>
 
- 
+  <!-- Tela Final do Quiz Principal -->
+  <div id="end-screen" class="end-screen" style="display:none;">
+    <button class="back-button" id="backButtonEndScreen">
+      <i class="fas fa-arrow-left"></i> Voltar ao Menu
+    </button>
+    <p id="final-message"></p>
+    <ul id="error-list"></ul>
+    <button id="restart-button" class="restart-button">
+      <i class="fas fa-sync-alt"></i> Reiniciar Quiz
+    </button>
+  </div>
+
   <!-- Tela Final do Quiz de Perguntas -->
   <div id="perguntas-end-screen" class="end-screen" style="display:none;">
     <button class="back-button" id="backButtonPerguntasEndScreen">
@@ -387,24 +415,24 @@
     </button>
   </div>
 
-  <!-- Tela “Seu Perfil” -->
-  <div id="profile-container" class="container" style="display:none;">
-    <button class="back-button" id="backButtonProfile">
-      <i class="fas fa-arrow-left"></i> Voltar
-    </button>
-    <h2>Seu Perfil</h2>
-    <img id="profile-photo" src="images/default.png" alt="Foto de perfil"
-         style="width:150px;height:150px;border-radius:50%;object-fit:cover;margin:1rem 0;" />
+  <!-- Tela de Perfil -->
+<div id="profile-container" class="profile-container" style="display:none;">
+  <button class="back-button" id="backButtonProfile">
+    <i class="fas fa-arrow-left"></i> Voltar ao Menu
+  </button>
+  <h2>Seu Perfil</h2>
+  <div class="profile-info">
+    <img id="profile-photo" src="images/default.png" alt="Foto de Perfil" class="profile-photo"/>
     <p><strong>Nome:</strong> <span id="profile-name"></span></p>
-    <p><strong>Pontuação no quiz:</strong> <span id="profile-score"></span></p>
-
-    <h3>Escolha seu avatar:</h3>
-    <div class="avatar-options">
-      <img src="images/avatar1.png" class="avatar-option" data-avatar="images/avatar1.png" />
-      <img src="images/avatar2.png" class="avatar-option" data-avatar="images/avatar2.png" />
-      <img src="images/avatar3.png" class="avatar-option" data-avatar="images/avatar3.png" />
-    </div>
+    <p><strong>Pontuação:</strong> <span id="profile-score">0</span></p>
   </div>
+  <h3>Escolha sua Foto de Perfil</h3>
+  <div class="avatar-options">
+    <img src="images/avatar1.png" class="avatar-option" data-avatar="images/avatar1.png" alt="Avatar 1"/>
+    <img src="images/avatar2.png" class="avatar-option" data-avatar="images/avatar2.png" alt="Avatar 2"/>
+    <img src="images/avatar3.png" class="avatar-option" data-avatar="images/avatar3.png" alt="Avatar 3"/>
+  </div>
+</div>
 
   <script type="module" src="script.js"></script>
 </body>
