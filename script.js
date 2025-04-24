@@ -382,13 +382,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Lista fixa de perguntas para todas as seções
-const allQuestions = [
-  /*...*/ // Mesmas perguntas definidas no final do arquivo original
-];
-
-
-Segue o arquivo script.js completo e corrigido, com o fluxo de login direcionando ao menu e o hideAllSections() ajustado para ignorar contêineres ausentes. Qualquer dúvida ou novo ajuste, é só falar!
 
 
 
