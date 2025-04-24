@@ -376,11 +376,19 @@ async function loadRanking() {
 
     snap.forEach(doc => {
       const userData = doc.data();
-      users.push(userData);
+      // Apenas adiciona usuários que terminaram o quiz (com pontuação e tempo registrados)
+      if (userData.score !== undefined && userData.time !== undefined) {
+        users.push(userData);
+      }
     });
 
-    // Ordena os usuários pela pontuação (score) em ordem decrescente
-    users.sort((a, b) => b.score - a.score);
+    // Ordena os usuários pela pontuação em ordem decrescente e, em caso de empate, pelo menor tempo
+    users.sort((a, b) => {
+      if (b.score === a.score) {
+        return a.time - b.time; // Menor tempo primeiro
+      }
+      return b.score - a.score; // Maior pontuação primeiro
+    });
 
     // Gera o ranking
     users.forEach((user, index) => {
@@ -388,7 +396,7 @@ async function loadRanking() {
       listItem.innerHTML = `
         <div class="ranking-item">
           <img src="${user.photoURL || 'images/default.png'}" alt="Foto de Perfil" class="ranking-photo"/>
-          <span>${index + 1}. ${user.name} - ${user.score || 0} pontos</span>
+          <span>${index + 1}. ${user.name} - ${user.score} pontos - ${user.time}s</span>
         </div>
       `;
       rankingList.appendChild(listItem);
