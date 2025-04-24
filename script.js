@@ -1,11 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  updateDoc
-} from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
 
 // Configuração Firebase
 const firebaseConfig = {
@@ -21,217 +15,202 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // Containers principais
-const registerContainer       = document.getElementById("register-container");
-const loginContainer          = document.getElementById("login-container");
-const menuContainer           = document.getElementById("menu-container");
-const quizContainer           = document.getElementById("quiz-container");
-const perguntasContainer      = document.getElementById("perguntas-container");
-const perguntasQuizContainer  = document.getElementById("perguntas-quiz-container");
-const libraryContainer        = document.getElementById("library-container");
-const rankingContainer        = document.getElementById("ranking-container");
-const endScreen               = document.getElementById("end-screen");
-const perguntasEndScreen      = document.getElementById("perguntas-end-screen");
-const spanishMenuContainer    = document.getElementById("spanish-menu-container");
-const spanishQuizContainer    = document.getElementById("spanish-container");
-const spanishEndScreen        = document.getElementById("spanish-end-screen");
-const spanishLibraryContainer = document.getElementById("spanish-library-container");
-const frenchMenuContainer     = document.getElementById("french-menu-container");
-const frenchQuizContainer     = document.getElementById("french-container");
-const frenchEndScreen         = document.getElementById("french-end-screen");
-const frenchLibraryContainer  = document.getElementById("french-library-container");
-const profileContainer        = document.getElementById("profile-container");
+const registerContainer      = document.getElementById("register-container");
+const loginContainer         = document.getElementById("login-container");
+const menuContainer          = document.getElementById("menu-container");
+const quizContainer          = document.getElementById("quiz-container");
+const perguntasContainer     = document.getElementById("perguntas-container");
+const perguntasQuizContainer = document.getElementById("perguntas-quiz-container");
+const libraryContainer       = document.getElementById("library-container");
+const rankingContainer       = document.getElementById("ranking-container");
+const endScreen              = document.getElementById("end-screen");
+const perguntasEndScreen     = document.getElementById("perguntas-end-screen");
+const spanishMenuContainer   = document.getElementById("spanish-menu-container");
+const spanishQuizContainer   = document.getElementById("spanish-container");
+const spanishEndScreen       = document.getElementById("spanish-end-screen");
+const spanishLibraryContainer= document.getElementById("spanish-library-container");
+const frenchMenuContainer    = document.getElementById("french-menu-container");
+const frenchQuizContainer    = document.getElementById("french-container");
+const frenchEndScreen        = document.getElementById("french-end-screen");
+const frenchLibraryContainer = document.getElementById("french-library-container");
 
 // Elementos de cadastro/login
-const startButton    = document.getElementById("start-button");
-const loginButton    = document.getElementById("login-button");
-const goLoginLink    = document.getElementById("go-login");
-const goRegisterLink = document.getElementById("go-register");
+const startButton        = document.getElementById("start-button");
+const loginButton        = document.getElementById("login-button");
+const goLoginLink        = document.getElementById("go-login");
+const goRegisterLink     = document.getElementById("go-register");
 
-// Botões de navegação
-const btnQuiz       = document.getElementById("btnQuiz");
-const btnPerguntas  = document.getElementById("btnPerguntas");
-const btnLibrary    = document.getElementById("btnLibrary");
-const btnRanking    = document.getElementById("btnRanking");
-const btnFacil      = document.getElementById("btnFacil");
-const btnMedio      = document.getElementById("btnMedio");
-const btnDificil    = document.getElementById("btnDificil");
-const restartButton = document.getElementById("restart-button");
+// Outros botões (menu, quiz, etc.)
+const btnQuiz            = document.getElementById("btnQuiz");
+const btnPerguntas       = document.getElementById("btnPerguntas");
+const btnLibrary         = document.getElementById("btnLibrary");
+const btnRanking         = document.getElementById("btnRanking");
+const btnFacil           = document.getElementById("btnFacil");
+const btnMedio           = document.getElementById("btnMedio");
+const btnDificil         = document.getElementById("btnDificil");
+const restartButton      = document.getElementById("restart-button");
+const perguntasRestartButton = document.getElementById("perguntas-restart-button");
+const perguntasMenuButton    = document.getElementById("perguntas-menu-button");
+const btnSpanish         = document.getElementById("btnSpanish");
+const btnSpanishQuiz     = document.getElementById("btnSpanishQuiz");
+const btnSpanishLibrary  = document.getElementById("btnSpanishLibrary");
+const backButtonSpanishMenu = document.getElementById("backButtonSpanishMenu");
+const spanishRestartButton = document.getElementById("spanish-restart-button");
+const spanishMenuButton    = document.getElementById("spanish-menu-button");
+const btnFrench          = document.getElementById("btnFrench");
+const btnFrenchQuiz      = document.getElementById("btnFrenchQuiz");
+const btnFrenchLibrary   = document.getElementById("btnFrenchLibrary");
+const backButtonFrenchMenu = document.getElementById("backButtonFrenchMenu");
+const frenchRestartButton  = document.getElementById("french-restart-button");
+const frenchMenuButton     = document.getElementById("french-menu-button");
 
-// Quiz Elements (Inglês)
-const questionElement     = document.getElementById("question");
-const optionsElement      = document.getElementById("options");
-const scoreElement        = document.getElementById("score");
-const timerElement        = document.getElementById("timer");
-const finalMessageElement = document.getElementById("final-message");
-const errorListElement    = document.getElementById("error-list");
+// Elementos do Quiz (inglês, perguntas, español, francês)
+const questionElement       = document.getElementById("question");
+const optionsElement        = document.getElementById("options");
+const scoreElement          = document.getElementById("score");
+const timerElement          = document.getElementById("timer");
+const finalMessageElement   = document.getElementById("final-message");
+const errorListElement      = document.getElementById("error-list");
 
-// Quiz Perguntas Elements
-const perguntasQuestionElement     = document.getElementById("perguntas-question");
-const perguntasOptionsElement      = document.getElementById("perguntas-options");
-const perguntasScoreElement        = document.getElementById("perguntas-score");
-const perguntasTimerElement        = document.getElementById("perguntas-timer");
+const perguntasQuestionElement = document.getElementById("perguntas-question");
+const perguntasOptionsElement  = document.getElementById("perguntas-options");
+const perguntasScoreElement    = document.getElementById("perguntas-score");
+const perguntasTimerElement    = document.getElementById("perguntas-timer");
 const perguntasFinalMessageElement = document.getElementById("perguntas-final-message");
 const perguntasErrorListElement    = document.getElementById("perguntas-error-list");
-const perguntasRestartButton       = document.getElementById("perguntas-restart-button");
-const perguntasMenuButton          = document.getElementById("perguntas-menu-button");
 
-// Spanish Quiz Elements
 const spanishQuestionElement = document.getElementById("spanish-question");
 const spanishOptionsElement  = document.getElementById("spanish-options");
 const spanishScoreElement    = document.getElementById("spanish-score");
 const spanishTimerElement    = document.getElementById("spanish-timer");
 const spanishFinalMessageEl  = document.getElementById("spanish-final-message");
 const spanishErrorListEl     = document.getElementById("spanish-error-list");
-const spanishRestartButton   = document.getElementById("spanish-restart-button");
-const spanishMenuButton      = document.getElementById("spanish-menu-button");
 
-// French Quiz Elements
 const frenchQuestionElement = document.getElementById("french-question");
 const frenchOptionsElement  = document.getElementById("french-options");
 const frenchScoreElement    = document.getElementById("french-score");
 const frenchTimerElement    = document.getElementById("french-timer");
 const frenchFinalMessageEl  = document.getElementById("french-final-message");
 const frenchErrorListEl     = document.getElementById("french-error-list");
-const frenchRestartButton   = document.getElementById("french-restart-button");
-const frenchMenuButton      = document.getElementById("french-menu-button");
 
-// Profile Elements
-const profileNameElement  = document.getElementById("profile-name");
-const profileScoreElement = document.getElementById("profile-score");
-const profilePhotoElement = document.getElementById("profile-photo");
-const avatarOptions       = document.querySelectorAll(".avatar-option");
-const backButtonProfile   = document.getElementById("backButtonProfile");
-
-let currentUserName = "";
-
-// Esconde todas as seções (ignora null)
+// Função genérica para esconder todas as seções
 function hideAllSections() {
   [
     registerContainer, loginContainer, menuContainer,
     quizContainer, perguntasContainer, perguntasQuizContainer,
     libraryContainer, rankingContainer, endScreen, perguntasEndScreen,
     spanishMenuContainer, spanishQuizContainer, spanishEndScreen, spanishLibraryContainer,
-    frenchMenuContainer, frenchQuizContainer, frenchEndScreen, frenchLibraryContainer,
-    profileContainer
-  ].forEach(sec => {
-    if (sec) sec.style.display = "none";
-  });
+    frenchMenuContainer, frenchQuizContainer, frenchEndScreen, frenchLibraryContainer
+  ].forEach(sec => sec && (sec.style.display = "none"));
 }
 
-// Volta ao menu principal
+// Função para voltar ao menu
 function backToMenu() {
+  stopTimer(); stopPerguntasTimer(); stopSpanishTimer(); stopFrenchTimer();
   hideAllSections();
-  if (menuContainer) menuContainer.style.display = "block";
+  menuContainer.style.display = "block";
 }
 
-// Navegação Cadastro/Login
-goLoginLink.addEventListener("click", () => {
-  registerContainer.style.display = "none";
-  loginContainer.style.display    = "block";
-});
-goRegisterLink.addEventListener("click", () => {
-  loginContainer.style.display    = "none";
-  registerContainer.style.display = "block";
+// Conecta botões de voltar
+[
+  "backButtonQuiz", "backButtonPerguntas", "backButtonPerguntasQuiz",
+  "backButtonLibrary", "backButtonRanking", "backButtonEndScreen", "backButtonPerguntasEndScreen",
+  "backButtonSpanish", "backButtonSpanishLibrary", "backButtonSpanishEndScreen",
+  "backButtonFrench", "backButtonFrenchLibrary", "backButtonFrenchEndScreen"
+].forEach(id => {
+  const btn = document.getElementById(id);
+  if (btn) btn.addEventListener("click", backToMenu);
 });
 
 // --- CADASTRO ---
 startButton.addEventListener("click", async () => {
-  const nameInput     = document.getElementById("name").value.trim();
+  const nameInput = document.getElementById("name").value.trim();
   const passwordInput = document.getElementById("register-password").value.trim();
   if (!nameInput || !passwordInput) {
     alert("Por favor, preencha todos os campos!");
     return;
   }
   try {
-    await addDoc(collection(db, "users"), { name: nameInput, password: passwordInput });
+    await addDoc(collection(db, "users"), {
+      name: nameInput,
+      password: passwordInput,
+      score: 0,
+      photoURL: "images/default.png"
+    });
     hideAllSections();
     loginContainer.style.display = "block";
   } catch (err) {
     console.error(err);
     alert("Não foi possível cadastrar. Tente novamente.");
-    registerContainer.style.display = "block";
   }
 });
 
-// --- LOGIN (corrigido para mostrar menu) ---
+// --- LOGIN ---
+let currentUserName = ""; // Variável para armazenar o nome do usuário logado
+
+// Atualiza o nome do usuário no menu
+function updateUserName(name) {
+  currentUserName = name;
+  const userNameElement = document.getElementById("user-name");
+  if (userNameElement) {
+    userNameElement.textContent = `Bem-vindo, ${name}!`;
+  }
+}
+
+// Modifique o login para atualizar o nome do usuário
 loginButton.addEventListener("click", async () => {
-  const loginName     = document.getElementById("login-name").value.trim();
+  const loginName = document.getElementById("login-name").value.trim();
   const loginPassword = document.getElementById("login-password").value.trim();
+
   if (!loginName || !loginPassword) {
     alert("Por favor, preencha todos os campos!");
     return;
   }
+
   try {
     const snap = await getDocs(collection(db, "users"));
-    let found = false;
+    let userFound = false;
+
     snap.forEach(doc => {
-      const u = doc.data();
-      if (u.name === loginName && u.password === loginPassword) {
-        found = true;
-        currentUserName = loginName;
+      const userData = doc.data();
+      if (userData.name === loginName && userData.password === loginPassword) {
+        userFound = true;
+        updateUserName(loginName); // Atualiza o nome do usuário
         hideAllSections();
-        if (menuContainer) menuContainer.style.display = "block";
+        menuContainer.style.display = "block"; // Mostra o menu principal
       }
     });
-    if (!found) alert("Dados de login incorretos! Tente novamente.");
+
+    if (!userFound) {
+      alert("Dados de login incorretos! Tente novamente.");
+    }
   } catch (err) {
-    console.error(err);
+    console.error("Erro no login:", err);
     alert("Erro ao efetuar login. Tente novamente.");
   }
 });
 
-// Perfil: clique no nome
-const userNameElement = document.getElementById("user-name");
-if (userNameElement) {
-  userNameElement.style.cursor = "pointer";
-  userNameElement.addEventListener("click", () => {
-    hideAllSections();
-    loadProfileData();
-    profileContainer.style.display = "block";
-  });
-}
-backButtonProfile.addEventListener("click", backToMenu);
-
-// --- PERFIL & AVATARES ---
-avatarOptions.forEach(img => {
-  img.addEventListener("click", async () => {
-    avatarOptions.forEach(i => i.classList.remove("selected"));
-    img.classList.add("selected");
-    profilePhotoElement.src = img.dataset.avatar;
-    const snap = await getDocs(collection(db, "users"));
-    snap.forEach(doc => {
-      if (doc.data().name === currentUserName) {
-        updateDoc(doc.ref, { photoURL: img.dataset.avatar });
-      }
-    });
-  });
+// Navegação entre telas de cadastro e login
+goLoginLink.addEventListener("click", () => {
+  registerContainer.style.display = "none";
+  loginContainer.style.display = "block";
 });
-
-async function loadProfileData() {
-  const snap = await getDocs(collection(db, "users"));
-  snap.forEach(doc => {
-    const u = doc.data();
-    if (u.name === currentUserName) {
-      profileNameElement.textContent  = u.name;
-      profileScoreElement.textContent = u.score ?? 0;
-      profilePhotoElement.src         = u.photoURL || "images/default.png";
-      avatarOptions.forEach(img => {
-        if (img.dataset.avatar === u.photoURL) img.classList.add("selected");
-      });
-    }
-  });
-}
+goRegisterLink.addEventListener("click", () => {
+  loginContainer.style.display = "none";
+  registerContainer.style.display = "block";
+});
 
 // --- QUIZ INGLÊS ---
 let questions = [], score = 0, currentQuestion = 0, errors = [], quizTimer = 0, timerInterval;
 function getRandomQuestions() {
-  return [...allQuestions].sort(() => Math.random() - 0.5).slice(0, 15);
+  return [...allQuestions].sort(() => Math.random() - 0.5).slice(0,15);
 }
 function startTimer() {
-  quizTimer = 0;
-  timerElement.textContent = quizTimer;
+  quizTimer = 0; timerElement.textContent = quizTimer;
   clearInterval(timerInterval);
- 	timerInterval = setInterval(() => { quizTimer++; timerElement.textContent = quizTimer; }, 1000);
+  timerInterval = setInterval(() => {
+    quizTimer++; timerElement.textContent = quizTimer;
+  },1000);
 }
 function stopTimer() { clearInterval(timerInterval); }
 function loadQuestion() {
@@ -239,10 +218,10 @@ function loadQuestion() {
     const q = questions[currentQuestion];
     questionElement.textContent = q.question;
     optionsElement.innerHTML = "";
-    q.options.forEach((opt, i) => {
+    q.options.forEach((opt,i)=>{
       const li = document.createElement("li");
       li.textContent = opt;
-      li.addEventListener("click", () => checkAnswer(i));
+      li.addEventListener("click", ()=> checkAnswer(i));
       optionsElement.appendChild(li);
     });
   } else endQuiz();
@@ -250,7 +229,7 @@ function loadQuestion() {
 function checkAnswer(sel) {
   const q = questions[currentQuestion];
   const opts = optionsElement.querySelectorAll("li");
-  opts.forEach((li, i) => {
+  opts.forEach((li,i)=>{
     li.classList.remove("correct","wrong");
     if (i === q.answer) li.classList.add("correct");
     else if (i === sel) li.classList.add("wrong");
@@ -258,45 +237,72 @@ function checkAnswer(sel) {
   });
   if (sel === q.answer) { score++; scoreElement.textContent = score; }
   else errors.push(`Pergunta: ${q.question} - Resposta: ${q.options[q.answer]}`);
-  setTimeout(() => { currentQuestion++; loadQuestion(); }, 1500);
+  saveProgress(currentUserName, { questions, score, currentQuestion, errors, quizTimer });
+  setTimeout(()=>{
+    currentQuestion++; loadQuestion();
+  },1500);
 }
 function endQuiz() {
   stopTimer();
   quizContainer.style.display = "none";
-  endScreen.style.display    = "block";
+  endScreen.style.display = "block";
   finalMessageElement.textContent = `Pontuação Final: ${score}/${questions.length} | Tempo: ${quizTimer}s`;
-  errorListElement.innerHTML = errors.map(e => `<li>${e}</li>`).join("");
-  saveScore(currentUserName, score, quizTimer);
+  errorListElement.innerHTML = errors.map(e=>`<li class="error-item">${e}</li>`).join("");
+  saveScore(document.getElementById("name").value.trim(), score, quizTimer);
 }
-btnQuiz.addEventListener("click", () => {
+btnQuiz.addEventListener("click", async () => {
   hideAllSections();
   quizContainer.style.display = "block";
-  questions = getRandomQuestions();
-  score = 0; currentQuestion = 0; errors = [];
+  const savedProgress = await loadProgress(currentUserName);
+  if (savedProgress) {
+    const resume = confirm("Você tem progresso salvo. Deseja continuar de onde parou?");
+    if (resume) {
+      questions = savedProgress.questions;
+      score = savedProgress.score;
+      currentQuestion = savedProgress.currentQuestion;
+      errors = savedProgress.errors;
+      quizTimer = savedProgress.quizTimer;
+    } else {
+      questions = getRandomQuestions();
+      score = 0;
+      currentQuestion = 0;
+      errors = [];
+      quizTimer = 0;
+    }
+  } else {
+    questions = getRandomQuestions();
+    score = 0;
+    currentQuestion = 0;
+    errors = [];
+    quizTimer = 0;
+  }
   scoreElement.textContent = score;
   startTimer();
   loadQuestion();
 });
-restartButton.addEventListener("click", () => btnQuiz.click());
+restartButton.addEventListener("click", ()=>{
+  btnQuiz.click();
+});
 
 // --- QUIZ PERGUNTAS ---
 let perguntasQuestions = [], perguntasScore = 0, currentPerguntaQuestion = 0, perguntasErrors = [], perguntasTimer = 0, perguntasTimerInterval;
 function startPerguntasTimer() {
-  perguntasTimer = 0;
-  perguntasTimerElement.textContent = perguntasTimer;
+  perguntasTimer = 0; perguntasTimerElement.textContent = perguntasTimer;
   clearInterval(perguntasTimerInterval);
-  perguntasTimerInterval = setInterval(() => { perguntasTimer++; perguntasTimerElement.textContent = perguntasTimer; }, 1000);
+  perguntasTimerInterval = setInterval(()=>{
+    perguntasTimer++; perguntasTimerElement.textContent = perguntasTimer;
+  },1000);
 }
-function stopPerguntasTimer() { clearInterval(perguntasTimerInterval); }
-function loadPerguntasQuestion() {
+function stopPerguntasTimer(){ clearInterval(perguntasTimerInterval); }
+function loadPerguntasQuestion(){
   if (currentPerguntaQuestion < perguntasQuestions.length) {
     const q = perguntasQuestions[currentPerguntaQuestion];
     perguntasQuestionElement.textContent = q.question;
     perguntasOptionsElement.innerHTML = "";
-    q.options.forEach((opt, i) => {
-      const li =	document.createElement("li");
+    q.options.forEach((opt,i)=>{
+      const li = document.createElement("li");
       li.textContent = opt;
-      li.addEventListener("click", () => checkPerguntasAnswer(i));
+      li.addEventListener("click", ()=> checkPerguntasAnswer(i));
       perguntasOptionsElement.appendChild(li);
     });
   } else endPerguntasQuiz();
@@ -304,55 +310,70 @@ function loadPerguntasQuestion() {
 function checkPerguntasAnswer(sel) {
   const q = perguntasQuestions[currentPerguntaQuestion];
   const opts = perguntasOptionsElement.querySelectorAll("li");
-  opts.forEach((li, i) => {
+  opts.forEach((li,i)=>{
     li.classList.remove("correct","wrong");
     if (i === q.answer) li.classList.add("correct");
-    else	if (i === sel) li.classList.add("wrong");
+    else if (i === sel) li.classList.add("wrong");
     li.style.pointerEvents = "none";
   });
   if (sel === q.answer) { perguntasScore++; perguntasScoreElement.textContent = perguntasScore; }
-  else perguntasErrors.push({ question: q.question, correct: q.options[q.answer] });
-  setTimeout(() => { currentPerguntaQuestion++; loadPerguntasQuestion(); }, 1500);
+  else perguntasErrors.push({ question: q.question, correct: q.options[q.answer], libraryRef: q.libraryRef });
+  setTimeout(()=>{
+    currentPerguntaQuestion++; loadPerguntasQuestion();
+  },1500);
 }
 function endPerguntasQuiz() {
   stopPerguntasTimer();
-  perguntasQuizContainer.style.display = "none";
-  perguntasEndScreen.style.display       = "block";
+  perguntasQuizContainer.style.display="none";
+  perguntasEndScreen.style.display="block";
   perguntasFinalMessageElement.textContent = `Pontuação Final: ${perguntasScore}/${perguntasQuestions.length} | Tempo: ${perguntasTimer}s`;
-  perguntasErrorListElement.innerHTML = perguntasErrors.map(err => `<li>${err.question} - Resposta correta: ${err.correct}</li>`).join(""");
+  perguntasErrorListElement.innerHTML = perguntasErrors.map(err=>`
+    <li class="error-item">
+      ${err.question}<br>
+      Resposta correta: ${err.correct}
+      <button onclick="showLibrarySection('${err.libraryRef}')">Aprenda Mais</button>
+    </li>
+  `).join("");
 }
-btnPerguntas.addEventListener("click", () => { hideAllSections(); perguntasContainer.style.display = "block"; });
-btnFacil.addEventListener("click", () => startPerguntasQuiz("easy"));
-btnMedio.addEventListener("click", () => startPerguntasQuiz("medium"));
-btnDificil.addEventListener("click", () => startPerguntasQuiz("hard"));
-perguntasRestartButton.addEventListener("click", () => startPerguntasQuiz(perguntasQuestions[0]?.difficulty || "easy"));
-perguntasMenuButton.addEventListener("click", backToMenu);
-
 function startPerguntasQuiz(dif) {
-  perguntasQuestions = allQuestions.filter(q => q.difficulty === dif)
-    .sort(() => Math.random() - 0.5).slice(0, 10);
-  perguntasScore = 0; currentPerguntaQuestion = 0; perguntasErrors = [];
-  perguntasScoreElement.textContent = perguntasScore;
+  perguntasQuestions = allQuestions.filter(q=>q.difficulty===dif).sort(()=>Math.random()-0.5).slice(0,10);
+  perguntasScore=0; currentPerguntaQuestion=0; perguntasErrors=[];
+  perguntasScoreElement.textContent=perguntasScore;
   hideAllSections();
-  perguntasQuizContainer.style.display = "block";
+  perguntasQuizContainer.style.display="block";
   startPerguntasTimer();
   loadPerguntasQuestion();
 }
+btnPerguntas.addEventListener("click", ()=>{ hideAllSections(); perguntasContainer.style.display="block"; });
+btnFacil.addEventListener("click", ()=> startPerguntasQuiz("easy"));
+btnMedio.addEventListener("click", ()=> startPerguntasQuiz("medium"));
+btnDificil.addEventListener("click", ()=> startPerguntasQuiz("hard"));
+perguntasRestartButton.addEventListener("click", ()=> startPerguntasQuiz(perguntasQuestions[0]?.difficulty||"easy"));
+perguntasMenuButton.addEventListener("click", backToMenu);
+
+// --- BIBLIOTECA ---
+btnLibrary.addEventListener("click", ()=>{ hideAllSections(); libraryContainer.style.display="block"; });
+window.showLibrarySection = function(sectionId){
+  hideAllSections();
+  libraryContainer.style.display="block";
+  document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+};
 
 // --- RANKING ---
-btnRanking.addEventListener("click", async () => {
+btnRanking.addEventListener("click", async ()=>{
   hideAllSections();
-  rankingContainer.style.display = "block";
+  rankingContainer.style.display="block";
   const rankingList = document.getElementById("ranking-list");
-  rankingList.innerHTML = "";
-  const snap = await getDocs(collection(db, "users"));
+  rankingList.innerHTML="";
+  const snap = await getDocs(collection(db,"users"));
   let users = [];
-  snap.forEach(doc => { users.push({ name: doc.data().name, score: doc.data().score || 0, time: doc.data().time || Infinity }); });
-  users = users.filter(u => u.time !== Infinity)
-               .sort((a, b) => (b.score - a.score) || (a.time - b.time));
-  users.forEach((u, i) => {
+  snap.forEach(doc=> users.push({ name: doc.data().name, score: doc.data().score||0, time: doc.data().time||9999 }));
+  users = users.filter(u=>u.time!==9999).sort((a,b)=>(b.score-a.score) || (a.time-b.time));
+  users.forEach((u,i)=>{
     const li = document.createElement("li");
-    li.innerHTML = `<span>${i+1}. ${u.name}</span><span>Pontos: ${u.score} | Tempo: ${u.time}s</span>`;
+    li.className="animate-in";
+    li.style.animationDelay=`${i*0.1}s`;
+    li.innerHTML=`<span>${i+1}. ${u.name}</span><span>Pontos: ${u.score} | Tempo: ${u.time}s</span>`;
     rankingList.appendChild(li);
   });
 });
@@ -360,31 +381,181 @@ btnRanking.addEventListener("click", async () => {
 // --- QUIZ ESPAÑOL ---
 let spanishQuestions = [], spanishScore = 0, currentSpanishQuestion = 0, spanishErrors = [], spanishTimer = 0, spanishTimerInterval;
 function getRandomSpanishQuestions() {
-  const all = [/*...*/]; // Mesmas perguntas definidas abaixo
-  return [...all].sort(() => Math.random() - 0.5).slice(0, 15);
+  const all = [
+    { question: "¿Cómo se dice 'Hello' en español?", options:["Hola","Adiós","Gracias","Por favor"], answer:0 },
+    { question: "¿Qué significa 'Goodbye' en español?", options:["Hola","Adiós","Buenas noches","Gracias"], answer:1 },
+    { question: "¿Cómo se dice 'Thank you' en español?", options:["Por favor","Gracias","De nada","Perdón"], answer:1 },
+    { question: "¿Cuál es el plural de 'amigo'?", options:["Amigos","Amigas","Amigoes","Amigues"], answer:0 },
+    { question: "¿Cómo se dice 'I am learning Spanish' en español?", options:["Estoy aprendiendo español","Aprendo español","Yo español aprendo","Aprendiendo estoy español"], answer:0 }
+  ];
+  return [...all].sort(()=>Math.random()-0.5).slice(0,15);
 }
-// (O restante do fluxo de espanhol e francês segue igual ao original)
-
-// Salvar pontuação no Firestore
-tasync function saveScore(userName, score, time) {
-  const snap = await getDocs(collection(db, "users"));
-  snap.forEach(doc => {
-    if (doc.data().name === userName) {
-      updateDoc(doc.ref, { score, time });
-    }
+function startSpanishTimer() {
+  spanishTimer=0; spanishTimerElement.textContent=spanishTimer;
+  clearInterval(spanishTimerInterval);
+  spanishTimerInterval=setInterval(()=>{
+    spanishTimer++; spanishTimerElement.textContent=spanishTimer;
+  },1000);
+}
+function stopSpanishTimer(){ clearInterval(spanishTimerInterval); }
+function loadSpanishQuestion() {
+  if (currentSpanishQuestion < spanishQuestions.length) {
+    const q = spanishQuestions[currentSpanishQuestion];
+    spanishQuestionElement.textContent = q.question;
+    spanishOptionsElement.innerHTML = "";
+    q.options.forEach((opt,i)=>{
+      const li=document.createElement("li");
+      li.textContent=opt;
+      li.addEventListener("click", ()=> spanishCheckAnswer(i));
+      spanishOptionsElement.appendChild(li);
+    });
+  } else endSpanishQuiz();
+}
+function spanishCheckAnswer(sel) {
+  const q=spanishQuestions[currentSpanishQuestion];
+  const opts=spanishOptionsElement.querySelectorAll("li");
+  opts.forEach((li,i)=>{
+    li.classList.remove("correct","wrong");
+    if (i===q.answer) li.classList.add("correct");
+    else if (i===sel) li.classList.add("wrong");
+    li.style.pointerEvents="none";
   });
+  if (sel===q.answer) { spanishScore++; spanishScoreElement.textContent=spanishScore; }
+  else spanishErrors.push(`Pregunta: ${q.question} - Respuesta: ${q.options[q.answer]}`);
+  setTimeout(()=>{
+    currentSpanishQuestion++; loadSpanishQuestion();
+  },1500);
+}
+function endSpanishQuiz() {
+  stopSpanishTimer();
+  spanishQuizContainer.style.display="none";
+  spanishEndScreen.style.display="block";
+  spanishFinalMessageEl.textContent = `Puntuación Final: ${spanishScore}/${spanishQuestions.length} | Tiempo: ${spanishTimer}s`;
+  spanishErrorListEl.innerHTML = spanishErrors.map(e=>`
+    <li class="error-item">
+      ${e}<br>
+      <button class="aprenda-mais-button" onclick="showLibrarySectionSpanish()">Aprenda Mais</button>
+    </li>
+  `).join("");
+}
+window.showLibrarySectionSpanish = function() {
+  hideAllSections();
+  spanishLibraryContainer.style.display="block";
+}
+btnSpanish.addEventListener("click", ()=>{ hideAllSections(); spanishMenuContainer.style.display="block"; });
+btnSpanishQuiz.addEventListener("click", ()=>{
+  hideAllSections(); spanishQuizContainer.style.display="block";
+  spanishQuestions = getRandomSpanishQuestions();
+  spanishScore=0; currentSpanishQuestion=0; spanishErrors=[];
+  spanishScoreElement.textContent=spanishScore;
+  startSpanishTimer(); loadSpanishQuestion();
+});
+btnSpanishLibrary.addEventListener("click", ()=>{ hideAllSections(); spanishLibraryContainer.style.display="block"; });
+backButtonSpanishMenu.addEventListener("click", backToMenu);
+spanishRestartButton.addEventListener("click", ()=>{
+  btnSpanishQuiz.click();
+});
+spanishMenuButton.addEventListener("click", backToMenu);
+
+// --- QUIZ FRANÇAIS ---
+let frenchQuestions = [], frenchScore = 0, currentFrenchQuestion = 0, frenchErrors = [], frenchTimer = 0, frenchTimerInterval;
+function getRandomFrenchQuestions() {
+  const all = [
+    { question: "Comment dit-on 'Hello' en français?", options:["Bonjour","Au revoir","Merci","S'il vous plaît"], answer:0 },
+    { question: "Que signifie 'Goodbye' en français?", options:["Bonjour","Au revoir","Bonne nuit","Merci"], answer:1 },
+    { question: "Comment dit-on 'Thank you' en français?", options:["S'il vous plaît","Merci","De rien","Pardon"], answer:1 },
+    { question: "Quel est le pluriel de 'ami'?", options:["Amis","Amies","Amis","Ami(e)s"], answer:0 },
+    { question: "Comment dit-on 'I am learning French' en français?", options:["J'apprends le français","Je français apprends","J'apprendrai le français","Je suis en train d'apprendre le français"], answer:0 }
+  ];
+  return [...all].sort(()=>Math.random()-0.5).slice(0,15);
+}
+function startFrenchTimer() {
+  frenchTimer=0; frenchTimerElement.textContent=frenchTimer;
+  clearInterval(frenchTimerInterval);
+  frenchTimerInterval=setInterval(()=>{
+    frenchTimer++; frenchTimerElement.textContent=frenchTimer;
+  },1000);
+}
+function stopFrenchTimer(){ clearInterval(frenchTimerInterval); }
+function loadFrenchQuestion() {
+  if (currentFrenchQuestion < frenchQuestions.length) {
+    const q = frenchQuestions[currentFrenchQuestion];
+    frenchQuestionElement.textContent = q.question;
+    frenchOptionsElement.innerHTML = "";
+    q.options.forEach((opt,i)=>{
+      const li=document.createElement("li");
+      li.textContent=opt;
+      li.addEventListener("click", ()=> frenchCheckAnswer(i));
+      frenchOptionsElement.appendChild(li);
+    });
+  } else endFrenchQuiz();
+}
+function frenchCheckAnswer(sel) {
+  const q=frenchQuestions[currentFrenchQuestion];
+  const opts=frenchOptionsElement.querySelectorAll("li");
+  opts.forEach((li,i)=>{
+    li.classList.remove("correct","wrong");
+    if (i===q.answer) li.classList.add("correct");
+    else if (i===sel) li.classList.add("wrong");
+    li.style.pointerEvents="none";
+  });
+  if (sel===q.answer) { frenchScore++; frenchScoreElement.textContent=frenchScore; }
+  else frenchErrors.push(`Question: ${q.question} - Réponse: ${q.options[q.answer]}`);
+  setTimeout(()=>{
+    currentFrenchQuestion++; loadFrenchQuestion();
+  },1500);
+}
+function endFrenchQuiz() {
+  stopFrenchTimer();
+  frenchQuizContainer.style.display="none";
+  frenchEndScreen.style.display="block";
+  frenchFinalMessageEl.textContent = `Score Final: ${frenchScore}/${frenchQuestions.length} | Temps: ${frenchTimer}s`;
+  frenchErrorListEl.innerHTML = frenchErrors.map(e=>`
+    <li class="error-item">
+      ${e}<br>
+      <button class="aprenda-mais-button" onclick="showLibrarySectionFrench()">En savoir plus</button>
+    </li>
+  `).join("");
+}
+window.showLibrarySectionFrench = function() {
+  hideAllSections();
+  frenchLibraryContainer.style.display="block";
+}
+btnFrench.addEventListener("click", ()=>{ hideAllSections(); frenchMenuContainer.style.display="block"; });
+btnFrenchQuiz.addEventListener("click", ()=>{
+  hideAllSections(); frenchQuizContainer.style.display="block";
+  frenchQuestions = getRandomFrenchQuestions();
+  frenchScore=0; currentFrenchQuestion=0; frenchErrors=[];
+  frenchScoreElement.textContent=frenchScore;
+  startFrenchTimer(); loadFrenchQuestion();
+});
+btnFrenchLibrary.addEventListener("click", ()=>{ hideAllSections(); frenchLibraryContainer.style.display="block"; });
+backButtonFrenchMenu.addEventListener("click", backToMenu);
+frenchRestartButton.addEventListener("click", ()=> btnFrenchQuiz.click());
+frenchMenuButton.addEventListener("click", backToMenu);
+
+// --- SALVAR PONTUAÇÃO ---
+async function saveScore(userName, score, time) {
+  const snap = await getDocs(collection(db,"users"));
+  let userDoc = null;
+  snap.forEach(doc=>{
+    if (doc.data().name === userName) userDoc = doc.ref;
+  });
+  if (userDoc) {
+    await updateDoc(userDoc, { score, time });
+  }
 }
 
-// Expansão de biblioteca
+// Alterna a visualização do conteúdo da Biblioteca (expansível)
 document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".text-card .text-header").forEach(header => {
-    header.addEventListener("click", () => header.nextElementSibling.classList.toggle("active"));
+  const headers = document.querySelectorAll(".text-card .text-header");
+  headers.forEach(header => {
+    header.addEventListener("click", () => {
+      const content = header.nextElementSibling;
+      content.classList.toggle("active");
+    });
   });
 });
-
-
-
-
 
 // Lista de perguntas fixa
 const allQuestions = [
@@ -419,4 +590,129 @@ const allQuestions = [
   { question: "What is the correct past tense of 'have'?", options: ["Haved", "Has", "Had", "Have"], answer: 2, difficulty: "medium", libraryRef: "verbos" },
 ];
 
+// Adicionando funcionalidade de redefinição de senha
+const resetPasswordButton = document.getElementById("reset-password-button");
+if (resetPasswordButton) {
+  resetPasswordButton.addEventListener("click", async () => {
+    const loginName = document.getElementById("login-name").value.trim();
+    if (!loginName) {
+      alert("Por favor, insira seu nome para redefinir a senha.");
+      return;
+    }
+    try {
+      const snap = await getDocs(collection(db, "users"));
+      let userFound = false;
+      snap.forEach(doc => {
+        if (doc.data().name === loginName) {
+          userFound = true;
+          const newPassword = prompt("Digite sua nova senha:");
+          if (newPassword) {
+            updateDoc(doc.ref, { password: newPassword });
+            alert("Senha redefinida com sucesso!");
+          }
+        }
+      });
+      if (!userFound) alert("Usuário não encontrado.");
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao redefinir a senha. Tente novamente.");
+    }
+  });
+}
 
+// Adicionando funcionalidade de logout
+const logoutButton = document.getElementById("logout-button");
+if (logoutButton) {
+  logoutButton.addEventListener("click", () => {
+    currentUserName = "";
+    hideAllSections();
+    loginContainer.style.display = "block";
+  });
+}
+
+// Função para salvar progresso do usuário
+async function saveProgress(userName, progress) {
+  try {
+    const snap = await getDocs(collection(db, "users"));
+    snap.forEach(doc => {
+      if (doc.data().name === userName) {
+        updateDoc(doc.ref, { progress });
+      }
+    });
+  } catch (err) {
+    console.error("Erro ao salvar progresso:", err);
+  }
+}
+
+// Função para carregar progresso do usuário
+async function loadProgress(userName) {
+  try {
+    const snap = await getDocs(collection(db, "users"));
+    let userProgress = null;
+    snap.forEach(doc => {
+      if (doc.data().name === userName) {
+        userProgress = doc.data().progress || null;
+      }
+    });
+    return userProgress;
+  } catch (err) {
+    console.error("Erro ao carregar progresso:", err);
+    return null;
+  }
+}
+
+// Elementos da tela de perfil
+const profileContainer = document.getElementById("profile-container");
+const profileNameElement = document.getElementById("profile-name");
+const profileScoreElement = document.getElementById("profile-score");
+const profilePhotoElement = document.getElementById("profile-photo");
+const avatarOptions = document.querySelectorAll(".avatar-option");
+const backButtonProfile = document.getElementById("backButtonProfile");
+
+// Exibir a tela de perfil ao clicar no nome do usuário
+const userNameElement = document.getElementById("user-name");
+if (userNameElement) {
+  userNameElement.style.cursor = "pointer";
+  userNameElement.addEventListener("click", () => {
+    hideAllSections();
+    loadProfileData();
+    profileContainer.style.display = "block";
+  });
+}
+
+// Voltar ao menu principal
+backButtonProfile.addEventListener("click", backToMenu);
+
+// Carregar dados do perfil do usuário
+async function loadProfileData() {
+  const snap = await getDocs(collection(db, "users"));
+  snap.forEach(doc => {
+    const user = doc.data();
+    if (user.name === currentUserName) {
+      profileNameElement.textContent = user.name;
+      profileScoreElement.textContent = user.score ?? 0;
+      profilePhotoElement.src = user.photoURL || "images/default.png";
+      avatarOptions.forEach(img => {
+        if (img.dataset.avatar === user.photoURL) img.classList.add("selected");
+        else img.classList.remove("selected");
+      });
+    }
+  });
+}
+
+// Atualizar foto de perfil
+avatarOptions.forEach(img => {
+  img.addEventListener("click", async () => {
+    avatarOptions.forEach(i => i.classList.remove("selected"));
+    img.classList.add("selected");
+    profilePhotoElement.src = img.dataset.avatar;
+
+    // Atualizar no Firebase
+    const snap = await getDocs(collection(db, "users"));
+    snap.forEach(doc => {
+      if (doc.data().name === currentUserName) {
+        updateDoc(doc.ref, { photoURL: img.dataset.avatar });
+      }
+    });
+  });
+});
