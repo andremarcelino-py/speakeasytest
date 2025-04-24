@@ -389,19 +389,35 @@ async function loadRanking() {
       return b.score - a.score; // Maior pontuação primeiro
     });
 
-    // Gera o ranking
-    users.forEach((user, index) => {
+    // Preenche o pódio
+    if (users[0]) {
+      document.getElementById("top-1-photo").src = users[0].photoURL || "images/default.png";
+      document.getElementById("top-1-name").textContent = users[0].name;
+      document.getElementById("top-1-score").textContent = `${users[0].score} pontos`;
+      document.getElementById("top-1-time").textContent = `${users[0].time}s`;
+    }
+    if (users[1]) {
+      document.getElementById("top-2-photo").src = users[1].photoURL || "images/default.png";
+      document.getElementById("top-2-name").textContent = users[1].name;
+      document.getElementById("top-2-score").textContent = `${users[1].score} pontos`;
+      document.getElementById("top-2-time").textContent = `${users[1].time}s`;
+    }
+    if (users[2]) {
+      document.getElementById("top-3-photo").src = users[2].photoURL || "images/default.png";
+      document.getElementById("top-3-name").textContent = users[2].name;
+      document.getElementById("top-3-score").textContent = `${users[2].score} pontos`;
+      document.getElementById("top-3-time").textContent = `${users[2].time}s`;
+    }
+
+    // Preenche o restante do ranking
+    users.slice(3).forEach((user, index) => {
       const listItem = document.createElement("li");
       listItem.classList.add("ranking-item");
-      if (index === 0) listItem.classList.add("top-1");
-      else if (index === 1) listItem.classList.add("top-2");
-      else if (index === 2) listItem.classList.add("top-3");
-
       listItem.innerHTML = `
         <div class="ranking-photo-container">
           <img src="${user.photoURL || 'images/default.png'}" alt="Foto de Perfil" class="ranking-photo"/>
         </div>
-        <span>${index + 1}. ${user.name}</span>
+        <span>${index + 4}. ${user.name}</span>
         <span>${user.score} pontos - ${user.time}s</span>
       `;
       rankingList.appendChild(listItem);
@@ -802,4 +818,43 @@ avatarOptions.forEach(img => {
       }
     });
   });
+});
+
+const avatars = [
+  "images/avatar1.png",
+  "images/avatar2.png",
+  "images/avatar3.png",
+  "images/avatar4.png",
+]; // Lista de avatares
+let currentAvatarIndex = 0;
+
+const avatarImage = document.getElementById("current-avatar");
+const prevButton = document.getElementById("prev-avatar");
+const nextButton = document.getElementById("next-avatar");
+const selectAvatarButton = document.getElementById("select-avatar-button");
+
+// Atualiza o avatar exibido
+function updateAvatar() {
+  avatarImage.src = avatars[currentAvatarIndex];
+}
+
+// Evento para o botão "Anterior"
+prevButton.addEventListener("click", () => {
+  currentAvatarIndex =
+    (currentAvatarIndex - 1 + avatars.length) % avatars.length;
+  updateAvatar();
+});
+
+// Evento para o botão "Próximo"
+nextButton.addEventListener("click", () => {
+  currentAvatarIndex = (currentAvatarIndex + 1) % avatars.length;
+  updateAvatar();
+});
+
+// Evento para o botão "Selecionar Avatar"
+selectAvatarButton.addEventListener("click", () => {
+  const selectedAvatar = avatars[currentAvatarIndex];
+  document.getElementById("profile-photo").src = selectedAvatar;
+  document.getElementById("user-photo").src = selectedAvatar;
+  alert("Avatar selecionado com sucesso!");
 });
