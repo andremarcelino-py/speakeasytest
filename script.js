@@ -409,13 +409,40 @@ btnRanking.addEventListener("click", () => {
 let spanishQuestions = [], spanishScore = 0, currentSpanishQuestion = 0, spanishErrors = [], spanishTimer = 0, spanishTimerInterval;
 function getRandomSpanishQuestions() {
   const all = [
-    { question: "¿Cómo se dice 'Hello' en español?", options:["Hola","Adiós","Gracias","Por favor"], answer:0 },
-    { question: "¿Qué significa 'Goodbye' en español?", options:["Hola","Adiós","Buenas noches","Gracias"], answer:1 },
-    { question: "¿Cómo se dice 'Thank you' en español?", options:["Por favor","Gracias","De nada","Perdón"], answer:1 },
-    { question: "¿Cuál es el plural de 'amigo'?", options:["Amigos","Amigas","Amigoes","Amigues"], answer:0 },
-    { question: "¿Cómo se dice 'I am learning Spanish' en español?", options:["Estoy aprendiendo español","Aprendo español","Yo español aprendo","Aprendiendo estoy español"], answer:0 }
+    { question: "¿Cómo se dice 'Olá' en español?", options: ["Hola", "Adiós", "Gracias", "Por favor"], answer: 0 },
+    { question: "¿Qué significa 'Adeus' en español?", options: ["Hola", "Adiós", "Buenas noches", "Gracias"], answer: 1 },
+    { question: "¿Cómo se dice 'Obrigado' en español?", options: ["Por favor", "Gracias", "De nada", "Perdón"], answer: 1 },
+    { question: "¿Cuál es el plural de 'amigo'?", options: ["Amigos", "Amigas", "Amigoes", "Amigues"], answer: 0 },
+    { question: "¿Cómo se dice 'Eu estou aprendendo espanhol' en español?", options: ["Estoy aprendiendo español", "Aprendo español", "Yo español aprendo", "Aprendiendo estoy español"], answer: 0 },
+    { question: "¿Qué significa 'Bom dia' en español?", options: ["Buenas noches", "Buenos días", "Buenas tardes", "Hola"], answer: 1 },
+    { question: "¿Cómo se dice 'Eu gosto de comer maçãs' en español?", options: ["Me gusta comer manzanas", "Yo como manzanas", "Me gusta manzanas", "Comer manzanas me gusta"], answer: 0 },
+    { question: "¿Qué significa 'Onde você mora?' en español?", options: ["¿Dónde vives?", "¿Cómo estás?", "¿Cuál es tu nombre?", "¿Qué haces?"], answer: 0 },
+    { question: "¿Cómo se dice 'Que horas são?' en español?", options: ["¿Qué hora es?", "¿Dónde está?", "¿Cómo estás?", "¿Qué haces?"], answer: 0 },
+    { question: "¿Qué significa 'Por favor'?", options: ["Gracias", "Por favor", "Disculpe", "De nada"], answer: 1 },
+    { question: "¿Cómo se dice 'Eu sou professor' en español?", options: ["Soy profesor", "Yo soy profesor", "Profesor soy", "Soy un profesor"], answer: 0 },
+    { question: "¿Qué significa 'De nada'?", options: ["De nada", "Gracias", "Disculpe", "Por favor"], answer: 0 },
+    { question: "¿Cómo se dice 'Eu estou feliz' en español?", options: ["Estoy feliz", "Yo feliz", "Soy feliz", "Feliz estoy"], answer: 0 },
+    { question: "¿Qué significa 'Qual é o seu nome?' en español?", options: ["¿Cómo te llamas?", "¿Cómo estás?", "¿Dónde vives?", "¿Qué haces?"], answer: 0 },
+    { question: "¿Cómo se dice 'Eu estou cansado' en español?", options: ["Estoy cansado", "Yo cansado", "Soy cansado", "Cansado estoy"], answer: 0 },
+    { question: "¿Qué significa 'O que você faz?' en español?", options: ["¿Qué haces?", "¿Dónde estás?", "¿Cómo estás?", "¿Cuál es tu nombre?"], answer: 0 },
+    { question: "¿Cómo se dice 'Eu gosto de ler livros' en español?", options: ["Me gusta leer libros", "Yo leo libros", "Me gusta libros", "Leer libros me gusta"], answer: 0 },
+    { question: "¿Qué significa 'Quanto custa?' en español?", options: ["¿Cuánto cuesta?", "¿Dónde está?", "¿Cómo estás?", "¿Qué haces?"], answer: 0 },
+    { question: "¿Cómo se dice 'Eu estou aprendendo' en español?", options: ["Estoy aprendiendo", "Yo aprendo", "Aprendiendo estoy", "Aprendo"], answer: 0 },
+    { question: "¿Qué significa 'Que horas são?' en español?", options: ["¿Qué hora es?", "¿Dónde estás?", "¿Cómo estás?", "¿Qué haces?"], answer: 0 },
+    { question: "¿Cómo se dice 'Eu estou com fome' en español?", options: ["Tengo hambre", "Yo hambre", "Soy hambre", "Hambre tengo"], answer: 0 },
+    { question: "¿Qué significa 'Você pode me ajudar?' en español?", options: ["¿Puedes ayudarme?", "¿Dónde estás?", "¿Cómo estás?", "¿Qué haces?"], answer: 0 },
+    { question: "¿Cómo se dice 'Eu estou com sede' en español?", options: ["Tengo sed", "Yo sed", "Soy sed", "Sed tengo"], answer: 0 },
+    { question: "¿Qué significa 'Onde fica o banheiro?' en español?", options: ["¿Dónde está el baño?", "¿Cómo estás?", "¿Qué haces?", "¿Dónde vives?"], answer: 0 },
+    { question: "¿Cómo se dice 'Eu estou com frio' en español?", options: ["Tengo frío", "Yo frío", "Soy frío", "Frío tengo"], answer: 0 },
+    { question: "¿Qué significa 'O que você quer comer?' en español?", options: ["¿Qué quieres comer?", "¿Dónde estás?", "¿Cómo estás?", "¿Qué haces?"], answer: 0 },
+    { question: "¿Cómo se dice 'Eu estou com calor' en español?", options: ["Tengo calor", "Yo calor", "Soy calor", "Calor tengo"], answer: 0 },
+    { question: "¿Qué significa 'O que você quer beber?' en español?", options: ["¿Qué quieres beber?", "¿Dónde estás?", "¿Cómo estás?", "¿Qué haces?"], answer: 0 },
+    { question: "¿Cómo se dice 'Eu estou estudando' en español?", options: ["Estoy estudiando", "Yo estudio", "Estudiando estoy", "Estudio"], answer: 0 },
+    { question: "¿Qué significa 'O que você está fazendo?' en español?", options: ["¿Qué estás haciendo?", "¿Dónde estás?", "¿Cómo estás?", "¿Qué haces?"], answer: 0 },
+    { question: "¿Cómo se dice 'Eu estou trabalhando' en español?", options: ["Estoy trabajando", "Yo trabajo", "Trabajando estoy", "Trabajo"], answer: 0 },
+    { question: "¿Qué significa 'Onde você trabalha?' en español?", options: ["¿Dónde trabajas?", "¿Cómo estás?", "¿Qué haces?", "¿Dónde vives?"], answer: 0 }
   ];
-  return [...all].sort(()=>Math.random()-0.5).slice(0,15);
+  return [...all].sort(() => Math.random() - 0.5).slice(0, 15);
 }
 function startSpanishTimer() {
   spanishTimer=0; spanishTimerElement.textContent=spanishTimer;
