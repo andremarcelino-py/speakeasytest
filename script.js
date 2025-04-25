@@ -825,13 +825,33 @@ const avatars = [
   "images/avatar2.png",
   "images/avatar3.png",
   "images/avatar4.png",
-]; // Lista de avatares
+  "images/avatar5.png",
+  "images/avatar6.png",
+  "images/avatar7.png",
+  "images/avatar8.png",
+  "images/avatar9.png",
+  "images/avatar10.png",
+]; // Lista de 10 avatares
 let currentAvatarIndex = 0;
 
+// Elementos do DOM
 const avatarImage = document.getElementById("current-avatar");
 const prevButton = document.getElementById("prev-avatar");
 const nextButton = document.getElementById("next-avatar");
 const selectAvatarButton = document.getElementById("select-avatar-button");
+const profilePhoto = document.getElementById("profile-photo");
+const userPhoto = document.getElementById("user-photo");
+
+// Carrega o avatar salvo no localStorage
+function loadSavedAvatar() {
+  const savedAvatar = localStorage.getItem("selectedAvatar");
+  if (savedAvatar) {
+    avatarImage.src = savedAvatar;
+    profilePhoto.src = savedAvatar;
+    userPhoto.src = savedAvatar;
+    currentAvatarIndex = avatars.indexOf(savedAvatar);
+  }
+}
 
 // Atualiza o avatar exibido
 function updateAvatar() {
@@ -854,7 +874,11 @@ nextButton.addEventListener("click", () => {
 // Evento para o botão "Selecionar Avatar"
 selectAvatarButton.addEventListener("click", () => {
   const selectedAvatar = avatars[currentAvatarIndex];
-  document.getElementById("profile-photo").src = selectedAvatar;
-  document.getElementById("user-photo").src = selectedAvatar;
+  profilePhoto.src = selectedAvatar;
+  userPhoto.src = selectedAvatar;
+  localStorage.setItem("selectedAvatar", selectedAvatar); // Salva no localStorage
   alert("Avatar selecionado com sucesso!");
 });
+
+// Carrega o avatar salvo ao iniciar
+loadSavedAvatar();
