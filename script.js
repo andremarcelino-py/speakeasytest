@@ -196,6 +196,30 @@ loginButton.addEventListener("click", async () => {
   }
 });
 
+// Exibir a tela de cadastro ao clicar em "Comece Agora"
+document.getElementById("start-now").addEventListener("click", () => {
+  document.getElementById("welcome-container").style.display = "none";
+  document.getElementById("register-container").style.display = "block";
+});
+
+// Exibir a tela de login ao clicar em "Já Tenho uma Conta"
+document.getElementById("login").addEventListener("click", () => {
+  document.getElementById("welcome-container").style.display = "none";
+  document.getElementById("login-container").style.display = "block";
+});
+
+// Alternar para a tela de login a partir da tela de cadastro
+document.getElementById("go-login").addEventListener("click", () => {
+  document.getElementById("register-container").style.display = "none";
+  document.getElementById("login-container").style.display = "block";
+});
+
+// Alternar para a tela de cadastro a partir da tela de login
+document.getElementById("go-register").addEventListener("click", () => {
+  document.getElementById("login-container").style.display = "none";
+  document.getElementById("register-container").style.display = "block";
+});
+
 // Navegação entre telas de cadastro e login
 goLoginLink.addEventListener("click", () => {
   registerContainer.style.display = "none";
@@ -829,37 +853,5 @@ avatarOptions.forEach(img => {
       console.error("Erro ao atualizar avatar:", err);
       alert("Erro ao salvar avatar. Tente novamente.");
     }
-  });
-});
-
-// Seleciona os elementos do popup
-const userPopup = document.getElementById("user-popup");
-const popupPhoto = document.getElementById("popup-photo");
-const popupName = document.getElementById("popup-name");
-const popupScore = document.getElementById("popup-score");
-const popupTime = document.getElementById("popup-time");
-const closePopupButton = document.querySelector(".close-popup");
-
-// Adiciona evento de clique para fechar o popup
-closePopupButton.addEventListener("click", () => {
-  userPopup.style.display = "none";
-});
-
-// Adiciona evento de clique nos itens do ranking
-document.querySelectorAll(".ranking-item").forEach((listItem) => {
-  listItem.addEventListener("click", () => {
-    const photo = listItem.querySelector(".ranking-photo img").src;
-    const name = listItem.querySelector(".ranking-name").textContent;
-    const score = listItem.querySelector(".ranking-score").textContent;
-    const time = listItem.querySelector(".ranking-time").textContent;
-
-    // Atualiza os dados do popup
-    popupPhoto.src = photo || "images/default.png";
-    popupName.textContent = name;
-    popupScore.textContent = `Pontuação: ${score}`;
-    popupTime.textContent = `Tempo: ${time}`;
-
-    // Exibe o popup
-    userPopup.style.display = "flex";
   });
 });
