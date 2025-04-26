@@ -11,8 +11,23 @@
 <body>
 
 
+  <!-- Tela de Boas-Vindas -->
+<div id="welcome-container" class="welcome-container">
+  <header class="welcome-header">
+    <div class="logo">Speak Easy</div>
+  </header>
+  <main class="welcome-content">
+    <h1 class="welcome-slogan">O jeito <span>fácil</span> de aprender inglês!</h1>
+    <p class="welcome-description">Domine o idioma com quizzes interativos e textos bilíngues. Comece agora e transforme seu aprendizado!</p>
+    <div class="welcome-buttons">
+      <button id="start-now" class="btn-primary">Comece Agora</button>
+      <button id="login" class="btn-secondary">Já Tenho uma Conta</button>
+    </div>
+  </main>
+</div>
+
   <!-- Tela de Cadastro -->
-<div id="register-container" class="register-container animate-in">
+<div id="register-container" class="register-container animate-in" style="display:none;">
   <h2>Cadastro</h2>
   <input type="text" id="name" placeholder="Digite seu nome"/>
   <input type="password" id="register-password" placeholder="Crie uma senha"/>
@@ -496,9 +511,8 @@
       <img src="images/default.png" alt="Avatar" />
     </div>
     <div class="ranking-details">
-      <span class="ranking-name">Nome do Jogador Muito Longo</span>
-      <span class="ranking-score">0 pontos</span>
-      <span class="ranking-time">0s</span>
+      <span class="ranking-name">Nome do Jogador</span>
+      <span class="ranking-score-time">0 pontos - 0s</span>
     </div>
   </li>
 </ul>
@@ -584,17 +598,6 @@
     <img src="images/avatar12.png" class="avatar-option" data-avatar="images/avatar12.png" alt="Avatar 12"/>
   </div>
 </div>
-</div>
-
-  <!-- Popup para exibir os dados do usuário -->
-<div id="user-popup" class="popup" style="display: none;">
-  <div class="popup-content">
-    <span class="close-popup">&times;</span>
-    <img id="popup-photo" src="images/default.png" alt="Foto do Usuário" class="popup-photo">
-    <h3 id="popup-name">Nome do Usuário</h3>
-    <p id="popup-score">Pontuação: 0 pontos</p>
-    <p id="popup-time">Tempo: 0s</p>
-  </div>
 </div>
 
   <script type="module" src="script.js"></script>
