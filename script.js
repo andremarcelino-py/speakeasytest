@@ -803,63 +803,63 @@ async function loadProfileData() {
   });
 }
 
-// Atualizar foto de perfil
+// Elementos do menu principal
+const userPhotoElement = document.getElementById("user-photo");
+
+// Atualizar foto de perfil ao selecionar um avatar
 avatarOptions.forEach(img => {
   img.addEventListener("click", async () => {
     avatarOptions.forEach(i => i.classList.remove("selected"));
     img.classList.add("selected");
     profilePhotoElement.src = img.dataset.avatar;
 
+    // Atualizar avatar no menu principal
+    userPhotoElement.src = img.dataset.avatar;
+
     // Atualizar no Firebase
-    const snap = await getDocs(collection(db, "users"));
-    snap.forEach(doc => {
-      if (doc.data().name === currentUserName) {
-        updateDoc(doc.ref, { photoURL: img.dataset.avatar });
-      }
-    });
+    try {
+      const snap = await getDocs(collection(db, "users"));
+      snap.forEach(doc => {
+        if (doc.data().name === currentUserName) {
+          updateDoc(doc.ref, { photoURL: img.dataset.avatar });
+        }
+      });
+      alert("Avatar atualizado com sucesso!");
+    } catch (err) {
+      console.error("Erro ao atualizar avatar:", err);
+      alert("Erro ao salvar avatar. Tente novamente.");
+    }
   });
 });
 
-const avatars = [
-  "images/avatar1.png",
-  "images/avatar2.png",
-  "images/avatar3.png",
-  "images/avatar4.png",
-  "images/avatar5.png",
-  "images/avatar6.png",
-  "images/avatar7.png",
-  "images/avatar8.png",
-  "images/avatar9.png",
-]; // Lista de avatares
-let currentAvatarIndex = 0;
+// Seleciona os elementos do popup
+const userPopup = document.getElementById("user-popup");
+const popupPhoto = document.getElementById("popup-photo");
+const popupName = document.getElementById("popup-name");
+const popupScore = document.getElementById("popup-score");
+const popupTime = document.getElementById("popup-time");
+const closePopupButton = document.querySelector(".close-popup");
 
-const avatarImage = document.getElementById("current-avatar");
-const prevButton = document.getElementById("prev-avatar");
-const nextButton = document.getElementById("next-avatar");
-const selectAvatarButton = document.getElementById("select-avatar-button");
-
-// Atualiza o avatar exibido
-function updateAvatar() {
-  avatarImage.src = avatars[currentAvatarIndex];
-}
-
-// Evento para o botão "Anterior"
-prevButton.addEventListener("click", () => {
-  currentAvatarIndex =
-    (currentAvatarIndex - 1 + avatars.length) % avatars.length;
-  updateAvatar();
+// Adiciona evento de clique para fechar o popup
+closePopupButton.addEventListener("click", () => {
+  userPopup.style.display = "none";
 });
 
-// Evento para o botão "Próximo"
-nextButton.addEventListener("click", () => {
-  currentAvatarIndex = (currentAvatarIndex + 1) % avatars.length;
-  updateAvatar();
-});
+// Adiciona evento de clique nos itens do ranking
+document.querySelectorAll(".ranking-item").forEach((listItem) => {
+  listItem.addEventListener("click", () => {
+    const photo = listItem.querySelector(".ranking-photo img").src;
+    const name = listItem.querySelector(".ranking-name").textContent;
+    const score = listItem.querySelector(".ranking-score").textContent;
+    const time = listItem.querySelector(".ranking-time").textContent;
 
-// Evento para o botão "Selecionar Avatar"
-selectAvatarButton.addEventListener("click", () => {
-  const selectedAvatar = avatars[currentAvatarIndex];
-  document.getElementById("profile-photo").src = selectedAvatar;
-  document.getElementById("user-photo").src = selectedAvatar;
-  alert("Avatar selecionado com sucesso!");
+    // Atualiza os dados do popup
+    popupPhoto.src = photo || "images/default.png";
+    popupName.textContent = name;
+    popupScore.textContent = `Pontuação: ${score}`;
+    popupTime.textContent = `Tempo: ${time}`;
+
+    // Exibe o popup
+    userPopup.style.display = "flex";
+  });
 });
