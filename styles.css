@@ -1,861 +1,606 @@
-:root {
-  --primary-color: #7C3AED;
-  --secondary-color: #A78BFA;
-  --accent-color: #F472B6;
-  --background-gradient: linear-gradient(135deg, #1F1A3A 0%, #2E0854 100%);
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Poppins', sans-serif;
-  background: var(--background-gradient);
-  color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-  padding: 20px;
-}
-
-/* Tela de Boas-Vindas */
-.welcome-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  height: 100vh;
-  background: linear-gradient(135deg, #7C3AED, #F472B6);
-  color: #FFF;
-}
-
-.welcome-header .logo {
-  font-size: 2rem;
-  font-weight: 600;
-  margin-bottom: 20px;
-}
-
-.welcome-slogan {
-  font-size: 2.5rem;
-  line-height: 1.2;
-  margin-bottom: 1rem;
-}
-
-.welcome-slogan span {
-  color: #FFD700;
-}
-
-.welcome-description {
-  font-size: 1rem;
-  margin-bottom: 2rem;
-  color: #F3E8FF;
-}
-
-.welcome-buttons {
-  display: flex;
-  gap: 15px;
-}
-
-.btn-primary,
-.btn-secondary {
-  padding: 12px 24px;
-  border-radius: 25px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
-  transition: all 0.3s ease;
-}
-
-.btn-primary {
-  background: #FFD700;
-  color: #7C3AED;
-}
-
-.btn-primary:hover {
-  background: #FFC300;
-}
-
-.btn-secondary {
-  background: transparent;
-  color: #FFF;
-  border: 2px solid #FFF;
-}
-
-.btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-/* Ocultar outras telas inicialmente */
-#register-container,
-#login-container,
-#menu-container {
-  display: none;
-}
-
-/* Telas de Cadastro e Login */
-.register-container, .login-container {
-  text-align: center;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  max-width: 400px;
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-.register-container h2, 
-.login-container h2 {
-  margin-bottom: 1.5rem;
-  color: white;
-}
-
-.register-container input,
-.login-container input {
-  display: block;
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border-radius: 8px;
-  border: 2px solid var(--primary-color);
-  background: rgba(255, 255, 255, 0.9);
-  transition: all 0.3s ease;
-}
-
-.register-container input:focus,
-.login-container input:focus {
-  transform: scale(1.02);
-  box-shadow: 0 0 15px var(--secondary-color);
-  outline: none;
-}
-
-.register-container button,
-.login-container button {
-  padding: 12px 24px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  background-color: var(--primary-color);
-  color: white;
-  font-weight: 600;
-  margin-top: 1rem;
-  transition: all 0.3s ease;
-}
-
-.register-container button:hover,
-.login-container button:hover {
-  background-color: var(--secondary-color);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
-}
-
-/* Seção de Personagem */
-#character-selection {
-  margin: 1rem 0;
-  text-align: center;
-}
-.character-options {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-.character-option {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: border 0.3s ease;
-}
-.character-option.selected {
-  border: 2px solid var(--primary-color);
-}
-
-/* Containers Gerais */
-.menu-container,
-.container,
-.quiz-container,
-.perguntas-container,
-.library-container,
-.ranking-container,
-.end-screen {
-  text-align: center;
-  width: 100%;
-  max-width: 1200px;
-  margin: auto;
-  padding: 2rem;
-  position: relative;
-  padding-top: 60px;
-}
-
-/* Botão Voltar */
-.back-button {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  z-index: 1000;
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  padding: 10px 15px;
-  border-radius: 50px;
-  color: white;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  transition: all 0.3s ease;
-}
-
-.back-button:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
-}
-
-/* Títulos e Tabs */
-.title {
-  font-size: 3rem;
-  background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 1.5rem;
-}
-
-.tabs {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
-}
-
-.tab-button {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 12px 24px;
-  border-radius: 12px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: white;
-  transition: all 0.3s ease;
-}
-
-.tab-button:hover {
-  background: var(--primary-color);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
-}
-
-/* Quiz e Perguntas */
-.quiz-container {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  border-radius: 20px;
-  padding: 2rem;
-  margin: 1rem 0;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-#question,
-#perguntas-question {
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
-  color: white;
-}
-
-/* Opções dos quizzes */
-#options li,
-#perguntas-options li,
-#spanish-options li,
-#french-options li {
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid transparent;
-  padding: 1rem;
-  margin: 0.5rem 0;
-  border-radius: 12px;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  cursor: pointer;
-  color: white;
-}
-
-#options li:hover,
-#perguntas-options li:hover,
-#spanish-options li:hover,
-#french-options li:hover {
-  transform: translateX(10px);
-  border-color: var(--primary-color);
-}
-
-#options li.correct,
-#perguntas-options li.correct,
-#spanish-options li.correct,
-#french-options li.correct {
-  background: rgba(72, 187, 120, 0.2);
-  border-color: #48BB78;
-}
-
-#options li.wrong,
-#perguntas-options li.wrong,
-#spanish-options li.wrong,
-#french-options li.wrong {
-  background: rgba(245, 101, 101, 0.2);
-  border-color: #F56565;
-}
-
-/* Score e Timer */
-.score-container {
-  margin: 1.5rem 0;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: var(--secondary-color);
-}
-
-/* Cards Biblioteca */
-.text-card {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin: 1rem 0;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.text-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 1rem;
-  color: var(--secondary-color);
-}
-
-.text-content p {
-  margin: 0.5rem 0;
-  padding: 0.5rem;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.english::before {
-  content: "🇬🇧";
-  margin-right: 8px;
-}
-
-.portuguese::before {
-  content: "🇧🇷";
-  margin-right: 8px;
-}
-
-.spanish::before {
-  content: "🇪🇸";
-  margin-right: 8px;
-}
-
-.french::before {
-  content: "🇫🇷";
-  margin-right: 8px;
-}
-
-/* Ranking */
-#ranking-list {
-  list-style: none;
-  padding: 0;
-  margin: 20px 0;
-}
-
-.ranking-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.ranking-photo {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 2px solid var(--primary-color);
-}
-
-#ranking-list {
-  counter-reset: ranking;
-  padding: 0;
-  margin: 2rem 0;
-}
-
-#ranking-list li {
-  counter-increment: ranking;
-  background: rgba(220, 214, 214, 0.068);
-  padding: 1.2rem;
-  margin: 0.8rem 0;
-  border-radius: 15px;
-  display: grid;
-  grid-template-columns: auto auto;
-  align-items: center;
-  transition: all 0.3s ease;
-}
-
-/* Tela Final */
-.end-screen {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  border-radius: 20px;
-  padding: 2rem;
-  margin: 1rem 0;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-#error-list,
-#perguntas-error-list {
-  list-style: none;
-  margin-bottom: 1.5rem;
-  text-align: left;
-}
-
-.error-item {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 0.8rem;
-  margin: 0.5rem 0;
-  border-radius: 8px;
-  border-left: 4px solid var(--accent-color);
-}
-
-/* Botão Reiniciar */
-.restart-button {
-  background: var(--primary-color);
-  padding: 1rem 2rem;
-  border-radius: 50px;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  border: none;
-  color: white;
-  cursor: pointer;
-  font-size: 1rem;
-  margin: 0.5rem;
-}
-
-.restart-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
-}
-
-/* Botões de Nível */
-.level-buttons {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  margin: 2rem 0;
-  flex-wrap: wrap;
-}
-
-.level-button {
-  padding: 1rem 2rem;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  color: white;
-  font-size: 1.1rem;
-  transition: transform 0.2s;
-}
-
-.level-button:hover {
-  transform: scale(1.05);
-}
-
-#btnFacil {
-  background: #e1a1cd;
-}
-
-#btnMedio {
-  background: #9e4077;
-}
-
-#btnDificil {
-  background: #9721c2;
-}
-
-/* Animação */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-in {
-  animation: fadeIn 0.5s ease-out;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-  .title {
-    font-size: 2.2rem;
-  }
-  .tab-button {
-    padding: 10px 15px;
-    font-size: 0.9rem;
-  }
-  .back-button {
-    bottom: 15px;
-    left: 10px;
-    padding: 8px 12px;
-    font-size: 0.9rem;
-  }
-  .level-buttons {
-    flex-direction: column;
-    gap: 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .title {
-    font-size: 1.8rem;
-  }
-  .register-container,
-  .menu-container,
-  .quiz-container,
-  .library-container,
-  .ranking-container,
-  .end-screen {
-    padding: 1rem;
-  }
-  .tab-button {
-    padding: 8px 12px;
-    font-size: 0.8rem;
-  }
-  .restart-button,
-  .level-button {
-    padding: 0.8rem 1.2rem;
-    font-size: 0.9rem;
-  }
-}
-
-/* Destaque para seções em Español e Français */
-#spanish-container,
-#spanish-library-container,
-#french-container,
-#french-library-container {
-  border-left: 5px solid #f39c12;
-  padding-left: 1rem;
-  animation: fadeIn 0.5s ease-in-out;
-}
-
-.tab-button#btnSpanish {
-  background-color: #f39c12;
-  color: white;
-}
-
-.tab-button#btnFrench {
-  background-color: #b319b8;
-  color: white;
-}
-
-@media (max-width: 768px) {
-  #spanish-container,
-  #spanish-library-container,
-  #french-container,
-  #french-library-container {
-    padding: 1rem;
-  }
-}
-
-/* Botão "Aprenda Mais" */
-.aprenda-mais-button {
-  background-color: var(--secondary-color);
-  border: none;
-  border-radius: 8px;
-  padding: 0.5rem 1rem;
-  color: white;
-  cursor: pointer;
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
-  transition: all 0.3s ease;
-}
-.aprenda-mais-button:hover {
-  transform: translateY(-2px);
-  background-color: var(--accent-color);
-}
-
-/* Inicialmente, conteúdo das seções oculto */
-.text-card .text-content {
-  display: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-/* Conteúdo ativo */
-.text-card .text-content.active {
-  display: block;
-  opacity: 1;
-}
-
-
-
-#user-info {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(8px);
-  padding: 0.75rem 1rem;
-  text-align: right;
-  font-size: 1rem;
-  font-weight: 500;
-  color: #fefefe;
-  z-index: 1001;
-}
-
-.menu-container {
-  padding-top: 3rem;
-}
-
-@media (max-width: 768px) {
-  #user-info {
-    font-size: 0.9rem;
-    padding: 0.5rem 0.75rem;
-  }
-}
-
-@media (max-width: 480px) {
-  #user-info {
-    font-size: 0.8rem;
-    padding: 0.4rem 0.6rem;
-  }
-}
-
-/* Estilos para a tela de perfil */
-.profile-container {
-  text-align: center;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 15px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
-  margin: 20px auto;
-}
-
-.profile-info {
-  margin-bottom: 20px;
-}
-
-.profile-photo {
-  width: 100px; /* Reduzido de 120px para 100px */
-  height: 100px;
-  border-radius: 50%;
-  border: 3px solid var(--primary-color);
-  margin-bottom: 10px;
-}
-
-.avatar-options {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-.avatar-option-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  border: 2px solid transparent;
-  transition: transform 0.3s, border 0.3s;
-  cursor: pointer;
-}
-
-.avatar-option-container:hover {
-  transform: scale(1.1);
-  border-color: var(--primary-color);
-}
-
-.avatar-option-container.selected {
-  border-color: var(--accent-color);
-}
-
-.avatar-option {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-  .profile-container {
-    padding: 15px;
-  }
-
-  .profile-photo {
-    width: 100px;
-    height: 100px;
-  }
-
-  .avatar-option-container {
-    width: 80px;
-    height: 80px;
-  }
-
-  .avatar-option {
-    width: 60px;
-    height: 60px;
-  }
-}
-
-@media (max-width: 480px) {
-  .profile-container {
-    padding: 10px;
-  }
-
-  .profile-photo {
-    width: 80px;
-    height: 80px;
-  }
-
-  .avatar-option-container {
-    width: 70px;
-    height: 70px;
-  }
-
-  .avatar-option {
-    width: 50px;
-    height: 50px;
-  }
-}
-.user-photo {
-  width: 32px; /* Reduzido de 40px para 32px */
-  height: 32px;
-  border-radius: 50%;
-  border: 2px solid var(--primary-color);
-  margin-right: 8px; /* Ajustado para melhor alinhamento */
-  vertical-align: middle;
-}
-
-/* Estilo do pódio */
-.podium {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 10px; /* Espaçamento entre os itens */
-  margin: 20px 0;
-  flex-wrap: nowrap; /* Garante que os itens fiquem lado a lado */
-  overflow-x: auto; /* Permite rolagem horizontal em telas muito estreitas */
-}
-
-.podium-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  background: #f4f4f4;
-  border-radius: 10px;
-  padding: 15px;
-  width: 120px;
-  height: 200px;
-  position: relative;
-  text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease;
-  flex-shrink: 0; /* Impede que os itens encolham em telas estreitas */
-}
-
-.podium-item:hover {
-  transform: scale(1.05);
-}
-
-/* Destaque para o top 3 */
-.podium-item.top-1 {
-  background: linear-gradient(135deg, #FFD700, #FFC700);
-  height: 240px;
-  font-weight: bold;
-  color: #2F2F2F;
-}
-
-.podium-item.top-2 {
-  background: linear-gradient(135deg, #C0C0C0, #A9A9A9);
-  height: 220px;
-  font-weight: bold;
-  color: #2F2F2F;
-}
-
-.podium-item.top-3 {
-  background: linear-gradient(135deg, #CD7F32, #B87333);
-  height: 200px;
-  font-weight: bold;
-  color: #2F2F2F;
-}
-
-.podium-photo {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-bottom: 10px;
-  border: 3px solid rgba(255, 255, 255, 0.7);
-}
-
-.podium-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.podium-name {
-  font-size: 1.2rem;
-  margin-top: 10px;
-  color: #fff;
-}
-
-.podium-details {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin-top: 10px;
-  font-size: 1rem;
-  color: #fff;
-}
-
-/* Responsividade */
-@media (max-width: 480px) {
-  .podium {
-    gap: 5px; /* Reduz o espaçamento entre os itens em telas muito estreitas */
-  }
-
-  .podium-item {
-    width: 100px;
-    height: 180px;
-    padding: 10px;
-  }
-
-  .podium-photo {
-    width: 60px;
-    height: 60px;
-  }
-
-  .podium-name {
-    font-size: 1rem;
-  }
-
-  .podium-details {
-    font-size: 0.8rem;
-  }
-}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Speak Easy - Quiz de Inglês</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+
+<!-- Tela de Boas-Vindas -->
+<div id="welcome-container" class="welcome-container">
+  <header class="welcome-header">
+    <img src="images/logo.png" alt="Logo Speak Easy" class="logo" />
+    <h1 class="logo-text">Speak Easy</h1> <!-- Adicionando o nome ao lado ou abaixo da logo -->
+  </header>
+  <main class="welcome-content">
+    <h1 class="welcome-slogan">O jeito <span>fácil</span> de aprender inglês!</h1>
+    <p class="welcome-description"></p>
+    <div class="welcome-buttons">
+      <button id="start-now" class="btn-primary">Comece Agora</button>
+      <button id="login" class="btn-secondary">Já Tenho uma Conta</button>
+    </div>
+  </main>
+</div>
+
+  <!-- Tela de Cadastro -->
+<div id="register-container" class="register-container animate-in" style="display:none;">
+  <h2>Cadastro</h2>
+  <input type="text" id="name" placeholder="Digite seu nome"/>
+  <input type="password" id="register-password" placeholder="Crie uma senha"/>
+  <button id="start-button">Cadastrar <i class="fas fa-arrow-right"></i></button>
+  <p>Já tem uma conta? <a href="#" id="go-login">Login</a></p>
+</div>
+
+  <!-- Tela de Login -->
+<div id="login-container" class="login-container" style="display:none;">
+  <h2>Login</h2>
+  <input type="text" id="login-name" placeholder="Digite seu nome">
+  <input type="password" id="login-password" placeholder="Digite sua senha">
+  <button id="login-button">Entrar</button>
+  <p>Não tem uma conta? <a href="#" id="go-register">Cadastre-se</a></p>
+</div>
+
+  <!-- Menu Principal -->
+  <div id="menu-container" class="menu-container" style="display:none;">
+    <h1 class="title">Speak Easy</h1>
+    <div id="user-info">
+      <img id="user-photo" src="images/default.png" alt="Foto de Perfil" class="user-photo"/>
+      <span id="user-name"></span>
+    </div>
+    <div class="tabs">
+      <button id="btnQuiz" class="tab-button animate-in"><i class="fas fa-question-circle"></i> Quiz</button>
+      <button id="btnPerguntas" class="tab-button animate-in"><i class="fas fa-edit"></i> Perguntas</button>
+      <button id="btnLibrary" class="tab-button animate-in"><i class="fas fa-book-open"></i> Biblioteca</button>
+      <button id="btnSpanish" class="tab-button animate-in spanish"><i class="fas fa-globe"></i> Español</button>
+      <button id="btnFrench" class="tab-button animate-in french"><i class="fas fa-globe"></i> Français</button>
+      <button id="btnRanking" class="tab-button animate-in"><i class="fas fa-trophy"></i> Ranking</button>
+    </div>
+    <!-- Botão de logout no menu principal -->
+<button id="logout-button" class="restart-button" style="position: absolute; top: 10px; right: 10px;">
+  Sair
+</button>
+  </div>
+
+  <!-- Menu Español: Selección de Contenido en Español -->
+  <div id="spanish-menu-container" class="menu-container" style="display:none;">
+    <h2>Contenido en Español</h2>
+    <div class="tabs">
+      <button id="btnSpanishQuiz" class="tab-button animate-in spanish">
+         <i class="fas fa-question-circle"></i> Preguntas
+      </button>
+      <button id="btnSpanishLibrary" class="tab-button animate-in spanish">
+         <i class="fas fa-book-open"></i> Biblioteca
+      </button>
+    </div>
+    <button class="back-button" id="backButtonSpanishMenu">
+      <i class="fas fa-arrow-left"></i> Volver al Menú Principal
+    </button>
+  </div>
+
+  <!-- Quiz en Español -->
+  <div id="spanish-container" class="quiz-container" style="display:none;">
+    <button class="back-button" id="backButtonSpanish">
+      <i class="fas fa-arrow-left"></i> Volver al Menú
+    </button>
+    <div id="spanish-quiz">
+      <p id="spanish-question"></p>
+      <ul id="spanish-options"></ul>
+    </div>
+    <div class="score-container">
+      <p>Puntuación: <span id="spanish-score">0</span>/15</p>
+      <p>Tiempo: <span id="spanish-timer">0</span> s</p>
+    </div>
+  </div>
+
+  <!-- Tela Final do Quiz en Español -->
+  <div id="spanish-end-screen" class="end-screen" style="display:none;">
+    <button class="back-button" id="backButtonSpanishEndScreen">
+      <i class="fas fa-arrow-left"></i> Volver al Menú
+    </button>
+    <p id="spanish-final-message"></p>
+    <ul id="spanish-error-list"></ul>
+    <button id="spanish-restart-button" class="restart-button">
+      <i class="fas fa-sync-alt"></i> Reiniciar Quiz
+    </button>
+    <button id="spanish-menu-button" class="restart-button">
+      <i class="fas fa-home"></i> Menú Principal
+    </button>
+  </div>
+
+  <!-- Biblioteca en Español -->
+  <div id="spanish-library-container" class="library-container" style="display:none;">
+  <button class="back-button" id="backButtonSpanishLibrary">
+    <i class="fas fa-arrow-left"></i> Volver al Menú
+  </button>
+  <h2><i class="fas fa-book-open"></i> Biblioteca de Textos en Español</h2>
+
+  <!-- Sección: Frases Básicas -->
+  <div id="frases-basicas-es" class="text-card animate-in">
+    <div class="text-header">
+      <i class="fas fa-star"></i>
+      <h3>Frases Básicas</h3>
+    </div>
+    <div class="text-content">
+      <p class="spanish">Hola - Olá</p>
+      <p class="spanish">Adiós - Adeus</p>
+      <p class="spanish">Gracias - Obrigado</p>
+      <p class="spanish">Por favor - Por favor</p>
+      <p class="spanish">¿Cómo estás? - Como você está?</p>
+    </div>
+  </div>
+
+  <!-- Sección: Verbos Importantes -->
+  <div id="verbos-importantes-es" class="text-card animate-in">
+    <div class="text-header">
+      <i class="fas fa-star"></i>
+      <h3>Verbos Importantes</h3>
+    </div>
+    <div class="text-content">
+      <p>Ejemplo: hablar, comer, vivir, estudiar, trabajar.</p>
+      <p class="spanish">Yo hablo español - Eu falo espanhol</p>
+      <p class="spanish">Ella come manzanas - Ela come maçãs</p>
+      <p class="spanish">Nosotros vivimos en México - Nós moramos no México</p>
+    </div>
+  </div>
+
+  <!-- Sección: Preguntas Comunes -->
+  <div id="preguntas-comunes-es" class="text-card animate-in">
+    <div class="text-header">
+      <i class="fas fa-star"></i>
+      <h3>Preguntas Comunes</h3>
+    </div>
+    <div class="text-content">
+      <p class="spanish">¿Dónde vives? - Onde você mora?</p>
+      <p class="spanish">¿Qué hora es? - Que horas são?</p>
+      <p class="spanish">¿Cuánto cuesta? - Quanto custa?</p>
+      <p class="spanish">¿Puedes ayudarme? - Você pode me ajudar?</p>
+      <p class="spanish">¿Cómo te llamas? - Qual é o seu nome?</p>
+    </div>
+  </div>
+
+  <!-- Sección: Expresiones Idiomáticas -->
+  <div id="expresiones-idiomaticas-es" class="text-card animate-in">
+    <div class="text-header">
+      <i class="fas fa-star"></i>
+      <h3>Expresiones Idiomáticas</h3>
+    </div>
+    <div class="text-content">
+      <p class="spanish">Estar en las nubes - Estar nas nuvens</p>
+      <p class="spanish">Tener la sartén por el mango - Ter a faca e o queijo na mão</p>
+      <p class="spanish">Ser pan comido - Ser muito fácil</p>
+      <p class="spanish">Llover a cántaros - Chover muito</p>
+    </div>
+  </div>
+</div>
+
+  <!-- Menu Français: Sélection de Contenu en Français -->
+  <div id="french-menu-container" class="menu-container" style="display:none;">
+    <h2>Contenu en Français</h2>
+    <div class="tabs">
+      <button id="btnFrenchQuiz" class="tab-button animate-in french">
+         <i class="fas fa-question-circle"></i> Questions
+      </button>
+      <button id="btnFrenchLibrary" class="tab-button animate-in french">
+         <i class="fas fa-book-open"></i> Bibliothèque
+      </button>
+    </div>
+    <button class="back-button" id="backButtonFrenchMenu">
+      <i class="fas fa-arrow-left"></i> Retour au Menu Principal
+    </button>
+  </div>
+
+  <!-- Quiz en Français -->
+  <div id="french-container" class="quiz-container" style="display:none;">
+    <button class="back-button" id="backButtonFrench">
+      <i class="fas fa-arrow-left"></i> Retour au Menu
+    </button>
+    <div id="french-quiz">
+      <p id="french-question"></p>
+      <ul id="french-options"></ul>
+    </div>
+    <div class="score-container">
+      <p>Score : <span id="french-score">0</span>/15</p>
+      <p>Temps : <span id="french-timer">0</span> s</p>
+    </div>
+  </div>
+
+  <!-- Écran Final du Quiz en Français -->
+  <div id="french-end-screen" class="end-screen" style="display:none;">
+    <button class="back-button" id="backButtonFrenchEndScreen">
+      <i class="fas fa-arrow-left"></i> Retour au Menu
+    </button>
+    <p id="french-final-message"></p>
+    <ul id="french-error-list"></ul>
+    <button id="french-restart-button" class="restart-button">
+      <i class="fas fa-sync-alt"></i> Réessayer
+    </button>
+    <button id="french-menu-button" class="restart-button">
+      <i class="fas fa-home"></i> Menu Principal
+    </button>
+  </div>
+
+  <!-- Bibliothèque en Français -->
+  <div id="french-library-container" class="library-container" style="display:none;">
+    <button class="back-button" id="backButtonFrenchLibrary">
+      <i class="fas fa-arrow-left"></i> Retour au Menu
+    </button>
+    <h2><i class="fas fa-book-open"></i> Bibliothèque en Français</h2>
+    <!-- Section: Phrases de Base -->
+    <div id="phrases-de-base-fr" class="text-card animate-in">
+      <div class="text-header">
+        <i class="fas fa-star"></i>
+        <h3>Phrases de Base</h3>
+      </div>
+      <div class="text-content">
+        <p class="french">J'aime étudier le français</p>
+        <p class="french">Je suis étudiant(e)</p>
+      </div>
+    </div>
+    <!-- Section: Verbes -->
+    <div id="verbes-fr" class="text-card animate-in">
+      <div class="text-header">
+        <i class="fas fa-star"></i>
+        <h3>Verbes</h3>
+      </div>
+      <div class="text-content">
+        <p>Exemple : lire, écrire, parler, manger et vivre.</p>
+      </div>
+    </div>
+    <!-- Section: Expressions Idiomatiques -->
+    <div id="expressions-fr" class="text-card animate-in">
+      <div class="text-header">
+        <i class="fas fa-star"></i>
+        <h3>Expressions Idiomatiques</h3>
+      </div>
+      <div class="text-content">
+        <p>Exemple : "donner un coup de main" signifie aider.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quiz Principal (en anglais) -->
+  <div id="quiz-container" class="quiz-container" style="display:none;">
+    <div id="quiz">
+      <p id="question"></p>
+      <ul id="options"></ul>
+    </div>
+    <div class="score-container">
+      <p>Pontuação: <span id="score">0</span>/15</p>
+      <p>Tempo: <span id="timer">0</span> s</p>
+    </div>
+  </div>
+
+  <!-- Seleção de Nível para Perguntas -->
+  <div id="perguntas-container" class="perguntas-container" style="display:none;">
+    <button class="back-button" id="backButtonPerguntas">
+      <i class="fas fa-arrow-left"></i> Voltar ao Menu
+    </button>
+    <h2><i class="fas fa-edit"></i> Escolha o Nível</h2>
+    <div class="level-buttons">
+      <button id="btnFacil" class="level-button">Fácil</button>
+      <button id="btnMedio" class="level-button">Médio</button>
+      <button id="btnDificil" class="level-button">Difícil</button>
+    </div>
+  </div>
+
+  <!-- Quiz de Perguntas -->
+  <div id="perguntas-quiz-container" class="quiz-container" style="display:none;">
+    <button class="back-button" id="backButtonPerguntasQuiz">
+      <i class="fas fa-arrow-left"></i> Voltar ao Menu
+    </button>
+    <div id="perguntas-quiz">
+      <p id="perguntas-question"></p>
+      <ul id="perguntas-options"></ul>
+    </div>
+    <div class="score-container">
+      <p>Pontuação: <span id="perguntas-score">0</span>/10</p>
+      <p>Tempo: <span id="perguntas-timer">0</span> s</p>
+    </div>
+  </div>
+
+  <!-- Biblioteca (em inglês) -->
+  <div id="library-container" class="library-container" style="display:none;">
+    <button class="back-button" id="backButtonLibrary">
+      <i class="fas fa-arrow-left"></i> Voltar ao Menu
+    </button>
+    <h2><i class="fas fa-book-open"></i> Biblioteca de Textos</h2>
+    <!-- Seção: Frases Básicas -->
+    <div id="frases-basicas" class="text-card animate-in">
+      <div class="text-header">
+        <i class="fas fa-star"></i>
+        <h3>Frases Básicas</h3>
+      </div>
+      <div class="text-content">
+        <p class="english">I like to study English</p>
+        <p class="portuguese">Eu gosto de estudar inglês</p>
+        <p class="english">I am a student</p>
+        <p class="portuguese">Eu sou estudante</p>
+      </div>
+    </div>
+    <!-- Seção: Verbos -->
+    <div id="verbos" class="text-card animate-in">
+      <div class="text-header">
+        <i class="fas fa-star"></i>
+        <h3>Verbos</h3>
+      </div>
+      <div class="text-content">
+        <p>Verbos são palavras de ação. Por exemplo, ler "read", escrever "write", e falar "speak" ajudam a descrever as atividades.</p>
+        <p>Exemplos:</p>
+        <p class="english">I like to read books</p>
+        <p class="portuguese">Eu gosto de ler livros</p>
+        <p class="english">She doesn't like coffee</p>
+        <p class="portuguese">Ela não gosta de café</p>
+      </div>
+    </div>
+    <!-- Seção: Idioms -->
+    <div id="idioms" class="text-card animate-in">
+      <div class="text-header">
+        <i class="fas fa-star"></i>
+        <h3>Idioms</h3>
+      </div>
+      <div class="text-content">
+        <p>"Idioms" também chamada de expressões idiomáticas, são expressões cujo significado não pode ser deduzido literalmente pelas palavras. Por exemplo, "break a leg" significa "boa sorte", não quebrar a perna.</p>
+        <p>Exemplos:</p>
+        <p class="english">A piece of cake</p>
+        <p class="portuguese">Algo muito fácil</p>
+        <p class="english">Help yourself</p>
+        <p class="portuguese">Sirva-se</p>
+      </div>
+    </div>
+    <!-- Seção: Gramática -->
+    <div id="grammar" class="text-card animate-in">
+      <div class="text-header">
+        <i class="fas fa-star"></i>
+        <h3>Lição de Gramática</h3>
+      </div>
+      <div class="text-content">
+        <p>Uma boa compreensão da gramática inglesa é essencial para formar frases corretas.</p>
+        <p>Dicas importantes: preste atenção aos tempos verbais, concordância entre sujeito e verbo e à estrutura da frase.</p>
+        <p>Exemplo: use "doesn't" com sujeitos singulares (He doesn't like apples).</p>
+      </div>
+    </div>
+    <!-- Seção: Cumprimentos -->
+    <div id="greetings" class="text-card animate-in">
+      <div class="text-header">
+        <i class="fas fa-star"></i>
+        <h3>Cumprimentos e Apresentações</h3>
+      </div>
+      <div class="text-content">
+        <p>Aprenda expressões comuns para saudações e apresentações, como "Good morning", "How are you?" e "Nice to meet you".</p>
+        <p>Exemplos:</p>
+        <p class="english">It's good to see you</p>
+        <p class="portuguese">Que bom ver você</p>
+        <p class="english">How are you doing?</p>
+        <p class="portuguese">Como vai você?</p>
+        <p class="english">Have a good night</p>
+        <p class="portuguese">Tenha uma boa noite</p>
+      </div>
+    </div>
+    <!-- NOVA SEÇÃO: Expressões Idiomáticas Avançadas -->
+<div id="idioms-advanced" class="text-card animate-in">
+  <div class="text-header">
+    <i class="fas fa-star"></i>
+    <h3>Expressões Idiomáticas Avançadas</h3>
+  </div>
+  <div class="text-content">
+    <p class="english">Burn the midnight oil - Trabalhar até tarde da noite</p>
+    <p class="english">Bite the bullet - Enfrentar algo difícil</p>
+    <p class="english">Hit the nail on the head - Acertar em cheio</p>
+    <p class="english">Let the cat out of the bag - Revelar um segredo</p>
+    <p class="english">Throw in the towel - Desistir</p>
+  </div>
+</div>
+
+<!-- NOVA SEÇÃO: Tempos Verbais -->
+<div id="verb-tenses" class="text-card animate-in">
+  <div class="text-header">
+    <i class="fas fa-star"></i>
+    <h3>Tempos Verbais</h3>
+  </div>
+  <div class="text-content">
+    <p><strong>Present Perfect:</strong> I have been to London - Eu estive em Londres</p>
+    <p><strong>Past Perfect:</strong> She had finished her homework before dinner - Ela tinha terminado a lição de casa antes do jantar</p>
+    <p><strong>Future Perfect:</strong> By next year, I will have graduated - No próximo ano, eu terei me formado</p>
+    <p><strong>Present Continuous:</strong> They are studying for the exam - Eles estão estudando para o exame</p>
+    <p><strong>Past Continuous:</strong> I was reading when the phone rang - Eu estava lendo quando o telefone tocou</p>
+  </div>
+</div>
+
+<!-- NOVA SEÇÃO: Vocabulário Técnico -->
+<div id="technical-vocabulary" class="text-card animate-in">
+  <div class="text-header">
+    <i class="fas fa-star"></i>
+    <h3>Vocabulário Técnico</h3>
+  </div>
+  <div class="text-content">
+    <p class="english">Algorithm - Algoritmo</p>
+    <p class="english">Database - Banco de dados</p>
+    <p class="english">Cloud Computing - Computação em nuvem</p>
+    <p class="english">Artificial Intelligence - Inteligência artificial</p>
+    <p class="english">Machine Learning - Aprendizado de máquina</p>
+  </div>
+</div>
+    <!-- NOVO CONTEÚDO: Palavras Interrogativas -->
+    <div id="interrogative-words" class="text-card animate-in">
+      <div class="text-header">
+        <i class="fas fa-star"></i>
+        <h3>Palavras Interrogativas</h3>
+      </div>
+      <div class="text-content">
+        <p>Essas palavras são essenciais para formular perguntas:</p>
+        <ul>
+          <li class="english">Who - Quem</li>
+          <li class="english">What - O que</li>
+          <li class="english">When - Quando</li>
+          <li class="english">Where - Onde</li>
+          <li class="english">Why - Por que</li>
+          <li class="english">How - Como</li>
+        </ul>
+        <p>Observe que cada uma tem sua função para determinar o tipo de resposta que esperamos.</p>
+      </div>
+    </div>
+  
+    <!-- NOVO CONTEÚDO: Mais Perguntas -->
+    <div id="more-questions" class="text-card animate-in">
+      <div class="text-header">
+        <i class="fas fa-star"></i>
+        <h3>Mais Perguntas</h3>
+      </div>
+      <div class="text-content">
+        <p>Abaixo, veja exemplos de perguntas comuns com suas traduções:</p>
+        <p class="english">What is your favorite food?</p>
+        <p class="portuguese">Qual é a sua comida favorita?</p>
+        <p class="english">When did you start learning English?</p>
+        <p class="portuguese">Quando você começou a aprender inglês?</p>
+        <p class="english">How often do you practice speaking?</p>
+        <p class="portuguese">Com que frequência você pratica falar?</p>
+        <p class="english">Who is your role model?</p>
+        <p class="portuguese">Quem é o seu ídolo?</p>
+        <p class="english">What do you do in your free time?</p>
+        <p class="portuguese">O que você faz no seu tempo livre?</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ranking -->
+  <div id="ranking-container" class="ranking-container" style="display:none;">
+  <button class="back-button" id="backButtonRanking">
+    <i class="fas fa-arrow-left"></i> Voltar ao Menu
+  </button>
+  <h2><i class="fas fa-trophy"></i> Ranking</h2>
+  <div class="podium">
+  <div class="podium-item top-2">
+    <div class="podium-photo">
+      <img src="images/default.png" alt="Avatar" class="ranking-photo" id="top-2-photo" />
+    </div>
+    <span id="top-2-name" class="podium-name">2º Lugar</span>
+    <div class="podium-details">
+      <span id="top-2-score">0 pontos</span>
+      <span id="top-2-time">0s</span>
+    </div>
+  </div>
+  <div class="podium-item top-1">
+    <div class="podium-photo">
+      <img src="images/default.png" alt="Avatar" class="ranking-photo" id="top-1-photo" />
+    </div>
+    <span id="top-1-name" class="podium-name">1º Lugar</span>
+    <div class="podium-details">
+      <span id="top-1-score">0 pontos</span>
+      <span id="top-1-time">0s</span>
+    </div>
+  </div>
+  <div class="podium-item top-3">
+    <div class="podium-photo">
+      <img src="images/default.png" alt="Avatar" class="ranking-photo" id="top-3-photo" />
+    </div>
+    <span id="top-3-name" class="podium-name">3º Lugar</span>
+    <div class="podium-details">
+      <span id="top-3-score">0 pontos</span>
+      <span id="top-3-time">0s</span>
+    </div>
+  </div>
+</div>
+<ul id="ranking-list" class="ranking-list">
+  <!-- Exemplo de item do ranking a partir do 4º lugar -->
+  <li class="ranking-item">
+    <div class="ranking-photo">
+      <img src="images/default.png" alt="Avatar" />
+    </div>
+    <div class="ranking-details">
+      <span class="ranking-name">Nome do Jogador</span>
+      <span class="ranking-score-time">0 pontos - 0s</span>
+    </div>
+  </li>
+</ul>
+</div>
+
+  <!-- Tela Final do Quiz Principal -->
+  <div id="end-screen" class="end-screen" style="display:none;">
+    <button class="back-button" id="backButtonEndScreen">
+      <i class="fas fa-arrow-left"></i> Voltar ao Menu
+    </button>
+    <p id="final-message"></p>
+    <ul id="error-list"></ul>
+    <button id="restart-button" class="restart-button">
+      <i class="fas fa-sync-alt"></i> Reiniciar Quiz
+    </button>
+  </div>
+
+  <!-- Tela Final do Quiz de Perguntas -->
+  <div id="perguntas-end-screen" class="end-screen" style="display:none;">
+    <button class="back-button" id="backButtonPerguntasEndScreen">
+      <i class="fas fa-arrow-left"></i> Voltar ao Menu
+    </button>
+    <p id="perguntas-final-message"></p>
+    <ul id="perguntas-error-list"></ul>
+    <button id="perguntas-restart-button" class="restart-button">
+      <i class="fas fa-sync-alt"></i> Tentar Novamente
+    </button>
+    <button id="perguntas-menu-button" class="restart-button">
+      <i class="fas fa-home"></i> Menu Principal
+    </button>
+  </div>
+
+  <!-- Tela de Perfil -->
+<div id="profile-container" class="profile-container" style="display:none;">
+  <button class="back-button" id="backButtonProfile">
+    <i class="fas fa-arrow-left"></i> Voltar ao Menu
+  </button>
+  <h2>Seu Perfil</h2>
+  <div class="profile-info">
+    <img id="profile-photo" src="images/default.png" alt="Foto de Perfil" class="profile-photo"/>
+    <p><strong>Nome:</strong> <span id="profile-name"></span></p>
+    <p><strong>Pontuação:</strong> <span id="profile-score">0</span></p>
+  </div>
+  <h3>Escolha sua Foto de Perfil</h3>
+  <div class="avatar-options">
+  <div class="avatar-option-container">
+    <img src="images/avatar0.png" class="avatar-option" data-avatar="images/avatar0.png" alt="Avatar 0"/>
+  </div>
+  <div class="avatar-option-container">
+    <img src="images/avatar1.png" class="avatar-option" data-avatar="images/avatar1.png" alt="Avatar 1"/>
+  </div>
+  <div class="avatar-option-container">
+    <img src="images/avatar2.png" class="avatar-option" data-avatar="images/avatar2.png" alt="Avatar 2"/>
+  </div>
+  <div class="avatar-option-container">
+    <img src="images/avatar3.png" class="avatar-option" data-avatar="images/avatar3.png" alt="Avatar 3"/>
+  </div>
+  <div class="avatar-option-container">
+    <img src="images/avatar4.png" class="avatar-option" data-avatar="images/avatar4.png" alt="Avatar 4"/>
+  </div>
+  <div class="avatar-option-container">
+    <img src="images/avatar5.png" class="avatar-option" data-avatar="images/avatar5.png" alt="Avatar 5"/>
+  </div>
+  <div class="avatar-option-container">
+    <img src="images/avatar6.png" class="avatar-option" data-avatar="images/avatar6.png" alt="Avatar 6"/>
+  </div>
+  <div class="avatar-option-container">
+    <img src="images/avatar7.png" class="avatar-option" data-avatar="images/avatar7.png" alt="Avatar 7"/>
+  </div>
+  <div class="avatar-option-container">
+    <img src="images/avatar8.png" class="avatar-option" data-avatar="images/avatar8.png" alt="Avatar 8"/>
+  </div>
+  <div class="avatar-option-container">
+    <img src="images/avatar9.png" class="avatar-option" data-avatar="images/avatar9.png" alt="Avatar 9"/>
+  </div>
+  <div class="avatar-option-container">
+    <img src="images/avatar10.png" class="avatar-option" data-avatar="images/avatar10.png" alt="Avatar 10"/>
+  </div>
+  <div class="avatar-option-container">
+    <img src="images/avatar11.png" class="avatar-option" data-avatar="images/avatar11.png" alt="Avatar 11"/>
+  </div>
+  <div class="avatar-option-container">
+    <img src="images/avatar12.png" class="avatar-option" data-avatar="images/avatar12.png" alt="Avatar 12"/>
+  </div>
+</div>
+</div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
