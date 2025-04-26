@@ -301,16 +301,125 @@ body {
   margin: 20px 0;
 }
 
+/* Estilo para o ranking a partir do 4º colocado */
 .ranking-item {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: center; /* Alinha a foto e os detalhes verticalmente */
+  gap: 15px; /* Espaçamento entre a foto e os detalhes */
   background: rgba(255, 255, 255, 0.1);
   padding: 15px;
   margin-bottom: 10px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  text-align: center;
+}
+
+/* Foto do ranking */
+.ranking-photo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--primary-color);
+  flex-shrink: 0; /* Impede que a foto encolha */
+}
+
+/* Detalhes do ranking */
+.ranking-details {
+  display: flex;
+  flex-direction: column; /* Alinha os elementos verticalmente */
+  align-items: flex-start; /* Alinha os elementos à esquerda */
+  gap: 5px; /* Espaçamento entre os elementos */
+  text-align: left; /* Garante que o texto fique alinhado à esquerda */
+  flex: 1; /* Permite que os detalhes ocupem o espaço restante */
+}
+
+/* Nome do jogador */
+.ranking-name {
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  max-width: 100px; /* Limita a largura máxima do nome */
+  white-space: nowrap; /* Impede que o texto quebre em várias linhas */
+  overflow: hidden; /* Esconde o texto que ultrapassa o limite */
+  text-overflow: ellipsis; /* Adiciona reticências (...) ao final do texto */
+}
+
+/* Pontuação e tempo */
+.ranking-score,
+.ranking-time {
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+/* Score e Timer */
+.score-container {
+  margin: 1.5rem 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--secondary-color);
+}
+
+/* Cards Biblioteca */
+.text-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.text-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+  color: var(--secondary-color);
+}
+
+.text-content p {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.english::before {
+  content: "🇬🇧";
+  margin-right: 8px;
+}
+
+.portuguese::before {
+  content: "🇧🇷";
+  margin-right: 8px;
+}
+
+.spanish::before {
+  content: "🇪🇸";
+  margin-right: 8px;
+}
+
+.french::before {
+  content: "🇫🇷";
+  margin-right: 8px;
+}
+
+/* Ranking */
+#ranking-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+/* Estilo para o ranking a partir do 4º colocado */
+.ranking-item {
+  display: flex;
+  align-items: center; /* Alinha a foto e os detalhes verticalmente */
+  gap: 15px; /* Espaçamento entre a foto e os detalhes */
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .ranking-photo {
@@ -322,52 +431,141 @@ body {
   border: 2px solid var(--primary-color);
 }
 
-.ranking-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+#ranking-list {
+  counter-reset: ranking;
+  padding: 0;
+  margin: 2rem 0;
 }
 
-.ranking-details {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
+.ranking-score-time {
+  font-size: 0.9rem;
+  color: #ccc;
 }
-
 .ranking-name {
   font-size: 1rem;
   font-weight: bold;
   color: white;
 }
 
-.ranking-score,
-.ranking-time {
-  font-size: 0.9rem;
-  color: #ccc;
+.ranking-details {
+  display: flex;
+  flex-direction: column; /* Alinha os elementos verticalmente */
+  align-items: center; /* Centraliza os elementos horizontalmente */
+  justify-content: center; /* Garante centralização vertical */
+  gap: 5px; /* Espaçamento entre os elementos */
+  text-align: center; /* Centraliza o texto */
+  width: 100%; /* Garante que o contêiner ocupe toda a largura disponível */
+}
+
+.ranking-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#ranking-list li {
+  counter-increment: ranking;
+  background: rgba(220, 214, 214, 0.068);
+  padding: 1.2rem;
+  margin: 0.8rem 0;
+  border-radius: 15px;
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+/* Tela Final */
+.end-screen {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 2rem;
+  margin: 1rem 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#error-list,
+#perguntas-error-list {
+  list-style: none;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.error-item {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.8rem;
+  margin: 0.5rem 0;
+  border-radius: 8px;
+  border-left: 4px solid var(--accent-color);
+}
+
+/* Botão Reiniciar */
+.restart-button {
+  background: var(--primary-color);
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  margin: 0.5rem;
+}
+
+.restart-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+}
+
+/* Botões de Nível */
+.level-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+
+.level-button {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+  font-size: 1.1rem;
+  transition: transform 0.2s;
+}
+
+.level-button:hover {
+  transform: scale(1.05);
+}
+
+#btnFacil {
+  background: #e1a1cd;
+}
+
+#btnMedio {
+  background: #9e4077;
+}
+
+#btnDificil {
+  background: #9721c2;
+}
+
+/* Animação */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+  animation: fadeIn 0.5s ease-out;
 }
 
 /* Responsividade */
-@media (max-width: 768px) {
-  .ranking-item {
-    padding: 10px;
-  }
-
-  .ranking-photo {
-    width: 50px;
-    height: 50px;
-  }
-
-  .ranking-name {
-    font-size: 0.9rem;
-  }
-
-  .ranking-score,
-  .ranking-time {
-    font-size: 0.8rem;
-  }
-}
-
 @media (max-width: 768px) {
   .title {
     font-size: 2.2rem;
@@ -669,8 +867,8 @@ body {
 }
 
 .podium-photo {
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
   overflow: hidden;
   margin-bottom: 10px;
@@ -705,14 +903,14 @@ body {
   }
 
   .podium-item {
-    width: 100px;
+    width: 150px;
     height: 180px;
     padding: 10px;
   }
 
   .podium-photo {
-    width: 60px;
-    height: 60px;
+    width: 90px;
+    height: 90px;
   }
 
   .podium-name {
@@ -724,172 +922,44 @@ body {
   }
 }
 
-/* Estilo para o botão "Sair" */
-#logout-button {
-  background: var(--primary-color);
-  color: white;
-  font-size: 0.9rem;
-  font-weight: bold;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-#logout-button:hover {
-  background: var(--secondary-color);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(124, 58, 237, 0.4);
-}
-
-/* Responsividade para o botão "Sair" */
-@media (max-width: 768px) {
-  #logout-button {
-    font-size: 0.8rem;
-    padding: 8px 16px;
-  }
-}
-
-/* Botões de Níveis com Degradê Roxo */
-.level-button {
-  padding: 1rem 2rem;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  color: white;
-  font-size: 1.1rem;
-  font-weight: bold;
-  transition: transform 0.2s, box-shadow 0.3s ease;
-  text-align: center;
-}
-
-/* Nível Fácil */
-#btnFacil {
-  background: linear-gradient(135deg, #9B5DE5, #7C3AED); /* Roxo claro para roxo escuro */
-  box-shadow: 0 4px 10px rgba(123, 58, 237, 0.4);
-}
-
-#btnFacil:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 15px rgba(123, 58, 237, 0.6);
-}
-
-/* Nível Médio */
-#btnMedio {
-  background: linear-gradient(135deg, #7C3AED, #5A189A); /* Roxo médio para roxo profundo */
-  box-shadow: 0 4px 10px rgba(90, 24, 154, 0.4);
-}
-
-#btnMedio:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 15px rgba(90, 24, 154, 0.6);
-}
-
-/* Nível Difícil */
-#btnDificil {
-  background: linear-gradient(135deg, #5A189A, #3A0CA3); /* Roxo profundo para roxo muito escuro */
-  box-shadow: 0 4px 10px rgba(58, 12, 163, 0.4);
-}
-
-#btnDificil:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 15px rgba(58, 12, 163, 0.6);
-}
-
-/* Responsividade para os botões de nível */
-@media (max-width: 768px) {
-  .level-button {
-    font-size: 1rem;
-    padding: 0.8rem 1.5rem;
-  }
-}
-
-/* Estilo para o seletor de avatar */
-.avatar-selection {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin: 20px 0;
-}
-
-.avatar-nav {
-  background: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.3s ease, transform 0.2s ease;
-}
-
-.avatar-nav:hover {
-  background: var(--secondary-color);
-  transform: scale(1.1);
-}
-
-.avatar-display {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 3px solid var(--primary-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.avatar-display img {
+/* Estilo do popup */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-}
-
-/* Estilo para o botão "Selecionar Avatar" */
-.select-avatar-button {
-  background: var(--primary-color);
-  color: white;
-  font-size: 1rem;
-  font-weight: bold;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background 0.3s ease, transform 0.2s ease;
-}
-
-.select-avatar-button:hover {
-  background: var(--secondary-color);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(124, 58, 237, 0.4);
-}
-
-/* Ajuste do botão "Voltar ao Menu" na tela de perfil */
-#backButtonProfile {
-  position: relative; /* Removido o posicionamento fixo */
-  margin-top: 20px; /* Adicionado espaçamento superior */
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  padding: 10px 15px;
-  border-radius: 50px;
-  color: white;
-  cursor: pointer;
+  backdrop-filter: blur(5px);
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
-  gap: 5px;
-  transition: all 0.3s ease;
+  justify-content: center;
+  z-index: 9999;
 }
 
-#backButtonProfile:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
+.popup-content {
+  background: #1f1a3a;
+  border-radius: 15px;
+  padding: 2rem;
+  text-align: center;
+  max-width: 300px;
+  color: white;
+  position: relative;
+}
+
+.popup-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  border: 2px solid var(--primary-color);
+}
+
+.close-popup {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: white;
 }
