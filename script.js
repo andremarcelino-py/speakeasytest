@@ -217,6 +217,27 @@ document.getElementById("go-register").addEventListener("click", () => {
   document.getElementById("register-container").style.display = "block";
 });
 
+// Função para capturar o Enter como confirmação
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    const activeElement = document.activeElement;
+
+    // Verifica se está na tela de cadastro
+    if (document.getElementById("register-container").style.display === "block") {
+      if (activeElement.id === "name" || activeElement.id === "register-password") {
+        document.getElementById("start-button").click();
+      }
+    }
+
+    // Verifica se está na tela de login
+    if (document.getElementById("login-container").style.display === "block") {
+      if (activeElement.id === "login-name" || activeElement.id === "login-password") {
+        document.getElementById("login-button").click();
+      }
+    }
+  }
+});
+
 // Navegação entre telas de cadastro e login
 goLoginLink.addEventListener("click", () => {
   registerContainer.style.display = "none";
