@@ -520,25 +520,31 @@
 </div>
 
   <!-- Tela Final do Quiz Principal -->
-<div id="end-screen" class="end-screen" style="display:none;">
-  <button class="back-button" id="backButtonEndScreen">
-    <i class="fas fa-arrow-left"></i> Voltar ao Menu
-  </button>
-  <p id="final-message"></p>
-  <ul id="error-list"></ul>
-</div>
+  <div id="end-screen" class="end-screen" style="display:none;">
+    <button class="back-button" id="backButtonEndScreen">
+      <i class="fas fa-arrow-left"></i> Voltar ao Menu
+    </button>
+    <p id="final-message"></p>
+    <ul id="error-list"></ul>
+    <button id="restart-button" class="restart-button">
+      <i class="fas fa-sync-alt"></i> Reiniciar Quiz
+    </button>
+  </div>
 
-<!-- Tela Final do Quiz de Perguntas -->
-<div id="perguntas-end-screen" class="end-screen" style="display:none;">
-  <button class="back-button" id="backButtonPerguntasEndScreen">
-    <i class="fas fa-arrow-left"></i> Voltar ao Menu
-  </button>
-  <p id="perguntas-final-message"></p>
-  <ul id="perguntas-error-list"></ul>
-  <button id="perguntas-menu-button" class="restart-button">
-    <i class="fas fa-home"></i> Menu Principal
-  </button>
-</div>
+  <!-- Tela Final do Quiz de Perguntas -->
+  <div id="perguntas-end-screen" class="end-screen" style="display:none;">
+    <button class="back-button" id="backButtonPerguntasEndScreen">
+      <i class="fas fa-arrow-left"></i> Voltar ao Menu
+    </button>
+    <p id="perguntas-final-message"></p>
+    <ul id="perguntas-error-list"></ul>
+    <button id="perguntas-restart-button" class="restart-button">
+      <i class="fas fa-sync-alt"></i> Tentar Novamente
+    </button>
+    <button id="perguntas-menu-button" class="restart-button">
+      <i class="fas fa-home"></i> Menu Principal
+    </button>
+  </div>
 
   <!-- Tela de Perfil -->
 <div id="profile-container" class="profile-container" style="display:none;">
