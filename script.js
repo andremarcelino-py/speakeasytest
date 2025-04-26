@@ -196,25 +196,22 @@ loginButton.addEventListener("click", async () => {
   }
 });
 
-// Exibir a tela de cadastro ao clicar em "Comece Agora"
+// Alternar entre telas
 document.getElementById("start-now").addEventListener("click", () => {
   document.getElementById("welcome-container").style.display = "none";
   document.getElementById("register-container").style.display = "block";
 });
 
-// Exibir a tela de login ao clicar em "Já Tenho uma Conta"
 document.getElementById("login").addEventListener("click", () => {
   document.getElementById("welcome-container").style.display = "none";
   document.getElementById("login-container").style.display = "block";
 });
 
-// Alternar para a tela de login a partir da tela de cadastro
 document.getElementById("go-login").addEventListener("click", () => {
   document.getElementById("register-container").style.display = "none";
   document.getElementById("login-container").style.display = "block";
 });
 
-// Alternar para a tela de cadastro a partir da tela de login
 document.getElementById("go-register").addEventListener("click", () => {
   document.getElementById("login-container").style.display = "none";
   document.getElementById("register-container").style.display = "block";
