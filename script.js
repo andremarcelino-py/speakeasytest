@@ -33,6 +33,7 @@ const frenchMenuContainer    = document.getElementById("french-menu-container");
 const frenchQuizContainer    = document.getElementById("french-container");
 const frenchEndScreen        = document.getElementById("french-end-screen");
 const frenchLibraryContainer = document.getElementById("french-library-container");
+const resultsContainer       = document.getElementById("results-container");
 
 // Elementos de cadastro/login
 const startButton        = document.getElementById("start-button");
@@ -63,6 +64,9 @@ const btnFrenchLibrary   = document.getElementById("btnFrenchLibrary");
 const backButtonFrenchMenu = document.getElementById("backButtonFrenchMenu");
 const frenchRestartButton  = document.getElementById("french-restart-button");
 const frenchMenuButton     = document.getElementById("french-menu-button");
+const resultsButton        = document.getElementById("results-button");
+const learnMoreButton      = document.getElementById("learn-more-button");
+const backButtonResults    = document.getElementById("backButtonResults");
 
 // Elementos do Quiz (inglês, perguntas, español, francês)
 const questionElement       = document.getElementById("question");
@@ -101,7 +105,7 @@ function hideAllSections() {
     libraryContainer, rankingContainer, endScreen, perguntasEndScreen,
     spanishMenuContainer, spanishQuizContainer, spanishEndScreen, spanishLibraryContainer,
     frenchMenuContainer, frenchQuizContainer, frenchEndScreen, frenchLibraryContainer,
-    profileContainer, exercisesContainer // Inclua o contêiner de exercícios aqui
+    profileContainer, exercisesContainer, resultsContainer // Inclua o contêiner de resultados aqui
   ].forEach(sec => sec && (sec.style.display = "none"));
 }
 
@@ -117,7 +121,8 @@ function backToMenu() {
   "backButtonQuiz", "backButtonPerguntas", "backButtonPerguntasQuiz",
   "backButtonLibrary", "backButtonRanking", "backButtonEndScreen", "backButtonPerguntasEndScreen",
   "backButtonSpanish", "backButtonSpanishLibrary", "backButtonSpanishEndScreen",
-  "backButtonFrench", "backButtonFrenchLibrary", "backButtonFrenchEndScreen"
+  "backButtonFrench", "backButtonFrenchLibrary", "backButtonFrenchEndScreen",
+  "backButtonResults"
 ].forEach(id => {
   const btn = document.getElementById(id);
   if (btn) btn.addEventListener("click", backToMenu);
@@ -306,62 +311,10 @@ function endQuiz() {
   stopTimer();
   quizContainer.style.display = "none";
   endScreen.style.display = "block";
-
-  // Mensagem de motivação
-  const motivationMessage = document.createElement("p");
-  motivationMessage.className = "motivation-message";
-  if (score === questions.length) {
-    motivationMessage.textContent = "Parabéns! Você acertou todas as perguntas! 🎉";
-  } else if (score >= questions.length * 0.7) {
-    motivationMessage.textContent = "Ótimo trabalho! Continue assim! 💪";
-  } else {
-    motivationMessage.textContent = "Não desista! Você está no caminho certo! 🌟";
-  }
-  endScreen.appendChild(motivationMessage);
-
-  // Exibir pontuação e erros
   finalMessageElement.textContent = `Pontuação Final: ${score}/${questions.length} | Tempo: ${quizTimer}s`;
-  errorListElement.innerHTML = errors.map(e => `
-    <li class="error-item" style="border: 2px solid #f44336; padding: 10px; margin-bottom: 10px; border-radius: 5px; background-color: #ffebee; color: #c62828;">
-      ${e}
-    </li>
-  `).join("");
+  errorListElement.innerHTML = errors.map(e=>`<li class="error-item">${e}</li>`).join("");
+  saveScore(document.getElementById("name").value.trim(), score, quizTimer);
 }
-
-// Substituir o botão de reiniciar quiz por "Aprender Mais"
-const learnMoreButton = document.createElement("button");
-learnMoreButton.textContent = "Aprender Mais";
-learnMoreButton.className = "learn-more-button";
-learnMoreButton.addEventListener("click", () => {
-  hideAllSections();
-  libraryContainer.style.display = "block";
-});
-endScreen.appendChild(learnMoreButton);
-
-// Estilo para o botão "Aprender Mais" e mensagem de motivação
-const style = document.createElement("style");
-style.textContent = `
-  .learn-more-button {
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
-  }
-  .learn-more-button:hover {
-    background-color: #45a049;
-  }
-  .motivation-message {
-    font-size: 18px;
-    font-weight: bold;
-    color: #2e7d32;
-    margin-top: 20px;
-  }
-`;
-document.head.appendChild(style);
 
 // Adicione um novo contêiner para a aba de aviso no HTML
 const quizWarningContainer = document.getElementById("quiz-warning-container");
@@ -1223,4 +1176,51 @@ document.addEventListener('keydown', (event) => {
       backToMenu(); // Volta ao menu principal
     }
   }
+});
+
+// --- RESULTADOS ---
+resultsButton.addEventListener('click', () => {
+  document.getElementById('end-screen').style.display = 'none';
+  document.getElementById('results-container').style.display = 'block';
+
+  const score = parseInt(document.getElementById('score').textContent, 10);
+  const totalQuestions = 15; // Total de questões do quiz
+  const wrongQuestions = []; // Substitua com as questões erradas do quiz
+
+  // Exibir pontuação
+  document.getElementById('score-summary').textContent = `Você acertou ${score} de ${totalQuestions} questões.`;
+
+  // Mensagem motivacional
+  let motivationalMessage = '';
+  if (score === totalQuestions) {
+    motivationalMessage = 'Parabéns! Você acertou todas as questões! 🎉';
+  } else if (score >= totalQuestions * 0.8) {
+    motivationalMessage = 'Ótimo trabalho! Continue assim! 💪';
+  } else if (score >= totalQuestions * 0.5) {
+    motivationalMessage = 'Bom esforço! Você está no caminho certo! 🚀';
+  } else {
+    motivationalMessage = 'Não desista! Continue praticando! 🌟';
+  }
+  document.getElementById('motivational-message').textContent = motivationalMessage;
+
+  // Exibir questões erradas
+  const wrongQuestionsList = document.getElementById('wrong-questions-list');
+  wrongQuestionsList.innerHTML = '';
+  wrongQuestions.forEach((question) => {
+    const li = document.createElement('li');
+    li.textContent = question; // Substitua com o texto da questão errada
+    wrongQuestionsList.appendChild(li);
+  });
+});
+
+// Botão "Aprenda Mais"
+learnMoreButton.addEventListener('click', () => {
+  document.getElementById('results-container').style.display = 'none';
+  document.getElementById('library-container').style.display = 'block';
+});
+
+// Botão "Voltar" nos resultados
+backButtonResults.addEventListener('click', () => {
+  document.getElementById('results-container').style.display = 'none';
+  document.getElementById('menu-container').style.display = 'block';
 });
