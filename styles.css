@@ -1239,6 +1239,25 @@ body {
   box-shadow: 0 4px 15px rgba(244, 114, 182, 0.4);
 }
 
+/* Botão Revisar */
+.review-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+.review-button:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+}
+
 /* Rodapé */
 .footer {
   margin-top: auto;
