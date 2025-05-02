@@ -355,6 +355,9 @@ function endQuiz() {
 
   // Exibe as questões erradas
   displayWrongAnswers();
+
+  // Exibe mensagem motivacional
+  showMotivationalMessage(score, questions.length);
 }
 
 // Adicione um novo contêiner para a aba de aviso no HTML
@@ -445,6 +448,9 @@ function endPerguntasQuiz() {
       <button onclick="showLibrarySection('${err.libraryRef}')">Aprenda Mais</button>
     </li>
   `).join("");
+
+  // Exibe mensagem motivacional
+  showMotivationalMessage(perguntasScore, perguntasQuestions.length);
 }
 function startPerguntasQuiz(dif) {
   perguntasQuestions = allQuestions.filter(q=>q.difficulty===dif).sort(()=>Math.random()-0.5).slice(0,10);
@@ -625,6 +631,9 @@ function endSpanishQuiz() {
       <button class="aprenda-mais-button" onclick="showLibrarySectionSpanish()">Aprenda Mais</button>
     </li>
   `).join("");
+
+  // Exibe mensagem motivacional
+  showMotivationalMessage(spanishScore, spanishQuestions.length);
 }
 window.showLibrarySectionSpanish = function() {
   hideAllSections();
@@ -714,6 +723,9 @@ function endFrenchQuiz() {
       <button class="aprenda-mais-button" onclick="showLibrarySectionFrench()">En savoir plus</button>
     </li>
   `).join("");
+
+  // Exibe mensagem motivacional
+  showMotivationalMessage(frenchScore, frenchQuestions.length);
 }
 window.showLibrarySectionFrench = function() {
   hideAllSections();
@@ -1231,19 +1243,6 @@ resultsButton.addEventListener('click', () => {
   // Exibir pontuação
   document.getElementById('score-summary').textContent = `Você acertou ${score} de ${totalQuestions} questões.`;
 
-  // Mensagem motivacional
-  let motivationalMessage = '';
-  if (score === totalQuestions) {
-    motivationalMessage = 'Parabéns! Você acertou todas as questões! 🎉';
-  } else if (score >= totalQuestions * 0.8) {
-    motivationalMessage = 'Ótimo trabalho! Continue assim! 💪';
-  } else if (score >= totalQuestions * 0.5) {
-    motivationalMessage = 'Bom esforço! Você está no caminho certo! 🚀';
-  } else {
-    motivationalMessage = 'Não desista! Continue praticando! 🌟';
-  }
-  document.getElementById('motivational-message').textContent = motivationalMessage;
-
   // Exibir questões erradas
   const wrongQuestionsList = document.getElementById('wrong-questions-list');
   wrongQuestionsList.innerHTML = '';
@@ -1265,3 +1264,29 @@ backButtonResults.addEventListener('click', () => {
   document.getElementById('results-container').style.display = 'none';
   document.getElementById('menu-container').style.display = 'block';
 });
+
+// Função para exibir mensagem motivacional
+function showMotivationalMessage(score, totalQuestions) {
+  let motivationalMessage = '';
+  if (score === totalQuestions) {
+    motivationalMessage = 'Parabéns! Você acertou todas as questões! 🎉';
+  } else if (score >= totalQuestions * 0.8) {
+    motivationalMessage = 'Ótimo trabalho! Continue assim! 💪';
+  } else if (score >= totalQuestions * 0.5) {
+    motivationalMessage = 'Bom esforço! Você está no caminho certo! 🚀';
+  } else {
+    motivationalMessage = 'Não desista! Continue praticando! 🌟';
+  }
+
+  // Exibe em popup (alert) ou em um elemento HTML
+  // alert(motivationalMessage); // Descomente para usar popup
+
+  // Exibe em um elemento na tela (certifique-se de ter um elemento com id="motivational-message")
+  const msgEl = document.getElementById('motivational-message');
+  if (msgEl) {
+    msgEl.textContent = motivationalMessage;
+    msgEl.style.display = 'block';
+  } else {
+    alert(motivationalMessage); // Fallback para popup se o elemento não existir
+  }
+}
