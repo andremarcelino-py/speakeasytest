@@ -291,29 +291,70 @@ function loadQuestion() {
     });
   } else endQuiz();
 }
+
+// Modifique a função `checkAnswer` para registrar as perguntas erradas
 function checkAnswer(sel) {
   const q = questions[currentQuestion];
   const opts = optionsElement.querySelectorAll("li");
-  opts.forEach((li,i)=>{
-    li.classList.remove("correct","wrong");
+  opts.forEach((li, i) => {
+    li.classList.remove("correct", "wrong");
     if (i === q.answer) li.classList.add("correct");
     else if (i === sel) li.classList.add("wrong");
     li.style.pointerEvents = "none";
   });
-  if (sel === q.answer) { score++; scoreElement.textContent = score; }
-  else errors.push(`Pergunta: ${q.question} - Resposta: ${q.options[q.answer]}`);
+
+  if (sel === q.answer) {
+    score++;
+    scoreElement.textContent = score;
+  } else {
+    errors.push({ question: q.question, selectedAnswer: q.options[sel] });
+  }
+
   saveProgress(currentUserName, { questions, score, currentQuestion, errors, quizTimer });
-  setTimeout(()=>{
-    currentQuestion++; loadQuestion();
-  },1500);
+  setTimeout(() => {
+    currentQuestion++;
+    loadQuestion();
+  }, 1500);
 }
+
+// Função para exibir as questões erradas com o botão "Revisar"
+function displayWrongAnswers() {
+  const errorList = document.getElementById("error-list");
+  errorList.innerHTML = ""; // Limpa a lista antes de adicionar os itens
+
+  errors.forEach((error) => {
+    const questionData = allQuestions.find((q) => q.question === error.question);
+
+    if (questionData) {
+      const listItem = document.createElement("li");
+      listItem.innerHTML = `
+        <p><strong>Pergunta:</strong> ${questionData.question}</p>
+        <p><strong>Resposta Correta:</strong> ${questionData.options[questionData.answer]}</p>
+        <button class="review-button" onclick="showLibrarySection('${questionData.libraryRef}')">
+          Revisar
+        </button>
+      `;
+      errorList.appendChild(listItem);
+    }
+  });
+}
+
+// Função para navegar até a seção da biblioteca
+function showLibrarySection(sectionId) {
+  hideAllSections();
+  libraryContainer.style.display = "block";
+  document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+}
+
+// Modifique a função `endQuiz` para exibir as questões erradas
 function endQuiz() {
   stopTimer();
   quizContainer.style.display = "none";
   endScreen.style.display = "block";
   finalMessageElement.textContent = `Pontuação Final: ${score}/${questions.length} | Tempo: ${quizTimer}s`;
-  errorListElement.innerHTML = errors.map(e=>`<li class="error-item">${e}</li>`).join("");
-  saveScore(document.getElementById("name").value.trim(), score, quizTimer);
+
+  // Exibe as questões erradas
+  displayWrongAnswers();
 }
 
 // Adicione um novo contêiner para a aba de aviso no HTML
