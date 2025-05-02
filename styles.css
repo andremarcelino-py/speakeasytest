@@ -652,7 +652,45 @@ body {
   box-shadow: 0 4px 15px rgba(244, 114, 182, 0.4);
 }
 
+/* Botão "Resultados" */
+#results-button {
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
 
+#results-button:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+}
+
+/* Botão "Aprenda Mais" */
+#learn-more-button {
+  background-color: var(--accent-color);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+#learn-more-button:hover {
+  background-color: #d6619d; /* Tom mais escuro do accent-color */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(244, 114, 182, 0.4);
+}
 
 #user-info {
   position: fixed;
@@ -1116,4 +1154,29 @@ body {
   color: var(--secondary-color);
   font-size: 0.9em;
   text-align: center;
+}
+
+/* Estilo para a lista de respostas erradas */
+.wrong-questions-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.wrong-questions-list li {
+  background: rgba(245, 101, 101, 0.1); /* Fundo vermelho claro */
+  border: 2px solid #F56565; /* Borda vermelha */
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.wrong-questions-list li:hover {
+  transform: translateX(10px);
+  box-shadow: 0 4px 10px rgba(245, 101, 101, 0.4);
 }
