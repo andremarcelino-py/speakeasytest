@@ -29,6 +29,20 @@
   </main>
 </div>
 
+
+<!-- Tela de Parabenização -->
+<div id="congratulations-container" style="display: none; text-align: center; padding: 20px;">
+  <h1 id="congratulations-title"></h1>
+  <p id="congratulations-message"></p>
+  <div id="error-list-container" style="margin-top: 20px;">
+    <h3>Erros e Respostas Corretas:</h3>
+    <button id="toggle-errors-btn" style="margin-bottom:10px;">Ocultar Erros</button>
+    <ul id="error-list" style="list-style: none; padding: 0;"></ul>
+  </div>
+  <button id="congratulations-back-button">Voltar ao Menu</button>
+</div>
+
+
   <!-- Tela de Cadastro -->
 <div id="register-container" class="register-container animate-in" style="display:none;">
   <header class="welcome-header">
@@ -626,22 +640,10 @@
       <i class="fas fa-arrow-left"></i> Voltar ao Menu
     </button>
     <p id="final-message"></p>
-    <h2></h2>
-    <p id="score-summary"></p>
-    <p id="time-summary"></p>
-    <p id="motivational-message"></p>
-    <h3>Questões Erradas</h3>
-        <ul id="error-list">
-      <!-- Questões erradas serão inseridas dinamicamente -->
-</ul>
-    <button id="learn-more-button" class="restart-button">
-      <i class="fas fa-book-open"></i> Saiba Mais
-    </button>
-
-      <i></i>
-    
+    <ul id="error-list"></ul>
     <button id="restart-button" class="restart-button">
-
+      <i class="fas fa-sync-alt"></i> Reiniciar Quiz
+    </button>
   </div>
 
   <!-- Tela Final do Quiz de Perguntas -->
@@ -769,18 +771,6 @@
   </div>
 </div>
 
-<div id="results-container" class="results-container" style="display:none;">
-  <button class="back-button" id="backButtonResults">
-    <i class="fas fa-arrow-left"></i> Voltar ao Menu
-  </button>
-
-</div>
-
-  <!-- Rodapé -->
-  <footer class="footer">
-    <p>© 2025 Speak Easy. Todos os direitos reservados.</p>
-  </footer>
-  
   <script type="module" src="script.js"></script>
 </body>
 </html>
