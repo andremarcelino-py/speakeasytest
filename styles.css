@@ -1475,7 +1475,15 @@ body {
 }
 
 /* Botão Voltar ao Menu do Quiz */
-#quiz-back-menu-button {
+#quiz-back-menu-button,
+#congratulations-back-button,
+#perguntas-menu-button,
+#spanish-menu-button,
+#french-menu-button,
+#backButtonEndScreen,
+#backButtonPerguntasEndScreen,
+#backButtonSpanishEndScreen,
+#backButtonFrenchEndScreen {
   background-color: var(--primary-color);
   color: #fff;
   border: none;
@@ -1488,7 +1496,15 @@ body {
   transition: all 0.3s ease;
 }
 
-#quiz-back-menu-button:hover {
+#quiz-back-menu-button:hover,
+#congratulations-back-button:hover,
+#perguntas-menu-button:hover,
+#spanish-menu-button:hover,
+#french-menu-button:hover,
+#backButtonEndScreen:hover,
+#backButtonPerguntasEndScreen:hover,
+#backButtonSpanishEndScreen:hover,
+#backButtonFrenchEndScreen:hover {
   background-color: var(--secondary-color);
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
