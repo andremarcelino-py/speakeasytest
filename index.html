@@ -1,776 +1,1495 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Speak Easy - Quiz de Inglês</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
-  <link rel="stylesheet" href="styles.css"/>
-</head>
-<body>
+:root {
+  --primary-color: #7C3AED;
+  --secondary-color: #A78BFA;
+  --accent-color: #F472B6;
+  --background-gradient: linear-gradient(135deg, #1F1A3A 0%, #2E0854 100%);
+}
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  <!-- Tela de Boas-Vindas -->
-<div id="welcome-container" class="welcome-container">
-  <header class="welcome-header">
-    <img src="images/logo.png" alt="Logo Speak Easy" class="logo" />
-    <h1 class="logo-text">Speak Easy</h1> <!-- Adicionando o nome ao lado ou abaixo da logo -->
-  </header>
-  <main class="welcome-content">
-    <h1 class="welcome-slogan">O jeito <span>fácil</span> de falar outra língua!</h1>
-    <p class="welcome-description">
-       Comece agora e transforme seu aprendizado!
-    </p>
-    <div class="welcome-buttons">
-      <button id="start-now" class="btn-primary">Comece Agora</button>
-      <button id="login" class="btn-secondary">Já Tenho uma Conta</button>
-    </div>
-  </main>
-</div>
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--background-gradient);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
 
+/* Tela de Boas-Vindas */
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  background: #1f1a3a; /* Cor de fundo consistente com o restante do site */
+  color: #fff; /* Texto branco para contraste */
+  padding: 20px;
+}
 
-<!-- Tela de Parabenização -->
-<div id="congratulations-container" style="display: none; text-align: center; padding: 20px;">
-  <h1 id="congratulations-title"></h1>
-  <p id="congratulations-message"></p>
-  <div id="error-list-container" style="margin-top: 20px;">
-    <h3>Erros e Respostas Corretas:</h3>
-    <button id="toggle-errors-btn" style="margin-bottom:10px;">Ocultar Erros</button>
-    <ul id="error-list" style="list-style: none; padding: 0;"></ul>
-  </div>
-  <button id="congratulations-back-button">Voltar ao Menu</button>
-</div>
+.welcome-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
 
+.welcome-header .logo {
+  width: 120px; /* Ajuste o tamanho da logo */
+  height: auto; /* Mantém a proporção da imagem */
+  margin-bottom: 10px; /* Espaçamento entre a logo e o texto */
+}
 
-  <!-- Tela de Cadastro -->
-<div id="register-container" class="register-container animate-in" style="display:none;">
-  <header class="welcome-header">
-    <img src="images/logo.png" alt="Logo Speak Easy" class="logo" />
-    <h1 class="logo-text">Speak Easy</h1>
-  </header>
-  <h2>Cadastro</h2>
-  <input type="text" id="name" placeholder="Digite seu nome"/>
-  <input type="password" id="register-password" placeholder="Crie uma senha"/>
-  <button id="start-button">Cadastrar <i class="fas fa-arrow-right"></i></button>
-  <p>Já tem uma conta? <a href="#" id="go-login">Login</a></p>
-</div>
+.welcome-header .logo-text {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #f472b6; /* Cor consistente com o restante do site */
+  text-align: center;
+}
 
-  <!-- Tela de Login -->
-<div id="login-container" class="login-container" style="display:none;">
-  <header class="welcome-header">
-    <img src="images/logo.png" alt="Logo Speak Easy" class="logo" />
-    <h1 class="logo-text">Speak Easy</h1>
-  </header>
-  <h2>Login</h2>
-  <input type="text" id="login-name" placeholder="Digite seu nome">
-  <input type="password" id="login-password" placeholder="Digite sua senha">
-  <button id="login-button">Entrar</button>
-  <p>Não tem uma conta? <a href="#" id="go-register">Cadastre-se</a></p>
-</div>
+.welcome-slogan {
+  font-size: 2.5rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  color: #fff;
+}
 
-  <!-- Menu Principal -->
-<div id="menu-container" class="menu-container" style="display:none;">
-  <header class="welcome-header">
-    <img src="images/logo.png" alt="Logo Speak Easy" class="logo" />
-    <h1 class="logo-text"></h1>
-  </header>
-  <h1 class="title">Bem-vindo ao Speak Easy</h1>
-  <div id="user-info">
-    <img id="user-photo" src="images/default.png" alt="Foto de Perfil" class="user-photo"/>
-    <span id="user-name"></span>
-  </div>
-  <div class="tabs">
-    <button id="btnQuiz" class="tab-button animate-in"><i class="fas fa-question-circle"></i> Quiz</button>
-    <button id="btnPerguntas" class="tab-button animate-in"><i class="fas fa-edit"></i> Perguntas</button>
-    <button id="btnLibrary" class="tab-button animate-in"><i class="fas fa-book-open"></i> Biblioteca</button>
-    <button id="btnSpanish" class="tab-button animate-in spanish"><i class="fas fa-globe"></i> Español</button>
-    <button id="btnFrench" class="tab-button animate-in french"><i class="fas fa-globe"></i> Français</button>
-    <button id="btnExercises" class="tab-button animate-in"><i class="fas fa-dumbbell"></i> Exercícios</button>
-    <button id="btnRanking" class="tab-button animate-in"><i class="fas fa-trophy"></i> Ranking</button>
-  </div>
-  <!-- Botão de logout no menu principal -->
-  <button id="logout-button" class="restart-button">Sair</button>
-</div>
+.welcome-slogan span {
+  color: #f472b6; /* Destaque com a cor principal */
+}
 
-  <!-- Menu Español: Selección de Contenido en Español -->
-  <div id="spanish-menu-container" class="menu-container" style="display:none;">
-    <h2>Contenido en Español</h2>
-    <div class="tabs">
-      <button id="btnSpanishQuiz" class="tab-button animate-in spanish">
-         <i class="fas fa-question-circle"></i> Preguntas
-      </button>
-      <button id="btnSpanishLibrary" class="tab-button animate-in spanish">
-         <i class="fas fa-book-open"></i> Biblioteca
-      </button>
-    </div>
-    <button class="back-button" id="backButtonSpanishMenu">
-      <i class="fas fa-arrow-left"></i> Volver al Menú Principal
-    </button>
-  </div>
+.welcome-description {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: #d1d5db; /* Texto com tom mais claro */
+}
 
-  <!-- Quiz en Español -->
-  <div id="spanish-container" class="quiz-container" style="display:none;">
-    <button class="back-button" id="backButtonSpanish">
-      <i class="fas fa-arrow-left"></i> Volver al Menú
-    </button>
-    <div id="spanish-quiz">
-      <p id="spanish-question"></p>
-      <ul id="spanish-options"></ul>
-    </div>
-    <div class="score-container">
-      <p>Puntuación: <span id="spanish-score">0</span>/15</p>
-      <p>Tiempo: <span id="spanish-timer">0</span> s</p>
-    </div>
-  </div>
+.welcome-buttons {
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+  gap: 15px; /* Espaçamento entre os botões */
+  margin-top: 20px; /* Adiciona um espaço acima dos botões */
+}
 
-  <!-- Tela Final do Quiz en Español -->
-  <div id="spanish-end-screen" class="end-screen" style="display:none;">
-    <button class="back-button" id="backButtonSpanishEndScreen">
-      <i class="fas fa-arrow-left"></i> Volver al Menú
-    </button>
-    <p id="spanish-final-message"></p>
-    <ul id="spanish-error-list"></ul>
-    <button id="spanish-restart-button" class="restart-button">
-      <i class="fas fa-sync-alt"></i> Reiniciar Quiz
-    </button>
-    <button id="spanish-menu-button" class="restart-button">
-      <i class="fas fa-home"></i> Menú Principal
-    </button>
-  </div>
+.btn-primary,
+.btn-secondary {
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+}
 
-  <!-- Biblioteca en Español -->
-  <div id="spanish-library-container" class="library-container" style="display:none;">
-  <button class="back-button" id="backButtonSpanishLibrary">
-    <i class="fas fa-arrow-left"></i> Volver al Menú
-  </button>
-  <h2><i class="fas fa-book-open"></i> Biblioteca de Textos en Español</h2>
+.btn-primary {
+  background: #f472b6; /* Cor principal */
+  color: #fff;
+}
 
-  <!-- Sección: Frases Básicas -->
-  <div id="frases-basicas-es" class="text-card animate-in">
-    <div class="text-header">
-      <i class="fas fa-star"></i>
-      <h3>Frases Básicas</h3>
-    </div>
-    <div class="text-content">
-      <p class="spanish">Hola - Olá</p>
-      <p class="spanish">Adiós - Adeus</p>
-      <p class="spanish">Gracias - Obrigado</p>
-      <p class="spanish">Por favor - Por favor</p>
-      <p class="spanish">¿Cómo estás? - Como você está?</p>
-    </div>
-  </div>
+.btn-primary:hover {
+  background: #d6619d; /* Cor de hover */
+}
 
-  <!-- Sección: Verbos Importantes -->
-  <div id="verbos-importantes-es" class="text-card animate-in">
-    <div class="text-header">
-      <i class="fas fa-star"></i>
-      <h3>Verbos Importantes</h3>
-    </div>
-    <div class="text-content">
-      <p>Ejemplo: hablar, comer, vivir, estudiar, trabajar.</p>
-      <p class="spanish">Yo hablo español - Eu falo espanhol</p>
-      <p class="spanish">Ella come manzanas - Ela come maçãs</p>
-      <p class="spanish">Nosotros vivimos en México - Nós moramos no México</p>
-    </div>
-  </div>
+.btn-secondary {
+  background: transparent;
+  color: #fff;
+  border: 2px solid #f472b6; /* Borda com a cor principal */
+}
 
-  <!-- Sección: Preguntas Comunes -->
-  <div id="preguntas-comunes-es" class="text-card animate-in">
-    <div class="text-header">
-      <i class="fas fa-star"></i>
-      <h3>Preguntas Comunes</h3>
-    </div>
-    <div class="text-content">
-      <p class="spanish">¿Dónde vives? - Onde você mora?</p>
-      <p class="spanish">¿Qué hora es? - Que horas são?</p>
-      <p class="spanish">¿Cuánto cuesta? - Quanto custa?</p>
-      <p class="spanish">¿Puedes ayudarme? - Você pode me ajudar?</p>
-      <p class="spanish">¿Cómo te llamas? - Qual é o seu nome?</p>
-    </div>
-  </div>
+.btn-secondary:hover {
+  background: rgba(244, 114, 182, 0.2); /* Fundo com transparência no hover */
+}
 
-  <!-- Sección: Expresiones Idiomáticas -->
-  <div id="expresiones-idiomaticas-es" class="text-card animate-in">
-    <div class="text-header">
-      <i class="fas fa-star"></i>
-      <h3>Expresiones Idiomáticas</h3>
-    </div>
-    <div class="text-content">
-      <p class="spanish">Estar en las nubes - Estar nas nuvens</p>
-      <p class="spanish">Tener la sartén por el mango - Ter a faca e o queijo na mão</p>
-      <p class="spanish">Ser pan comido - Ser muito fácil</p>
-      <p class="spanish">Llover a cántaros - Chover muito</p>
-    </div>
-  </div>
+/* Ocultar outras telas inicialmente */
+#register-container,
+#login-container,
+#menu-container {
+  display: none;
+}
 
-  <!-- Sección: Preguntas Avanzadas -->
-<div id="preguntas-avanzadas-es" class="text-card animate-in">
-  <div class="text-header">
-    <i class="fas fa-star"></i>
-    <h3>Preguntas Avanzadas</h3>
-  </div>
-  <div class="text-content">
-    <p class="spanish">¿Qué opinas sobre el cambio climático? - O que você acha sobre a mudança climática?</p>
-    <p class="spanish">¿Cuál es tu libro favorito y por qué? - Qual é o seu livro favorito e por quê?</p>
-    <p class="spanish">¿Qué harías si ganaras la lotería? - O que você faria se ganhasse na loteria?</p>
-    <p class="spanish">¿Cómo describirías tu ciudad natal? - Como você descreveria sua cidade natal?</p>
-    <p class="spanish">¿Qué te motiva a aprender español? - O que te motiva a aprender espanhol?</p>
-  </div>
-</div>
+/* Telas de Cadastro e Login */
+.register-container, .login-container {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 400px;
+  width: 100%;
+  margin-bottom: 20px;
+}
 
-<!-- Sección: Cultura Española -->
-<div id="cultura-es" class="text-card animate-in">
-  <div class="text-header">
-    <i class="fas fa-star"></i>
-    <h3>Cultura Española</h3>
-  </div>
-  <div class="text-content">
-    <p class="spanish">La paella es un plato típico de España, originario de Valencia.</p>
-    <p class="spanish">El flamenco es un estilo de música y danza tradicional de Andalucía.</p>
-    <p class="spanish">La Sagrada Familia es una famosa basílica en Barcelona diseñada por Antoni Gaudí.</p>
-    <p class="spanish">El idioma español tiene más de 500 millones de hablantes en el mundo.</p>
-  </div>
-</div>
-</div>
+.register-container h2, 
+.login-container h2 {
+  margin-bottom: 1.5rem;
+  color: white;
+}
 
-  <!-- Menu Français: Sélection de Contenu en Français -->
-  <div id="french-menu-container" class="menu-container" style="display:none;">
-    <h2>Contenu en Français</h2>
-    <div class="tabs">
-      <button id="btnFrenchQuiz" class="tab-button animate-in french">
-         <i class="fas fa-question-circle"></i> Questions
-      </button>
-      <button id="btnFrenchLibrary" class="tab-button animate-in french">
-         <i class="fas fa-book-open"></i> Bibliothèque
-      </button>
-    </div>
-    <button class="back-button" id="backButtonFrenchMenu">
-      <i class="fas fa-arrow-left"></i> Retour au Menu Principal
-    </button>
-  </div>
+.register-container input,
+.login-container input {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 2px solid var(--primary-color);
+  background: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+}
 
-  <!-- Quiz en Français -->
-  <div id="french-container" class="quiz-container" style="display:none;">
-    <button class="back-button" id="backButtonFrench">
-      <i class="fas fa-arrow-left"></i> Retour au Menu
-    </button>
-    <div id="french-quiz">
-      <p id="french-question"></p>
-      <ul id="french-options"></ul>
-    </div>
-    <div class="score-container">
-      <p>Score : <span id="french-score">0</span>/15</p>
-      <p>Temps : <span id="french-timer">0</span> s</p>
-    </div>
-  </div>
+.register-container input:focus,
+.login-container input:focus {
+  transform: scale(1.02);
+  box-shadow: 0 0 15px var(--secondary-color);
+  outline: none;
+}
 
-  <!-- Écran Final du Quiz en Français -->
-  <div id="french-end-screen" class="end-screen" style="display:none;">
-    <button class="back-button" id="backButtonFrenchEndScreen">
-      <i class="fas fa-arrow-left"></i> Retour au Menu
-    </button>
-    <p id="french-final-message"></p>
-    <ul id="french-error-list"></ul>
-    <button id="french-restart-button" class="restart-button">
-      <i class="fas fa-sync-alt"></i> Réessayer
-    </button>
-    <button id="french-menu-button" class="restart-button">
-      <i class="fas fa-home"></i> Menu Principal
-    </button>
-  </div>
+.register-container button,
+.login-container button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: 600;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+}
 
-  <!-- Bibliothèque en Français -->
-  <div id="french-library-container" class="library-container" style="display:none;">
-  <button class="back-button" id="backButtonFrenchLibrary">
-    <i class="fas fa-arrow-left"></i> Retour au Menu
-  </button>
-  <h2><i class="fas fa-book-open"></i> Bibliothèque en Français</h2>
+.register-container button:hover,
+.login-container button:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+}
 
-  <!-- Section: Phrases de Base -->
-  <div id="phrases-de-base-fr" class="text-card animate-in">
-    <div class="text-header">
-      <i class="fas fa-star"></i>
-      <h3>Phrases de Base 🌟</h3>
-    </div>
-    <div class="text-content">
-      <p class="french">Bonjour - Bom dia</p>
-      <p class="french">Bonsoir - Boa noite</p>
-      <p class="french">Merci - Obrigado</p>
-      <p class="french">S'il vous plaît - Por favor</p>
-      <p class="french">Comment ça va ? - Como vai você?</p>
-    </div>
-  </div>
+/* Seção de Personagem */
+#character-selection {
+  margin: 1rem 0;
+  text-align: center;
+}
+.character-options {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.character-option {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border 0.3s ease;
+}
+.character-option.selected {
+  border: 2px solid var(--primary-color);
+}
 
-  <!-- Section: Verbes Importants -->
-  <div id="verbes-importants-fr" class="text-card animate-in">
-    <div class="text-header">
-      <i class="fas fa-star"></i>
-      <h3>Verbes Importants 🏃‍♂️</h3>
-    </div>
-    <div class="text-content">
-      <p>Exemples de verbes importants :</p>
-      <p class="french">Parler - Falar</p>
-      <p class="french">Manger - Comer</p>
-      <p class="french">Vivre - Viver</p>
-      <p class="french">Étudier - Estudar</p>
-      <p class="french">Travailler - Trabalhar</p>
-    </div>
-  </div>
+/* Containers Gerais */
+.menu-container,
+.container,
+.quiz-container,
+.perguntas-container,
+.library-container,
+.ranking-container,
+.end-screen {
+  text-align: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 2rem;
+  position: relative;
+  padding-top: 60px;
+}
 
-  <!-- Section: Questions Courantes -->
-  <div id="questions-courantes-fr" class="text-card animate-in">
-    <div class="text-header">
-      <i class="fas fa-star"></i>
-      <h3>Questions Courantes ❓</h3>
-    </div>
-    <div class="text-content">
-      <p class="french">Où habites-tu ? - Onde você mora?</p>
-      <p class="french">Quelle heure est-il ? - Que horas são?</p>
-      <p class="french">Combien ça coûte ? - Quanto custa?</p>
-      <p class="french">Peux-tu m'aider ? - Você pode me ajudar?</p>
-      <p class="french">Comment t'appelles-tu ? - Qual é o seu nome?</p>
-    </div>
-  </div>
+/* Botão Voltar */
+.back-button {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 50px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.3s ease;
+}
 
-  <!-- Section: Expressions Idiomatiques -->
-  <div id="expressions-idiomatiques-fr" class="text-card animate-in">
-    <div class="text-header">
-      <i class="fas fa-star"></i>
-      <h3>Expressions Idiomatiques 💡</h3>
-    </div>
-    <div class="text-content">
-      <p class="french">Être dans la lune 🌙 - Estar distraído</p>
-      <p class="french">Avoir le cœur sur la main ❤️ - Ser generoso</p>
-      <p class="french">Casser les pieds 🦶 - Irritar alguém</p>
-      <p class="french">Donner un coup de main 🤝 - Ajudar</p>
-      <p class="french">Faire la grasse matinée 🛌 - Dormir até tarde</p>
-    </div>
-  </div>
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
 
-  <!-- Section: Culture Française -->
-  <div id="culture-fr" class="text-card animate-in">
-    <div class="text-header">
-      <i class="fas fa-star"></i>
-      <h3>Culture Française 🇫🇷</h3>
-    </div>
-    <div class="text-content">
-      <p class="french">La Tour Eiffel est un symbole emblématique de la France.</p>
-      <p class="french">La baguette est un pain traditionnel français.</p>
-      <p class="french">Le fromage est une partie importante de la cuisine française.</p>
-      <p class="french">Le Louvre est le musée le plus visité au monde.</p>
-      <p class="french">Le 14 juillet est la fête nationale de la France.</p>
-    </div>
-  </div>
-</div>
+/* Títulos e Tabs */
+.title {
+  font-size: 3rem;
+  background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
 
-  <!-- Quiz Principal (em inglês) -->
-  <div id="quiz-container" class="quiz-container" style="display:none;">
-    <div id="quiz">
-      <p id="question"></p>
-      <ul id="options"></ul>
-    </div>
-    <div class="score-container">
-      <p>Pontuação: <span id="score">0</span>/15</p>
-      <p>Tempo: <span id="timer">0</span> s</p>
-    </div>
-  </div>
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
 
-  <!-- Seleção de Nível para Perguntas -->
-  <div id="perguntas-container" class="perguntas-container" style="display:none;">
-    <button class="back-button" id="backButtonPerguntas">
-      <i class="fas fa-arrow-left"></i> Voltar ao Menu
-    </button>
-    <h2><i class="fas fa-edit"></i> Escolha o Nível</h2>
-    <div class="level-buttons">
-      <button id="btnFacil" class="level-button">Fácil</button>
-      <button id="btnMedio" class="level-button">Médio</button>
-      <button id="btnDificil" class="level-button">Difícil</button>
-    </div>
-  </div>
+.tab-button {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 12px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  transition: all 0.3s ease;
+}
 
-  <!-- Quiz de Perguntas -->
-  <div id="perguntas-quiz-container" class="quiz-container" style="display:none;">
-    <button class="back-button" id="backButtonPerguntasQuiz">
-      <i class="fas fa-arrow-left"></i> Voltar ao Menu
-    </button>
-    <div id="perguntas-quiz">
-      <p id="perguntas-question"></p>
-      <ul id="perguntas-options"></ul>
-    </div>
-    <div class="score-container">
-      <p>Pontuação: <span id="perguntas-score">0</span>/10</p>
-      <p>Tempo: <span id="perguntas-timer">0</span> s</p>
-    </div>
-  </div>
+.tab-button:hover {
+  background: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+}
 
-  <!-- Biblioteca (em inglês) -->
-  <div id="library-container" class="library-container" style="display:none;">
-    <button class="back-button" id="backButtonLibrary">
-      <i class="fas fa-arrow-left"></i> Voltar ao Menu
-    </button>
-    <h2><i class="fas fa-book-open"></i> Biblioteca de Textos</h2>
-    <!-- Seção: Frases Básicas -->
-    <div id="frases-basicas" class="text-card animate-in">
-      <div class="text-header">
-        <i class="fas fa-star"></i>
-        <h3>Frases Básicas 🌟</h3>
-      </div>
-      <div class="text-content">
-        <p class="english">I like to study English 📚</p>
-        <p class="portuguese">Eu gosto de estudar inglês 📚</p>
-        <p class="english">I am a student 🎓</p>
-        <p class="portuguese">Eu sou estudante 🎓</p>
-      </div>
-    </div>
+/* Quiz e Perguntas */
+.quiz-container {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 2rem;
+  margin: 1rem 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
 
-    <!-- Seção: Verbos -->
-    <div id="verbos" class="text-card animate-in">
-  <div class="text-header">
-    <i class="fas fa-star"></i>
-    <h3>Verbos de Ação 🏃‍♂️</h3>
-  </div>
-  <div class="text-content">
-    <p>Verbos são palavras de ação. Por exemplo, ler "read" 📖, escrever "write" ✍️, e falar "speak" 🗣️ ajudam a descrever as atividades.</p>
-    <p>Exemplos:</p>
-    <p class="english">I like to read books 📖</p>
-    <p class="portuguese">Eu gosto de ler livros 📖</p>
-    <p class="english">She doesn't like coffee ☕</p>
-    <p class="portuguese">Ela não gosta de café ☕</p>
-  </div>
-</div>
+#question,
+#perguntas-question {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: white;
+}
 
-<!-- Seção: Idioms -->
-<div id="idioms" class="text-card animate-in">
-  <div class="text-header">
-    <i class="fas fa-star"></i>
-    <h3>Idioms 💡</h3>
-  </div>
-  <div class="text-content">
-    <p>"Idioms" também chamada de expressões idiomáticas, são expressões cujo significado não pode ser deduzido literalmente pelas palavras. Por exemplo, "break a leg" significa "boa sorte", não quebrar a perna.</p>
-    <p>Exemplos:</p>
-    <p class="english">A piece of cake 🍰</p>
-    <p class="portuguese">Algo muito fácil 🍰</p>
-    <p class="english">Help yourself 🤲</p>
-    <p class="portuguese">Sirva-se 🤲</p>
-  </div>
-</div>
+/* Opções dos quizzes */
+#options li,
+#perguntas-options li,
+#spanish-options li,
+#french-options li {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid transparent;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  color: white;
+}
 
-<!-- Seção: Gramática -->
-<div id="grammar" class="text-card animate-in">
-  <div class="text-header">
-    <i class="fas fa-star"></i>
-    <h3>Lição de Gramática 📖</h3>
-  </div>
-  <div class="text-content">
-    <p>Uma boa compreensão da gramática inglesa é essencial para formar frases corretas.</p>
-    <p>Dicas importantes: preste atenção aos tempos verbais, concordância entre sujeito e verbo e à estrutura da frase.</p>
-    <p>Exemplo: use "doesn't" com sujeitos singulares (He doesn't like apples 🍎).</p>
-  </div>
-</div>
+#options li:hover,
+#perguntas-options li:hover,
+#spanish-options li:hover,
+#french-options li:hover {
+  transform: translateX(10px);
+  border-color: var(--primary-color);
+}
 
-<!-- Seção: Cumprimentos -->
-<div id="greetings" class="text-card animate-in">
-  <div class="text-header">
-    <i class="fas fa-star"></i>
-    <h3>Cumprimentos e Apresentações 👋</h3>
-  </div>
-  <div class="text-content">
-    <p>Aprenda expressões comuns para saudações e apresentações, como "Good morning", "How are you?" e "Nice to meet you".</p>
-    <p>Exemplos:</p>
-    <p class="english">It's good to see you 😊</p>
-    <p class="portuguese">Que bom ver você 😊</p>
-    <p class="english">How are you doing? 🤔</p>
-    <p class="portuguese">Como vai você? 🤔</p>
-    <p class="english">Have a good night 🌙</p>
-    <p class="portuguese">Tenha uma boa noite 🌙</p>
-  </div>
-</div>
+#options li.correct,
+#perguntas-options li.correct,
+#spanish-options li.correct,
+#french-options li.correct {
+  background: rgba(72, 187, 120, 0.2);
+  border-color: #48BB78;
+}
 
-<!-- Seção: Expressões Idiomáticas Avançadas -->
-<div id="idioms-advanced" class="text-card animate-in">
-  <div class="text-header">
-    <i class="fas fa-star"></i>
-    <h3>Expressões Idiomáticas Avançadas 💡</h3>
-  </div>
-  <div class="text-content">
-    <p class="english">Burn the midnight oil 🕯️ - Trabalhar até tarde da noite</p>
-    <p class="english">Bite the bullet 💪 - Enfrentar algo difícil</p>
-    <p class="english">Hit the nail on the head 🔨 - Acertar em cheio</p>
-    <p class="english">Let the cat out of the bag 🐱 - Revelar um segredo</p>
-    <p class="english">Throw in the towel 🏳️ - Desistir</p>
-  </div>
-</div>
+#options li.wrong,
+#perguntas-options li.wrong,
+#spanish-options li.wrong,
+#french-options li.wrong {
+  background: rgba(245, 101, 101, 0.2);
+  border-color: #F56565;
+}
 
-<!-- Seção: Tempos Verbais -->
-<div id="verb-tenses" class="text-card animate-in">
-  <div class="text-header">
-    <i class="fas fa-star"></i>
-    <h3>Tempos Verbais ⏳</h3>
-  </div>
-  <div class="text-content">
-    <p><strong>Present Perfect:</strong> I have been to London 🏙️ - Eu estive em Londres</p>
-    <p><strong>Past Perfect:</strong> She had finished her homework before dinner 🍽️ - Ela tinha terminado a lição de casa antes do jantar</p>
-    <p><strong>Future Perfect:</strong> By next year, I will have graduated 🎓 - No próximo ano, eu terei me formado</p>
-    <p><strong>Present Continuous:</strong> They are studying for the exam 📚 - Eles estão estudando para o exame</p>
-    <p><strong>Past Continuous:</strong> I was reading when the phone rang ☎️ - Eu estava lendo quando o telefone tocou</p>
-  </div>
-</div>
+/* Score e Timer */
+.score-container {
+  margin: 1.5rem 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--secondary-color);
+}
 
-<!-- Seção: Vocabulário Técnico -->
-<div id="technical-vocabulary" class="text-card animate-in">
-  <div class="text-header">
-    <i class="fas fa-star"></i>
-    <h3>Vocabulário Técnico 💻</h3>
-  </div>
-  <div class="text-content">
-    <p class="english">Algorithm 🤖 - Algoritmo</p>
-    <p class="english">Database 🗄️ - Banco de dados</p>
-    <p class="english">Cloud Computing ☁️ - Computação em nuvem</p>
-    <p class="english">Artificial Intelligence 🧠 - Inteligência artificial</p>
-    <p class="english">Machine Learning 📈 - Aprendizado de máquina</p>
-  </div>
-</div>
+/* Cards Biblioteca */
+.text-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
 
-<!-- Seção: Palavras Interrogativas -->
-<div id="interrogative-words" class="text-card animate-in">
-  <div class="text-header">
-    <i class="fas fa-star"></i>
-    <h3>Palavras Interrogativas ❓</h3>
-  </div>
-  <div class="text-content">
-    <p>Essas palavras são essenciais para formular perguntas:</p>
-    <ul>
-      <li class="english">Who 👤 - Quem</li>
-      <li class="english">What 🧐 - O que</li>
-      <li class="english">When ⏰ - Quando</li>
-      <li class="english">Where 📍 - Onde</li>
-      <li class="english">Why 🤔 - Por que</li>
-      <li class="english">How 🛠️ - Como</li>
-    </ul>
-    <p>Observe que cada uma tem sua função para determinar o tipo de resposta que esperamos.</p>
-  </div>
-</div>
+.text-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+  color: var(--secondary-color);
+}
 
-<!-- Seção: Mais Perguntas -->
-<div id="more-questions" class="text-card animate-in">
-  <div class="text-header">
-    <i class="fas fa-star"></i>
-    <h3>Mais Perguntas 🗣️</h3>
-  </div>
-  <div class="text-content">
-    <p>Abaixo, veja exemplos de perguntas comuns com suas traduções:</p>
-    <p class="english">What is your favorite food? 🍔</p>
-    <p class="portuguese">Qual é a sua comida favorita? 🍔</p>
-    <p class="english">When did you start learning English? 📅</p>
-    <p class="portuguese">Quando você começou a aprender inglês? 📅</p>
-    <p class="english">How often do you practice speaking? 🗣️</p>
-    <p class="portuguese">Com que frequência você pratica falar? 🗣️</p>
-    <p class="english">Who is your role model? 🌟</p>
-    <p class="portuguese">Quem é o seu ídolo? 🌟</p>
-    <p class="english">What do you do in your free time? 🕒</p>
-    <p class="portuguese">O que você faz no seu tempo livre? 🕒</p>
-  </div>
-</div>
-  </div>
+.text-content p {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
+}
 
-  <!-- Ranking -->
-  <div id="ranking-container" class="ranking-container" style="display:none;">
-  <button class="back-button" id="backButtonRanking">
-    <i class="fas fa-arrow-left"></i> Voltar ao Menu
-  </button>
-  <h2 class="ranking-title"><i class="fas fa-trophy"></i> Ranking</h2>
-  <div class="podium">
-  <!-- Primeiro Lugar -->
-  <div class="podium-item first-place">
-    <div class="podium-rank">🥇</div>
-    <div class="podium-photo shine">
-      <img src="images/default.png" alt="Avatar" class="ranking-photo" id="top-1-photo" />
-    </div>
-    <div class="podium-details">
-      <span id="top-1-name" class="podium-name">1º Lugar</span>
-      <span id="top-1-score" class="podium-score">0 pontos</span>
-      <span id="top-1-time" class="podium-time">0s</span>
-    </div>
-  </div>
+.english::before {
+  content: "🇬🇧";
+  margin-right: 8px;
+}
 
-  <!-- Segundo Lugar -->
-  <div class="podium-item second-place">
-    <div class="podium-rank">🥈</div>
-    <div class="podium-photo">
-      <img src="images/default.png" alt="Avatar" class="ranking-photo" id="top-2-photo" />
-    </div>
-    <div class="podium-details">
-      <span id="top-2-name" class="podium-name">2º Lugar</span>
-      <span id="top-2-score" class="podium-score">0 pontos</span>
-      <span id="top-2-time" class="podium-time">0s</span>
-    </div>
-  </div>
+.portuguese::before {
+  content: "🇧🇷";
+  margin-right: 8px;
+}
 
-  <!-- Terceiro Lugar -->
-  <div class="podium-item third-place">
-    <div class="podium-rank">🥉</div>
-    <div class="podium-photo">
-      <img src="images/default.png" alt="Avatar" class="ranking-photo" id="top-3-photo" />
-    </div>
-    <div class="podium-details">
-      <span id="top-3-name" class="podium-name">3º Lugar</span>
-      <span id="top-3-score" class="podium-score">0 pontos</span>
-      <span id="top-3-time" class="podium-time">0s</span>
-    </div>
-  </div>
-</div>
-  <ul id="ranking-list" class="ranking-list">
-    <!-- Exemplo de item do ranking a partir do 4º lugar -->
-    <li class="ranking-item">
-      <div class="ranking-photo">
-        <img src="images/default.png" alt="Avatar" />
-      </div>
-      <div class="ranking-details">
-        <span class="ranking-name">Nome do Jogador</span>
-        <span class="ranking-score-time">0 pontos - 0s</span>
-      </div>
-    </li>
-  </ul>
-</div>
+.spanish::before {
+  content: "🇪🇸";
+  margin-right: 8px;
+}
 
-  <!-- Tela Final do Quiz Principal -->
-  <div id="end-screen" class="end-screen" style="display:none;">
-    <button class="back-button" id="backButtonEndScreen">
-      <i class="fas fa-arrow-left"></i> Voltar ao Menu
-    </button>
-    <p id="final-message"></p>
-    <ul id="error-list"></ul>
-    <button id="restart-button" class="restart-button">
-      <i class="fas fa-sync-alt"></i> Reiniciar Quiz
-    </button>
-  </div>
+.french::before {
+  content: "🇫🇷";
+  margin-right: 8px;
+}
 
-  <!-- Tela Final do Quiz de Perguntas -->
-  <div id="perguntas-end-screen" class="end-screen" style="display:none;">
-    <button class="back-button" id="backButtonPerguntasEndScreen">
-      <i class="fas fa-arrow-left"></i> Voltar ao Menu
-    </button>
-    <p id="perguntas-final-message"></p>
-    <ul id="perguntas-error-list"></ul>
-    <button id="perguntas-restart-button" class="restart-button">
-      <i class="fas fa-sync-alt"></i> Tentar Novamente
-    </button>
-    <button id="perguntas-menu-button" class="restart-button">
-      <i class="fas fa-home"></i> Menu Principal
-    </button>
-  </div>
+/* Ranking */
+#ranking-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
 
-  <!-- Tela de Perfil -->
-<div id="profile-container" class="profile-container" style="display:none;">
-  <button class="back-button" id="backButtonProfile">
-    <i class="fas fa-arrow-left"></i> Voltar ao Menu
-  </button>
-  <h2>Seu Perfil</h2>
-  <div class="profile-info">
-    <img id="profile-photo" src="images/default.png" alt="Foto de Perfil" class="profile-photo"/>
-    <p><strong>Nome:</strong> <span id="profile-name"></span></p>
-    <p><strong>Pontuação:</strong> <span id="profile-score">0</span></p>
-  </div>
-  <h3>Escolha sua Foto de Perfil</h3>
-  <div class="avatar-options">
-  <div class="avatar-option-container">
-    <img src="images/avatar0.png" class="avatar-option" data-avatar="images/avatar0.png" alt="Avatar 0"/>
-  </div>
-  <div class="avatar-option-container">
-    <img src="images/avatar1.png" class="avatar-option" data-avatar="images/avatar1.png" alt="Avatar 1"/>
-  </div>
-  <div class="avatar-option-container">
-    <img src="images/avatar2.png" class="avatar-option" data-avatar="images/avatar2.png" alt="Avatar 2"/>
-  </div>
-  <div class="avatar-option-container">
-    <img src="images/avatar3.png" class="avatar-option" data-avatar="images/avatar3.png" alt="Avatar 3"/>
-  </div>
-  <div class="avatar-option-container">
-    <img src="images/avatar4.png" class="avatar-option" data-avatar="images/avatar4.png" alt="Avatar 4"/>
-  </div>
-  <div class="avatar-option-container">
-    <img src="images/avatar5.png" class="avatar-option" data-avatar="images/avatar5.png" alt="Avatar 5"/>
-  </div>
-  <div class="avatar-option-container">
-    <img src="images/avatar6.png" class="avatar-option" data-avatar="images/avatar6.png" alt="Avatar 6"/>
-  </div>
-  <div class="avatar-option-container">
-    <img src="images/avatar7.png" class="avatar-option" data-avatar="images/avatar7.png" alt="Avatar 7"/>
-  </div>
-  <div class="avatar-option-container">
-    <img src="images/avatar8.png" class="avatar-option" data-avatar="images/avatar8.png" alt="Avatar 8"/>
-  </div>
-  <div class="avatar-option-container">
-    <img src="images/avatar9.png" class="avatar-option" data-avatar="images/avatar9.png" alt="Avatar 9"/>
-  </div>
-  <div class="avatar-option-container">
-    <img src="images/avatar10.png" class="avatar-option" data-avatar="images/avatar10.png" alt="Avatar 10"/>
-  </div>
-  <div class="avatar-option-container">
-    <img src="images/avatar11.png" class="avatar-option" data-avatar="images/avatar11.png" alt="Avatar 11"/>
-  </div>
-  <div class="avatar-option-container">
-    <img src="images/avatar12.png" class="avatar-option" data-avatar="images/avatar12.png" alt="Avatar 12"/>
-  </div>
-  <div class="avatar-option-container">
-    <img src="images/avatar13.png" class="avatar-option" data-avatar="images/avatar13.png" alt="Avatar 13"/>
-  </div>
-  <div class="avatar-option-container">
-    <img src="images/avatar14.png" class="avatar-option" data-avatar="images/avatar14.png" alt="Avatar 14"/>
-  </div>
-  <div class="avatar-option-container">
-    <img src="images/avatar15.png" class="avatar-option" data-avatar="images/avatar15.png" alt="Avatar 15"/>
-  </div>
-  <div class="avatar-option-container">
-    <img src="images/avatar16.png" class="avatar-option" data-avatar="images/avatar16.png" alt="Avatar 16"/>
-  </div>
-  <div class="avatar-option-container">
-    <img src="images/avatar17.png" class="avatar-option" data-avatar="images/avatar17.png" alt="Avatar 17"/>
-  </div>
-  <div class="avatar-option-container">
-    <img src="images/avatar18.png" class="avatar-option" data-avatar="images/avatar18.png" alt="Avatar 18"/>
-  </div>
-  <div class="avatar-option-container">
-    <img src="images/avatar19.png" class="avatar-option" data-avatar="images/avatar19.png" alt="Avatar 19"/>
-  </div>
-  <div class="avatar-option-container">
-    <img src="images/avatar20.png" class="avatar-option" data-avatar="images/avatar20.png" alt="Avatar 20"/>
-  </div>
-</div>
-</div>
+.ranking-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease;
+}
 
-  <!-- Aba de aviso do quiz -->
-<div id="quiz-warning-container" style="display: none;">
-  <p id="quiz-warning-message">Você já realizou este quiz. Você só pode fazê-lo uma vez.</p>
-  <button id="quiz-warning-back-button">Voltar ao Menu</button>
-</div>
+.ranking-item:hover {
+  transform: translateX(10px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
 
-<div id="exercises-container" style="display: none;">
-  <h2>Exercícios</h2>
-  <p id="exercise-question"></p>
-  <input type="text" id="exercise-input" placeholder="Digite sua resposta aqui" />
-  <button id="exercise-submit">Enviar</button>
-  <p id="exercise-feedback"></p>
-  
-  <!-- Bloco para exibir os exercícios acertados -->
-  <div id="correct-answers-container" style="margin-top: 20px;">
-    <h3>Exercícios Acertados</h3>
-    <div id="correct-answers-list"></div>
-  </div>
+.ranking-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--primary-color);
+}
 
-  <button id="backButtonExercises">Voltar ao Menu</button>
-</div>
+.ranking-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-<div id="first-time-popup" class="popup" style="display: none;">
-  <div class="popup-content">
-    <h2>Bem-vindo ao Speak Easy!</h2>
-    <p>Gostaríamos de conhecer você melhor. Que tal configurar seu perfil agora?</p>
-    <button id="go-to-profile">Ir para o Perfil</button>
-    <button id="skip-profile">Depois</button>
-  </div>
-</div>
+.ranking-details {
+  display: flex;
+  flex-direction: column;
+}
 
-  <script type="module" src="script.js"></script>
-</body>
-</html>
+.ranking-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--secondary-color);
+}
+
+.ranking-score-time {
+  font-size: 1rem;
+  color: #fff;
+}
+
+/* Título do Ranking */
+.ranking-title {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--primary-color);
+  text-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo do pódio */
+.podium {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  margin: 30px 0;
+}
+
+.podium-item {
+  text-align: center;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #f4f4f4;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.podium-rank {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.first-place {
+  background-color: gold;
+  animation: pulse 2s infinite;
+}
+
+.second-place {
+  background-color: silver;
+}
+
+.third-place {
+  background-color: #cd7f32; /* Bronze */
+}
+
+.podium-photo img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  border: 3px solid #fff;
+}
+
+.podium-details {
+  font-size: 1em;
+  font-weight: bold;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.podium-name {
+  font-size: 1.2em;
+}
+
+.podium-score,
+.podium-time {
+  font-size: 1em;
+}
+
+/* Efeito de pulso para o primeiro lugar */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 10px 2px rgba(255, 223, 0, 0.8);
+  }
+  50% {
+    box-shadow: 0 0 20px 5px rgba(255, 223, 0, 1);
+  }
+  100% {
+    box-shadow: 0 0 10px 2px rgba(255, 223, 0, 0.8);
+  }
+}
+
+.shine {
+  animation: pulse 2s infinite;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.2rem;
+  }
+  .podium-photo {
+    width: 100px; /* Reduz o tamanho para tablets */
+    height: 100px;
+  }
+  .tab-button {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+  }
+  .back-button {
+    bottom: 15px;
+    left: 10px;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+  .level-buttons {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.8rem;
+  }
+  .podium-photo {
+    width: 80px; /* Reduz o tamanho para celulares */
+    height: 80px;
+  }
+  .register-container,
+  .menu-container,
+  .quiz-container,
+  .library-container,
+  .ranking-container,
+  .end-screen {
+    padding: 1rem;
+  }
+  .tab-button {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+  .restart-button,
+  .level-button {
+    padding: 0.8rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Destaque para seções em Español e Français */
+#spanish-container,
+#spanish-library-container,
+#french-container,
+#french-library-container {
+  border-left: 5px solid var(--primary-color);
+  padding-left: 1rem;
+  animation: fadeIn 0.5s ease-in-out;
+  margin-bottom: 20px;
+}
+
+#spanish-container h3,
+#french-container h3 {
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+
+#spanish-container p,
+#french-container p {
+  font-size: 1rem;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+#spanish-container ul,
+#french-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+#spanish-container ul li::before,
+#french-container ul li::before {
+  content: "•";
+  color: var(--secondary-color);
+  margin-right: 8px;
+}
+
+#spanish-container ul li,
+#french-container ul li {
+  font-size: 1rem;
+  color: #d1d5db;
+  margin-bottom: 5px;
+}
+
+/* Botões para aprender mais */
+.learn-more-button {
+  background-color: var(--secondary-color);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.learn-more-button:hover {
+  background-color: var(--accent-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(244, 114, 182, 0.4);
+}
+
+/* Botão "Resultados" */
+#results-button {
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+#results-button:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+}
+
+/* Botão "Aprenda Mais" */
+#learn-more-button {
+  background-color: var(--accent-color);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+#learn-more-button:hover {
+  background-color: #d6619d; /* Tom mais escuro do accent-color */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(244, 114, 182, 0.4);
+}
+
+#user-info {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  padding: 0.75rem 1rem;
+  text-align: right;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fefefe;
+  z-index: 1001;
+}
+
+.menu-container {
+  padding-top: 3rem;
+}
+
+@media (max-width: 768px) {
+  #user-info {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #user-info {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.6rem;
+  }
+}
+
+/* Estilos para a tela de perfil */
+.profile-container {
+  text-align: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.profile-info {
+  margin-bottom: 20px;
+}
+
+.profile-photo {
+  width: 100px; /* Reduzido de 120px para 100px */
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid var(--primary-color);
+  margin-bottom: 10px;
+}
+
+.avatar-options {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.avatar-option-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  transition: transform 0.3s, border 0.3s;
+  cursor: pointer;
+}
+
+.avatar-option-container:hover {
+  transform: scale(1.1);
+  border-color: var(--primary-color);
+}
+
+.avatar-option-container.selected {
+  border-color: var(--accent-color);
+}
+
+.avatar-option {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 15px;
+  }
+
+  .profile-photo {
+    width: 100px;
+    height: 100px;
+  }
+
+  .avatar-option-container {
+    width: 80px;
+    height: 80px;
+  }
+
+  .avatar-option {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-container {
+    padding: 10px;
+  }
+
+  .profile-photo {
+    width: 80px;
+    height: 80px;
+  }
+
+  .avatar-option-container {
+    width: 70px;
+    height: 70px;
+  }
+
+  .avatar-option {
+    width: 50px;
+    height: 50px;
+  }
+}
+.user-photo {
+  width: 32px; /* Reduzido de 40px para 32px */
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--primary-color);
+  margin-right: 8px; /* Ajustado para melhor alinhamento */
+  vertical-align: middle;
+}
+
+/* Estilo do Carrossel */
+.avatar-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  position: relative;
+}
+
+.carousel-track-container {
+  overflow: hidden;
+  width: 300px; /* Ajuste conforme necessário */
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+}
+
+.carousel-slide {
+  min-width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.carousel-slide img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: border 0.3s ease;
+}
+
+.carousel-slide img.selected {
+  border-color: var(--primary-color);
+}
+
+.carousel-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--primary-color);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.prev-button {
+  left: -40px;
+}
+
+.next-button {
+  right: -40px;
+}
+
+/* Estilo para o aviso do quiz */
+#quiz-warning-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(124, 58, 237, 0.1); /* Cor primária com transparência */
+  border: 2px solid var(--primary-color);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 400px;
+  text-align: center;
+}
+
+#quiz-warning-message {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+#quiz-warning-back-button {
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#quiz-warning-back-button:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+}
+
+/* Estilo para o menu de níveis das perguntas */
+.level-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.level-button {
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.level-button:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+}
+
+/* Estilo para o botão "Sair" no menu principal */
+#logout-button {
+  background-color: var(--accent-color);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+}
+
+#logout-button:hover {
+  background-color: #d6619d; /* Tom mais escuro do accent-color */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(244, 114, 182, 0.4);
+}
+
+/* Estilo para a aba de exercícios */
+#exercises-container {
+  display: none; /* Esconde a aba inicialmente */
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+#exercise-question {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+#exercise-input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: 2px solid var(--primary-color);
+  background: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+}
+
+#exercise-input:focus {
+  transform: scale(1.02);
+  box-shadow: 0 0 15px var(--secondary-color);
+  outline: none;
+}
+
+#exercise-submit {
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#exercise-submit:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+}
+
+#exercise-feedback {
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+#backButtonExercises {
+  background-color: var(--accent-color);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+}
+
+#backButtonExercises:hover {
+  background-color: #d6619d; /* Tom mais escuro do accent-color */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(244, 114, 182, 0.4);
+}
+
+#exercise-skip {
+  background-color: #f0ad4e;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(240, 173, 78, 0.15);
+}
+
+#exercise-skip:hover {
+  background-color: #ec971f;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(240, 173, 78, 0.3);
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background: rgb(255, 255, 255);
+  color: black;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.popup-content h2 {
+  margin-bottom: 10px;
+}
+
+.popup-content p {
+  margin-bottom: 20px;
+}
+
+.popup-content button {
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+#go-to-profile {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+#skip-profile {
+  background-color: var(--accent-color);
+  color: white;
+}
+.correct-answer-item {
+  border: 2px solid #4caf50; /* Verde para indicar acerto */
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: #e8f5e9; /* Fundo verde claro */
+  color: #2e7d32; /* Texto verde escuro */
+  font-family: 'Poppins', sans-serif;
+}
+
+.correct-answer-item p {
+  margin: 5px 0;
+}
+
+.results-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.results-container h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.results-container p {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.results-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.results-container ul li {
+  margin: 5px 0;
+  font-size: 16px;
+}
+
+/* Estilo para a tela final do quiz */
+.end-screen {
+  text-align: center;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  margin: 40px auto;
+  color: white;
+}
+
+.end-screen h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+  text-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.end-screen p {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+  color: #d1d5db;
+}
+
+.end-screen h3 {
+  font-size: 1.8rem;
+  margin-top: 20px;
+  color: var(--secondary-color);
+}
+
+.end-screen ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.end-screen ul li {
+  background: rgba(245, 101, 101, 0.1); /* Fundo vermelho claro */
+  border: 2px solid #F56565; /* Borda vermelha */
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.end-screen ul li:hover {
+  transform: translateX(10px);
+  box-shadow: 0 4px 10px rgba(245, 101, 101, 0.4);
+}
+
+.end-screen .restart-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+}
+
+.end-screen .restart-button:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+}
+
+.end-screen .learn-more-button {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+}
+
+.end-screen .learn-more-button:hover {
+  background-color: #d6619d; /* Tom mais escuro do accent-color */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(244, 114, 182, 0.4);
+}
+
+/* Botão Revisar */
+.review-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+.review-button:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+}
+
+/* Rodapé */
+.footer {
+  margin-top: auto;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  color: var(--secondary-color);
+  font-size: 0.9em;
+  text-align: center;
+}
+
+/* Estilo para a lista de respostas erradas */
+.wrong-questions-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.wrong-questions-list li {
+  background: rgba(245, 101, 101, 0.1); /* Fundo vermelho claro */
+  border: 2px solid #F56565; /* Borda vermelha */
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.wrong-questions-list li:hover {
+  transform: translateX(10px);
+  box-shadow: 0 4px 10px rgba(245, 101, 101, 0.4);
+}
+
+/* Estilo para a aba de vocabulário */
+.vocab-tab.completed { background: #4caf50; color: #fff; }
+.vocab-tab { margin: 4px; padding: 8px 16px; border-radius: 8px; border: none; cursor: pointer; }
+.vocab-content { margin-top: 20px; }
+
+/* Estilo para a aba de vocabulário dinâmico */
+.vocab-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.vocab-tab {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.08);
+}
+
+.vocab-tab:hover {
+  background: var(--primary-color);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.2);
+}
+
+.vocab-tab.completed {
+  background: #4caf50;
+  color: #fff;
+  border-color: #388e3c;
+  box-shadow: 0 0 10px 2px rgba(76, 175, 80, 0.3);
+}
+
+.vocab-content {
+  background: rgba(255,255,255,0.05);
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 1rem 0;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#vocab-image {
+  margin-bottom: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.08);
+  background: #fff;
+  padding: 8px;
+}
+
+#vocab-phase {
+  width: 100%;
+  max-width: 350px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+#vocab-question {
+  font-size: 1.2rem;
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+}
+
+#vocab-answer {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 2px solid var(--primary-color);
+  background: rgba(255,255,255,0.9);
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+#vocab-answer:focus {
+  outline: none;
+  box-shadow: 0 0 10px var(--secondary-color);
+  transform: scale(1.02);
+}
+
+#vocab-submit {
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-bottom: 1rem;
+}
+
+#vocab-submit:hover {
+  background: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.2);
+}
+
+#vocab-feedback {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  margin-top: 0.5rem;
+  min-height: 1.2em;
+}
+
+#vocab-progress {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+  .vocab-content {
+    padding: 1rem;
+  }
+  #vocab-phase {
+    max-width: 100%;
+  }
+  .vocab-tab {
+    padding: 8px 12px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Destaca perguntas erradas */
+.error-item {
+  border: 2px solid #e53935;
+  background: #ffebee;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+  color: #b71c1c;
+  box-shadow: 0 2px 6px rgba(229,57,53,0.08);
+}
+
+/* Botão Aprenda Mais */
+.aprenda-mais-button {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  margin-top: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.aprenda-mais-button:hover {
+  background: #1565c0;
+}
+
+/* Botão Voltar ao Menu do Quiz */
+#quiz-back-menu-button {
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+}
+
+#quiz-back-menu-button:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+}
