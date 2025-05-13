@@ -1475,15 +1475,7 @@ body {
 }
 
 /* Botão Voltar ao Menu do Quiz */
-#quiz-back-menu-button,
-#congratulations-back-button,
-#perguntas-menu-button,
-#spanish-menu-button,
-#french-menu-button,
-#backButtonEndScreen,
-#backButtonPerguntasEndScreen,
-#backButtonSpanishEndScreen,
-#backButtonFrenchEndScreen {
+#quiz-back-menu-button {
   background-color: var(--primary-color);
   color: #fff;
   border: none;
@@ -1496,16 +1488,92 @@ body {
   transition: all 0.3s ease;
 }
 
-#quiz-back-menu-button:hover,
-#congratulations-back-button:hover,
-#perguntas-menu-button:hover,
-#spanish-menu-button:hover,
-#french-menu-button:hover,
-#backButtonEndScreen:hover,
-#backButtonPerguntasEndScreen:hover,
-#backButtonSpanishEndScreen:hover,
-#backButtonFrenchEndScreen:hover {
+#quiz-back-menu-button:hover {
   background-color: var(--secondary-color);
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+}
+/* Adicione ao seu styles.css */
+.meu-destaque {
+  border: 3px solid #ff9800 !important;
+  background: #ffe0fd28 !important;
+  box-shadow: 0 0 10px #ff9800;
+}
+
+
+/* Destaque para o botão Voltar ao Menu nas telas de erros/respostas */
+.btn-voltar-menu-destaque {
+  background: #ff9800;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  padding: 10px 28px;
+  margin-top: 18px;
+  font-size: 1.1em;
+  box-shadow: 0 2px 8px #ff980055;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+.btn-voltar-menu-destaque:hover {
+  background: #e65100;
+}
+
+/* Destaque para o botão Voltar ao Menu na tela de parabenização */
+#congratulations-back-button {
+  background: #ff9800;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  padding: 12px 32px;
+  margin-top: 20px;
+  font-size: 1.1em;
+  box-shadow: 0 2px 8px #ff980055;
+  transition: background 0.2s, transform 0.2s;
+  cursor: pointer;
+}
+#congratulations-back-button:hover {
+  background: #e65100;
+  transform: scale(1.05);
+}
+/* Barra de progresso do quiz */
+#quiz-progress-bar-container {
+  width: 100%;
+  background: #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  height: 16px;
+  box-shadow: 0 1px 4px #0001;
+}
+#quiz-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #4caf50, #81c784);
+  width: 0%;
+  border-radius: 8px;
+  transition: width 0.3s;
+}
+
+
+.aprenda-mais-button,
+.learn-more-button,
+#learn-more-button {
+  background-color: var(--accent-color);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+}
+
+.aprenda-mais-button:hover,
+.learn-more-button:hover,
+#learn-more-button:hover {
+  background-color: #d6619d;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(244, 114, 182, 0.4);
 }
