@@ -274,13 +274,6 @@ function startTimer() {
 }
 function stopTimer() { clearInterval(timerInterval); }
 function loadQuestion() {
-  // Atualiza barra de progresso
-  const progressBar = document.getElementById("quiz-progress-bar");
-  if (progressBar) {
-    const percent = ((currentQuestion) / questions.length) * 100;
-    progressBar.style.width = percent + "%";
-  }
-
   if (currentQuestion < questions.length) {
     const q = questions[currentQuestion];
     questionElement.textContent = q.question;
@@ -293,10 +286,6 @@ function loadQuestion() {
     });
   } else endQuiz();
 }
-
-
-
-
 function checkAnswer(sel) {
   const q = questions[currentQuestion];
   const opts = optionsElement.querySelectorAll("li");
@@ -782,6 +771,74 @@ function getRandomFrenchQuestions() {
   ];
   return [...all].sort(() => Math.random() - 0.5).slice(0, 15);
 }
+function startFrenchTimer() {
+  frenchTimer=0; frenchTimerElement.textContent=frenchTimer;
+  clearInterval(frenchTimerInterval);
+  frenchTimerInterval=setInterval(()=>{
+    frenchTimer++; frenchTimerElement.textContent=frenchTimer;
+  },1000);
+}
+function stopFrenchTimer(){ clearInterval(frenchTimerInterval); }
+function loadFrenchQuestion() {
+  if (currentFrenchQuestion < frenchQuestions.length) {
+    const q = frenchQuestions[currentFrenchQuestion];
+    frenchQuestionElement.textContent = q.question;
+    frenchOptionsElement.innerHTML = "";
+    q.options.forEach((opt,i)=>{
+      const li=document.createElement("li");
+      li.textContent=opt;
+      li.addEventListener("click", ()=> frenchCheckAnswer(i));
+      frenchOptionsElement.appendChild(li);
+    });
+  } else endFrenchQuiz();
+}
+function frenchCheckAnswer(sel) {
+  const q=frenchQuestions[currentFrenchQuestion];
+  const opts=frenchOptionsElement.querySelectorAll("li");
+  opts.forEach((li,i)=>{
+    li.classList.remove("correct","wrong");
+    if (i===q.answer) li.classList.add("correct");
+    else if (i===sel) li.classList.add("wrong");
+    li.style.pointerEvents="none";
+  });
+  if (sel===q.answer) { frenchScore++; frenchScoreElement.textContent=frenchScore; }
+  else frenchErrors.push(`Question: ${q.question} - Réponse: ${q.options[q.answer]}`);
+  setTimeout(()=>{
+    currentFrenchQuestion++; loadFrenchQuestion();
+  },1500);
+}
+function endFrenchQuiz() {
+  stopFrenchTimer();
+  frenchQuizContainer.style.display="none";
+  frenchEndScreen.style.display="block";
+  frenchFinalMessageEl.textContent = `Score Final: ${frenchScore}/${frenchQuestions.length} | Temps: ${frenchTimer}s`;
+  frenchErrorListEl.innerHTML = frenchErrors.map(e=>`
+    <li class="error-item">
+      ${e}<br>
+      <button class="aprenda-mais-button" onclick="showLibrarySectionFrench()">En savoir plus</button>
+    </li>
+  `).join("");
+}
+window.showLibrarySectionFrench = function() {
+  hideAllSections();
+  frenchLibraryContainer.style.display="block";
+}
+btnFrench.addEventListener("click", ()=>{ hideAllSections(); frenchMenuContainer.style.display="block"; });
+btnFrenchQuiz.addEventListener("click", ()=>{
+  hideAllSections(); frenchQuizContainer.style.display="block";
+  frenchQuestions = getRandomFrenchQuestions();
+  frenchScore=0; currentFrenchQuestion=0; frenchErrors=[];
+  frenchScoreElement.textContent=frenchScore;
+  startFrenchTimer(); loadFrenchQuestion();
+});
+btnFrenchLibrary.addEventListener("click", ()=>{ hideAllSections(); frenchLibraryContainer.style.display="block"; });
+backButtonFrenchMenu.addEventListener("click", backToMenu);
+frenchRestartButton.addEventListener("click", ()=> btnFrenchQuiz.click());
+frenchMenuButton.addEventListener("click", backToMenu);
+
+
+saveScore(currentUserName, score, quizTimer);
+
 
 // --- SALVAR PONTUAÇÃO ---
 async function saveScore(userName, score, time) {
@@ -805,8 +862,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
-
-
 
 const allQuestions = [
   // Pedidos e Cortesia
@@ -902,3 +957,413 @@ const allQuestions = [
   { question: "Como perguntar sobre a frequência de prática em inglês?", options: ["How often do you practice speaking?", "When do you practice?", "Why do you practice?", "Who do you practice with?"], answer: 0, difficulty: "easy", libraryRef: "more-questions" },
   { question: "Como perguntar sobre comida favorita em inglês?", options: ["Where do you eat?", "How do you cook?", "Do you like pizza?", "What is your favorite food?"], answer: 3, difficulty: "easy", libraryRef: "more-questions" },
 ];
+
+// Adicionando funcionalidade de redefinição de senha
+const resetPasswordButton = document.getElementById("reset-password-button");
+if (resetPasswordButton) {
+  resetPasswordButton.addEventListener("click", async () => {
+    const loginName = document.getElementById("login-name").value.trim();
+    if (!loginName) {
+      alert("Por favor, insira seu nome para redefinir a senha.");
+      return;
+    }
+    try {
+      const snap = await getDocs(collection(db, "users"));
+      let userFound = false;
+      snap.forEach(doc => {
+        if (doc.data().name === loginName) {
+          userFound = true;
+          const newPassword = prompt("Digite sua nova senha:");
+          if (newPassword) {
+            updateDoc(doc.ref, { password: newPassword });
+            alert("Senha redefinida com sucesso!");
+          }
+        }
+      });
+      if (!userFound) alert("Usuário não encontrado.");
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao redefinir a senha. Tente novamente.");
+    }
+  });
+}
+
+// Adicionando funcionalidade de logout
+const logoutButton = document.getElementById("logout-button");
+if (logoutButton) {
+  logoutButton.addEventListener("click", () => {
+    currentUserName = "";
+    hideAllSections();
+    loginContainer.style.display = "block";
+  });
+}
+
+// Função para salvar progresso do usuário
+async function saveProgress(userName, progress) {
+  try {
+    const snap = await getDocs(collection(db, "users"));
+    snap.forEach(doc => {
+      if (doc.data().name === userName) {
+        updateDoc(doc.ref, { progress });
+      }
+    });
+  } catch (err) {
+    console.error("Erro ao salvar progresso:", err);
+  }
+}
+
+// Função para carregar progresso do usuário
+async function loadProgress(userName) {
+  try {
+    const snap = await getDocs(collection(db, "users"));
+    let userProgress = null;
+    snap.forEach(doc => {
+      if (doc.data().name === userName) {
+        userProgress = doc.data().progress || null;
+      }
+    });
+    return userProgress;
+  } catch (err) {
+    console.error("Erro ao carregar progresso:", err);
+    return null;
+  }
+}
+
+// Elementos da tela de perfil
+const profileContainer = document.getElementById("profile-container");
+const profileNameElement = document.getElementById("profile-name");
+const profileScoreElement = document.getElementById("profile-score");
+const profilePhotoElement = document.getElementById("profile-photo");
+const avatarOptions = document.querySelectorAll(".avatar-option");
+const backButtonProfile = document.getElementById("backButtonProfile");
+
+// Exibir a tela de perfil ao clicar no nome do usuário
+const userNameElement = document.getElementById("user-name");
+if (userNameElement) {
+  userNameElement.style.cursor = "pointer";
+  userNameElement.addEventListener("click", () => {
+    hideAllSections();
+    loadProfileData();
+    profileContainer.style.display = "block";
+  });
+}
+
+// Voltar ao menu principal
+backButtonProfile.addEventListener("click", backToMenu);
+
+// Carregar dados do perfil do usuário
+async function loadProfileData() {
+  const snap = await getDocs(collection(db, "users"));
+  snap.forEach(doc => {
+    const user = doc.data();
+    if (user.name === currentUserName) {
+      profileNameElement.textContent = user.name;
+      profileScoreElement.textContent = user.score ?? 0;
+      profilePhotoElement.src = user.photoURL || "images/default.png";
+      avatarOptions.forEach(img => {
+        if (img.dataset.avatar === user.photoURL) img.classList.add("selected");
+        else img.classList.remove("selected");
+      });
+    }
+  });
+}
+
+// Elementos do menu principal
+const userPhotoElement = document.getElementById("user-photo");
+
+// Atualizar foto de perfil ao selecionar um avatar
+avatarOptions.forEach(img => {
+  img.addEventListener("click", async () => {
+    avatarOptions.forEach(i => i.classList.remove("selected"));
+    img.classList.add("selected");
+    profilePhotoElement.src = img.dataset.avatar;
+
+    // Atualizar avatar no menu principal
+    userPhotoElement.src = img.dataset.avatar;
+
+    // Atualizar no Firebase
+    try {
+      const snap = await getDocs(collection(db, "users"));
+      snap.forEach(doc => {
+        if (doc.data().name === currentUserName) {
+          updateDoc(doc.ref, { photoURL: img.dataset.avatar });
+        }
+      });
+      alert("Avatar atualizado com sucesso!");
+    } catch (err) {
+      console.error("Erro ao atualizar avatar:", err);
+      alert("Erro ao salvar avatar. Tente novamente.");
+    }
+  });
+});
+
+// --- ABA DE EXERCÍCIOS ---
+const btnExercises = document.getElementById("btnExercises");
+const exercisesContainer = document.getElementById("exercises-container");
+const exerciseQuestionElement = document.getElementById("exercise-question");
+const exerciseInputElement = document.getElementById("exercise-input");
+const exerciseSubmitButton = document.getElementById("exercise-submit");
+const exerciseFeedbackElement = document.getElementById("exercise-feedback");
+const backButtonExercises = document.getElementById("backButtonExercises");
+
+
+// Adiciona o evento de clique para voltar ao menu principal
+backButtonExercises.addEventListener("click", () => {
+  hideAllSections(); // Esconde todas as seções
+  menuContainer.style.display = "block"; // Mostra o menu principal
+});
+
+// Array de perguntas, respostas e explicações
+const exerciseQuestions = [
+  {
+    question: "Qual é a capital da França?",
+    answer: "Paris",
+    explanation: "Paris é a capital da França e é conhecida como a Cidade Luz.",
+  },
+  
+  // Perguntas em inglês
+  {
+    question: "What is the synonym of 'happy'?",
+    answer: "Joyful",
+    explanation: "A synonym for 'happy' is 'joyful', which means feeling or showing great pleasure.",
+  },
+  {
+    question: "What is the antonym of 'big'?",
+    answer: "Small",
+    explanation: "The antonym of 'big' is 'small', which means of a size that is less than normal.",
+  },
+  {
+    question: "What is the plural of 'child'?",
+    answer: "Children",
+    explanation: "The plural of 'child' is 'children', which refers to more than one child.",
+  },
+  {
+    question: "What is the past tense of 'go'?",
+    answer: "Went",
+    explanation: "The past tense of 'go' is 'went', used to describe an action that happened in the past.",
+  },
+  {
+    question: "What is the opposite of 'hot'?",
+    answer: "Cold",
+    explanation: "The opposite of 'hot' is 'cold', which refers to a low temperature.",
+  },
+  {
+    question: "What is the meaning of 'apple'?",
+    answer: "A fruit",
+    explanation: "An apple is a fruit that is typically round, red, green, or yellow, and sweet or tart in taste.",
+  },
+  {
+    question: "What is the capital of the United States?",
+    answer: "Washington, D.C.",
+    explanation: "Washington, D.C. is the capital of the United States and the seat of its federal government.",
+  },
+  {
+    question: "What is the opposite of 'fast'?",
+    answer: "Slow",
+    explanation: "The opposite of 'fast' is 'slow', which means moving or operating at a low speed.",
+  },
+  {
+    question: "What is the meaning of 'blue'?",
+    answer: "A color",
+    explanation: "Blue is a primary color that is often associated with the sky and the ocean.",
+  },
+  {
+    question: "What is the plural of 'mouse'?",
+    answer: "Mice",
+    explanation: "The plural of 'mouse' is 'mice', which refers to more than one mouse.",
+  },
+  {
+    question: "What is the past tense of 'eat'?",
+    answer: "Ate",
+    explanation: "The past tense of 'eat' is 'ate', used to describe the act of consuming food in the past.",
+  },
+  {
+    question: "What is the synonym of 'beautiful'?",
+    answer: "Pretty",
+    explanation: "A synonym for 'beautiful' is 'pretty', which means pleasing to the eye or attractive.",
+  },
+  {
+    question: "What is the opposite of 'day'?",
+    answer: "Night",
+    explanation: "The opposite of 'day' is 'night', which refers to the period of darkness between sunset and sunrise.",
+  },
+  {
+    question: "What is the meaning of 'dog'?",
+    answer: "An animal",
+    explanation: "A dog is a domesticated animal often kept as a pet or used for work.",
+  },
+  {
+    question: "What is the capital of England?",
+    answer: "London",
+    explanation: "London is the capital of England and one of the most famous cities in the world.",
+  },
+];
+
+let currentExerciseQuestionIndex = 0; // Índice da pergunta atual
+const correctExerciseAnswers = [];
+const similarityThreshold = 0.8; // Limite de similaridade (80%)
+
+// Função para calcular similaridade entre duas strings
+function calculateSimilarity(str1, str2) {
+  const normalize = (str) => str.toLowerCase().trim();
+  const [a, b] = [normalize(str1), normalize(str2)];
+  let matches = 0;
+
+  for (let i = 0; i < Math.min(a.length, b.length); i++) {
+    if (a[i] === b[i]) matches++;
+  }
+
+  return matches / Math.max(a.length, b.length);
+}
+
+// Função para exibir a próxima pergunta
+function showNextQuestion() {
+  if (currentExerciseQuestionIndex < exerciseQuestions.length) {
+      const questionElement = document.getElementById("exercise-question");
+      questionElement.textContent = exerciseQuestions[currentExerciseQuestionIndex].question;
+    } else {
+      document.getElementById("exercise-feedback").textContent =
+        "Você completou todos os exercícios!";
+      document.getElementById("exercise-input").disabled = true;
+      document.getElementById("exercise-submit").disabled = true;
+    }
+}
+
+// Função para adicionar um exercício acertado ao bloco
+function addCorrectAnswer(question, userAnswer, correctAnswer, explanation) {
+  const correctAnswersList = document.getElementById("correct-answers-list");
+
+  // Cria um novo bloco para o exercício acertado
+  const answerBlock = document.createElement("div");
+  answerBlock.className = "correct-answer-item";
+  answerBlock.style.border = "2px solid #4caf50";
+  answerBlock.style.padding = "10px";
+  answerBlock.style.marginBottom = "10px";
+  answerBlock.style.borderRadius = "5px";
+  answerBlock.style.backgroundColor = "#e8f5e9";
+  answerBlock.style.color = "#2e7d32";
+
+  answerBlock.innerHTML = `
+    <p><strong>Pergunta:</strong> ${question}</p>
+    <p><strong>Sua Resposta:</strong> ${userAnswer}</p>
+    <p><strong>Resposta Correta:</strong> ${correctAnswer}</p>
+    <p><strong>Explicação:</strong> ${explanation}</p>
+  `;
+
+  // Adiciona o bloco ao contêiner
+  correctAnswersList.appendChild(answerBlock);
+}
+
+// Manipular envio de resposta
+document.getElementById("exercise-submit").addEventListener("click", () => {
+  const userAnswer = document.getElementById("exercise-input").value.trim();
+  const currentQuestion = exerciseQuestions[currentExerciseQuestionIndex];
+
+  // Verifica se a resposta é semelhante o suficiente
+  if (
+    calculateSimilarity(userAnswer, currentQuestion.answer) >=
+    similarityThreshold
+  ) {
+    correctExerciseAnswers.push({
+      question: currentQuestion.question,
+      answer: userAnswer,
+    });
+    document.getElementById("exercise-feedback").textContent =
+      "Resposta correta!";
+    addCorrectAnswer(
+      currentQuestion.question,
+      userAnswer,
+      currentQuestion.answer,
+      currentQuestion.explanation
+    ); // Adiciona ao bloco de acertos
+    currentExerciseQuestionIndex++; // Avança para a próxima pergunta
+    showNextQuestion(); // Exibe a próxima pergunta
+  } else {
+    document.getElementById("exercise-feedback").textContent =
+      "Resposta incorreta!";
+  }
+
+  document.getElementById("exercise-input").value = ""; // Limpar entrada
+});
+
+// Mostra a aba de exercícios ao clicar no botão
+btnExercises.addEventListener("click", () => {
+  hideAllSections(); // Esconde todas as outras seções
+  exercisesContainer.style.display = "block"; // Mostra o contêiner de exercícios
+  currentExerciseIndex = 0; // Reinicia o índice dos exercícios
+  randomExercises = getRandomExercises(); // Gera uma nova lista de exercícios aleatórios
+  loadExercise(); // Carrega o primeiro exercício
+});
+
+// Inicializa a primeira pergunta
+showNextQuestion();
+
+document.addEventListener('keydown', (event) => {
+  const key = event.key;
+
+  // Ação para a tecla Enter
+  if (key === 'Enter') {
+    // Verifica se está na tela de Cadastro
+    if (document.getElementById('register-container').style.display === 'block') {
+      document.getElementById('start-button').click();
+    }
+
+    // Verifica se está na tela de Login
+    if (document.getElementById('login-container').style.display === 'block') {
+      document.getElementById('login-button').click();
+    }
+
+    // Verifica se está na tela de Exercícios
+    if (document.getElementById('exercises-container').style.display === 'block') {
+      document.getElementById('exercise-submit').click();
+    }
+  }
+
+  // Ação para a tecla Esc
+  if (key === 'Escape') {
+    // Verifica se está na tela de Cadastro
+    if (document.getElementById('register-container').style.display === 'block') {
+      document.getElementById('go-login').click();
+    }
+
+    // Verifica se está na tela de Login
+    if (document.getElementById('login-container').style.display === 'block') {
+      document.getElementById('go-register').click();
+    }
+
+    // Verifica se está na tela de Exercícios
+    if (document.getElementById('exercises-container').style.display === 'block') {
+      document.getElementById('backButtonExercises').click();
+    }
+
+    // Verifica se está na tela de Aviso do Quiz
+    if (document.getElementById('quiz-warning-container').style.display === 'block') {
+      document.getElementById('quiz-warning-back-button').click();
+    }
+
+    // Verifica se está em qualquer outra aba (exceto Quiz)
+    const quizContainers = [
+      document.getElementById('quiz-container')
+      
+    ];
+
+    const isInQuiz = quizContainers.some(container => container && container.style.display === 'block');
+    if (!isInQuiz) {
+      backToMenu(); // Volta ao menu principal
+    }
+  }
+});
+
+// Unifica o botão "Voltar ao Menu" após qualquer quiz
+const backToMenuButton = document.getElementById("backToMenuButton");
+if (backToMenuButton) {
+  backToMenuButton.addEventListener("click", () => {
+    // Oculta todas as telas de finalização de quiz
+    congratulationsContainer.style.display = "none";
+    perguntasEndScreen.style.display = "none";
+    spanishEndScreen.style.display = "none";
+    frenchEndScreen.style.display = "none";
+    // Volta ao menu principal
+    menuContainer.style.display = "block";
+  });
+};
